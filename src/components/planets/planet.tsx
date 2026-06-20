@@ -33,26 +33,11 @@ export const Planet: FC<PlanetProps> = ({
 
   const _axialTilt = THREE.MathUtils.degToRad(axialTilt);
 
-  const [map, normalMap, cloudsMap, atmosphereMap, ringMap, nightMap] =
-    useTexture(
-      [
-        textures.map,
-        textures.normal || textures.map,
-        textures.clouds || textures.map,
-        textures.atmosphere || textures.map,
-        textures.ring || textures.map,
-        textures.night || textures.map,
-      ]
-      // (textures) => {
-      //   const ring = textures[4];
+  const loadedTextures = useTexture(
+    Object.fromEntries(Object.entries(textures).filter(([, value]) => value))
+  ) as Partial<Record<keyof PlanetTextures, THREE.Texture>>;
 
-      //   if (ring) {
-      //     ring.center.set(0.5, 0.5);
-      //     ring.repeat.y = -1;
-      //     ring.rotation = Math.PI / 2;
-      //   }
-      // }
-    );
+  const { map, normal, clouds, atmosphere, ring, night } = loadedTextures;
 
   useFrame((_, delta) => {
     const direction = (retrograde ? -1 : 1) * speedMultiplier;
@@ -80,7 +65,7 @@ export const Planet: FC<PlanetProps> = ({
           <>
             <meshBasicMaterial
               depthWrite={false}
-              map={textureOverrides.has("night") ? nightMap : map}
+              map={textureOverrides.has("night") ? night : map}
             />
             <mesh>
               <sphereGeometry args={[2.15, 64, 64]} />
@@ -105,19 +90,19 @@ export const Planet: FC<PlanetProps> = ({
           </>
         ) : (
           <meshStandardMaterial
-            map={textureOverrides.has("night") ? nightMap : map}
-            normalMap={textures.normal ? normalMap : undefined}
-            normalScale={new THREE.Vector2(8, -8)}
+            map={textureOverrides.has("night") ? night : map}
+            normalMap={normal}
+            normalScale={normal ? new THREE.Vector2(8, -8) : undefined}
           />
         )}
       </mesh>
 
       {/* Clouds */}
-      {textures.clouds && textureOverrides.has("clouds") && (
+      {clouds && textureOverrides.has("clouds") && (
         <mesh ref={cloudsRef}>
           <sphereGeometry args={[2.03, 64, 64]} />
           <meshStandardMaterial
-            map={cloudsMap}
+            map={clouds}
             transparent
             opacity={0.4}
             depthWrite={false}
@@ -126,12 +111,12 @@ export const Planet: FC<PlanetProps> = ({
       )}
 
       {/* Atmosphere */}
-      {textures.atmosphere && textureOverrides.has("atmosphere") && (
+      {atmosphere && textureOverrides.has("atmosphere") && (
         <>
           <mesh ref={atmosphereRef}>
             <sphereGeometry args={[2.08, 64, 64]} />
             <meshStandardMaterial
-              map={atmosphereMap}
+              map={atmosphere}
               transparent
               opacity={0.5}
               depthWrite={false}
@@ -151,11 +136,11 @@ export const Planet: FC<PlanetProps> = ({
         </>
       )}
       {/* Ring */}
-      {textures.ring && (
+      {ring && (
         <mesh ref={ringRef} rotation={[4.9, 0, 0]}>
           <ringGeometry args={[2.3, 2.8, 128]} />
           <meshStandardMaterial
-            map={ringMap}
+            map={ring}
             // transparent
             // opacity={0.9}
             side={THREE.DoubleSide}
