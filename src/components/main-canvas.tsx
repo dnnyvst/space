@@ -28,8 +28,7 @@ export const MainCanvas: FC = () => {
         ))}
       </div>
       <Canvas className="w-full h-full flex-1">
-        {/* temporary, was 0.4 */}
-        <ambientLight intensity={selectedPlanetId === "earth" ? 0.1 : 0.1} />
+        <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         <SunLight />
         {selectedPlanet && (
           <Planet

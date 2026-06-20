@@ -65,6 +65,15 @@ export const PLANET_CONFIG: PlanetConfigMap = {
       map: "/textures/jupiter/surface.jpg",
     },
   },
+  uranus: {
+    id: "uranus",
+    name: "uranus",
+    retrograde: true,
+    tilt: 97.77,
+    textures: {
+      map: "/textures/uranus/surface.jpg",
+    },
+  },
   neptune: {
     id: "neptune",
     name: "neptune",
