@@ -88,7 +88,6 @@ export const MainCanvas: FC = () => {
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         {selectedPlanetId !== "sun" && <SunLight />}
         <Planet
-          key={selectedPlanetId}
           axialTilt={selectedPlanet.tilt}
           retrograde={selectedPlanet.retrograde}
           textures={selectedPlanet.textures}
