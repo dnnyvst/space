@@ -11,6 +11,7 @@ interface PlanetProps {
   retrograde?: boolean;
   textures: PlanetTextures;
   textureOverrides?: Set<string>;
+  scale?: number;
 }
 
 export const Planet: FC<PlanetProps> = ({
@@ -18,6 +19,7 @@ export const Planet: FC<PlanetProps> = ({
   retrograde = false,
   textures,
   textureOverrides = new Set(),
+  scale = 1,
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const planetRef = useRef<THREE.Mesh>(null);
@@ -66,7 +68,7 @@ export const Planet: FC<PlanetProps> = ({
   });
 
   return (
-    <group ref={groupRef} rotation={[0, 0, _axialTilt]}>
+    <group ref={groupRef} rotation={[0, 0, _axialTilt]} scale={scale}>
       {/* Planet */}
       <mesh ref={planetRef}>
         <sphereGeometry args={[2, 64, 64]} />

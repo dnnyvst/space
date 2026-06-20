@@ -2,10 +2,12 @@
 
 import { useState, type FC } from "react";
 import { Canvas } from "@react-three/fiber";
+import { useMediaQuery } from "usehooks-ts";
 import { Planet, SunLight } from "@/components";
 import { PLANET_CONFIG } from "@/config";
 
 export const MainCanvas: FC = () => {
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
     new Set(["clouds", "atmosphere"])
@@ -22,9 +24,9 @@ export const MainCanvas: FC = () => {
   return (
     <div className="h-screen relative font-mono">
       {/* UI overlay*/}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10">
+      <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min">
         {/* Planet select */}
-        <div className="flex gap-6 bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg">
+        <div className="flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-black border border-white/30 py-2 px-4 rounded-lg">
           {Object.values(PLANET_CONFIG).map(({ id, name }) => (
             <button
               key={id}
@@ -86,6 +88,7 @@ export const MainCanvas: FC = () => {
           retrograde={selectedPlanet.retrograde}
           textures={selectedPlanet.textures}
           textureOverrides={selectedProperties}
+          scale={isMobile ? 0.75 : 1}
         />
       </Canvas>
 
