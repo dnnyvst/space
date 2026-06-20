@@ -7,6 +7,9 @@ import { PLANET_CONFIG } from "@/config";
 
 export const MainCanvas: FC = () => {
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
+  const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
+    new Set()
+  );
 
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
@@ -41,13 +44,31 @@ export const MainCanvas: FC = () => {
         {Object.keys(toggleTextures).length > 0 && (
           <div className="flex bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg">
             <ul>
-              {Object.keys(toggleTextures).map((key) => (
+              {Object.keys(toggleTextures).map((property) => (
                 <li
-                  className="flex gap-3 opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out"
-                  key={key}
+                  className={`flex gap-3 opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out ${
+                    selectedProperties.has(property) &&
+                    "opacity-100 hover:opacity-100"
+                  }`}
+                  key={property}
+                  onClick={() =>
+                    setSelectedProperties((selectedProperties) => {
+                      if (selectedProperties.has(property)) {
+                        return new Set(
+                          [...selectedProperties].filter((p) => p !== property)
+                        );
+                      }
+                      return new Set([...selectedProperties, property]);
+                    })
+                  }
                 >
-                  <input className="cursor-pointer" type="checkbox" />
-                  {key}
+                  <input
+                    readOnly
+                    className="cursor-pointer"
+                    type="checkbox"
+                    checked={selectedProperties.has(property)}
+                  />
+                  {property}
                 </li>
               ))}
             </ul>
