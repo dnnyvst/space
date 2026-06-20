@@ -13,6 +13,7 @@ interface PlanetProps {
   textureOverrides?: Set<string>;
   scale?: number;
   speedMultiplier?: number;
+  emissive?: boolean;
 }
 
 export const Planet: FC<PlanetProps> = ({
@@ -22,6 +23,7 @@ export const Planet: FC<PlanetProps> = ({
   textureOverrides = new Set(),
   scale = 1,
   speedMultiplier = 1,
+  emissive = false,
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const planetRef = useRef<THREE.Mesh>(null);
@@ -74,10 +76,39 @@ export const Planet: FC<PlanetProps> = ({
       {/* Planet */}
       <mesh ref={planetRef}>
         <sphereGeometry args={[2, 64, 64]} />
-        <meshStandardMaterial
-          map={textureOverrides.has("night") ? nightMap : map}
-          normalMap={textures.normal ? normalMap : undefined}
-        />
+        {emissive ? (
+          <>
+            <meshBasicMaterial
+              depthWrite={false}
+              map={textureOverrides.has("night") ? nightMap : map}
+            />
+            <mesh>
+              <sphereGeometry args={[2.15, 64, 64]} />
+              <meshBasicMaterial
+                color="#ffb347"
+                transparent
+                opacity={0.06}
+                blending={THREE.AdditiveBlending}
+                depthWrite={false}
+              />
+            </mesh>
+            <mesh>
+              <sphereGeometry args={[2.3, 64, 64]} />
+              <meshBasicMaterial
+                color="#ff9a3d"
+                transparent
+                opacity={0.04}
+                blending={THREE.AdditiveBlending}
+                depthWrite={false}
+              />
+            </mesh>
+          </>
+        ) : (
+          <meshStandardMaterial
+            map={textureOverrides.has("night") ? nightMap : map}
+            normalMap={textures.normal ? normalMap : undefined}
+          />
+        )}
       </mesh>
 
       {/* Clouds */}

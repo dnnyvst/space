@@ -81,7 +81,7 @@ export const MainCanvas: FC = () => {
       {/* CANVAS (full screen) */}
       <Canvas className="w-full h-full" gl={{ alpha: true }}>
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
-        <SunLight />
+        {selectedPlanetId !== "sun" && <SunLight />}
         <Planet
           axialTilt={selectedPlanet.tilt}
           retrograde={selectedPlanet.retrograde}
@@ -89,6 +89,7 @@ export const MainCanvas: FC = () => {
           textureOverrides={selectedProperties}
           scale={isMobile ? 0.75 : 1}
           speedMultiplier={selectedPlanetId === "sun" ? 0.2 : 1}
+          emissive={selectedPlanetId === "sun"}
         />
       </Canvas>
       {/* Saturn overlay */}
