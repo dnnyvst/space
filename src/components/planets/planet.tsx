@@ -12,6 +12,7 @@ interface PlanetProps {
   textures: PlanetTextures;
   textureOverrides?: Set<string>;
   scale?: number;
+  speedMultiplier?: number;
 }
 
 export const Planet: FC<PlanetProps> = ({
@@ -20,6 +21,7 @@ export const Planet: FC<PlanetProps> = ({
   textures,
   textureOverrides = new Set(),
   scale = 1,
+  speedMultiplier = 1,
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const planetRef = useRef<THREE.Mesh>(null);
@@ -51,7 +53,7 @@ export const Planet: FC<PlanetProps> = ({
     );
 
   useFrame((_, delta) => {
-    const direction = retrograde ? -1 : 1;
+    const direction = (retrograde ? -1 : 1) * speedMultiplier;
 
     if (planetRef.current) {
       planetRef.current.rotation.y += delta * 0.1 * direction;

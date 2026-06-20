@@ -13,6 +13,12 @@ interface PlanetConfigMap {
 }
 
 export const PLANET_CONFIG: PlanetConfigMap = {
+  sun: {
+    id: "sun",
+    name: "sun",
+    tilt: 7.25,
+    textures: { map: "/textures/sun/surface.jpg" },
+  },
   mercury: {
     id: "mercury",
     name: "mercury",

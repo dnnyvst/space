@@ -88,6 +88,7 @@ export const MainCanvas: FC = () => {
           textures={selectedPlanet.textures}
           textureOverrides={selectedProperties}
           scale={isMobile ? 0.75 : 1}
+          speedMultiplier={selectedPlanetId === "sun" ? 0.2 : 1}
         />
       </Canvas>
       {/* Saturn overlay */}

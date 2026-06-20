@@ -1,4 +1,5 @@
 export type Planet =
+  | "sun"
   | "mercury"
   | "venus"
   | "earth"
