@@ -22,7 +22,7 @@ export const MainCanvas: FC = () => {
   );
 
   return (
-    <div className="h-screen relative font-mono">
+    <div className="fixed inset-0 overflow-hidden font-mono bg-[url(/stars_milky_way.jpg)]">
       {/* UI overlay*/}
       <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min">
         {/* Planet select */}
@@ -78,9 +78,8 @@ export const MainCanvas: FC = () => {
           </div>
         )}
       </div>
-
       {/* CANVAS (full screen) */}
-      <Canvas className="w-full h-full">
+      <Canvas className="w-full h-full" gl={{ alpha: true }}>
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         <SunLight />
         <Planet
@@ -91,7 +90,6 @@ export const MainCanvas: FC = () => {
           scale={isMobile ? 0.75 : 1}
         />
       </Canvas>
-
       {/* Saturn overlay */}
       {selectedPlanetId === "saturn" && (
         <div className="absolute inset-0 flex justify-center items-center text-black">
