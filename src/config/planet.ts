@@ -71,6 +71,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     tilt: 26.73,
     textures: {
       map: "/textures/saturn/surface.jpg",
+      ring: "/textures/saturn/ring.png",
     },
   },
   uranus: {

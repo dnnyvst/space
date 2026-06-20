@@ -14,4 +14,5 @@ export interface PlanetTextures {
   normal?: string;
   clouds?: string;
   atmosphere?: string;
+  ring?: string;
 }

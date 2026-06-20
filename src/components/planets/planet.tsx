@@ -24,11 +24,12 @@ export const Planet: FC<PlanetProps> = ({
 
   const _axialTilt = THREE.MathUtils.degToRad(axialTilt);
 
-  const [map, normalMap, cloudsMap, atmosphereMap] = useTexture([
+  const [map, normalMap, cloudsMap, atmosphereMap, ringMap] = useTexture([
     textures.map,
     textures.normal || textures.map,
     textures.clouds || textures.map,
     textures.atmosphere || textures.map,
+    textures.ring || textures.map,
   ]);
 
   useFrame((_, delta) => {
@@ -90,6 +91,13 @@ export const Planet: FC<PlanetProps> = ({
             />
           </mesh> */}
         </>
+      )}
+      {/* Ring */}
+      {textures.ring && (
+        <mesh rotation={[5, 0, 0]}>
+          <ringGeometry args={[2.3, 2.4, 64]} />
+          <meshStandardMaterial map={ringMap} />
+        </mesh>
       )}
     </group>
   );
