@@ -11,9 +11,9 @@ export const Earth = () => {
   const cloudsRef = useRef<THREE.Mesh>(null);
 
   const [dayMap, normalMap, cloudsMap] = useTexture([
-    "/textures/earth_daymap.jpg",
-    "/textures/earth_normal_map.jpg",
-    "/textures/earth_clouds.jpg",
+    "/textures/earth/day.jpg",
+    "/textures/earth/normal.jpg",
+    "/textures/earth/clouds.jpg",
   ]);
 
   useFrame((state, delta) => {
