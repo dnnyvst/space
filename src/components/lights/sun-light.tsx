@@ -9,6 +9,6 @@ export const SunLight: FC<SunLightProps> = ({ noColor = false }) => (
     position={[5, 5, 5]}
     intensity={2}
     castShadow
-    color={noColor ? undefined : "#fff1d6"}
+    color={noColor ? "white" : "#fff1d6"}
   />
 );
