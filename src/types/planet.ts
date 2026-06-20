@@ -1,4 +1,10 @@
-export type Planet = "earth" | "moon" | "venus" | "neptune";
+export type Planet =
+  | "mercury"
+  | "venus"
+  | "earth"
+  | "mars"
+  | "neptune"
+  | "moon";
 
 export interface PlanetTextures {
   map: string;

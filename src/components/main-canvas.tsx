@@ -28,8 +28,9 @@ export const MainCanvas: FC = () => {
         ))}
       </div>
       <Canvas className="w-full h-full flex-1">
-        <ambientLight intensity={selectedPlanetId === "earth" ? 0.4 : 0.1} />
-        <SunLight noColor={selectedPlanetId === "moon"} />
+        {/* temporary, was 0.4 */}
+        <ambientLight intensity={selectedPlanetId === "earth" ? 0.1 : 0.1} />
+        <SunLight />
         {selectedPlanet && (
           <Planet
             axialTilt={selectedPlanet.tilt}

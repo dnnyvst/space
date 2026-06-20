@@ -13,6 +13,24 @@ interface PlanetConfigMap {
 }
 
 export const PLANET_CONFIG: PlanetConfigMap = {
+  mercury: {
+    id: "mercury",
+    name: "mercury",
+    tilt: 0.034,
+    textures: {
+      map: "/textures/mercury/surface.jpg",
+    },
+  },
+  venus: {
+    id: "venus",
+    name: "venus",
+    retrograde: true,
+    tilt: 177.4,
+    textures: {
+      map: "/textures/venus/surface.jpg",
+      atmosphere: "/textures/venus/atmosphere.jpg",
+    },
+  },
   earth: {
     id: "earth",
     name: "earth",
@@ -31,14 +49,12 @@ export const PLANET_CONFIG: PlanetConfigMap = {
       map: "/textures/moon/moon.jpg",
     },
   },
-  venus: {
-    id: "venus",
-    name: "venus",
-    retrograde: true,
-    tilt: 177.4,
+  mars: {
+    id: "mars",
+    name: "mars",
+    tilt: 25.19,
     textures: {
-      map: "/textures/venus/surface.jpg",
-      atmosphere: "/textures/venus/atmosphere.jpg",
+      map: "/textures/mars/surface.jpg",
     },
   },
   neptune: {
