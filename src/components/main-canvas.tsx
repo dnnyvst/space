@@ -11,8 +11,8 @@ export const MainCanvas: FC = () => {
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
   return (
-    <div className=" h-screen flex flex-col">
-      <div className="flex gap-8 pt-10 justify-center font-mono">
+    <div className="h-screen flex flex-col items-center font-mono">
+      <div className="flex gap-8 mt-10 bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg">
         {Object.values(PLANET_CONFIG).map(({ id, name }) => (
           <button
             key={id}
@@ -27,17 +27,27 @@ export const MainCanvas: FC = () => {
           </button>
         ))}
       </div>
-      <Canvas className="w-full h-full flex-1">
-        <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
-        <SunLight />
-        {selectedPlanet && (
-          <Planet
-            axialTilt={selectedPlanet.tilt}
-            retrograde={selectedPlanet.retrograde}
-            textures={selectedPlanet.textures}
-          />
+      <div className="flex-1 w-full relative">
+        <Canvas className="w-full h-full">
+          <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
+          <SunLight />
+          {selectedPlanet && selectedPlanetId !== "saturn" && (
+            <Planet
+              axialTilt={selectedPlanet.tilt}
+              retrograde={selectedPlanet.retrograde}
+              textures={selectedPlanet.textures}
+            />
+          )}
+        </Canvas>
+        {selectedPlanetId === "saturn" && (
+          <div className="absolute inset-0 flex justify-center items-center h-3/4 ">
+            under construction.
+            <br />
+            <br />
+            rings are too hard.
+          </div>
         )}
-      </Canvas>
+      </div>
     </div>
   );
 };

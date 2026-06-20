@@ -21,16 +21,28 @@ export const Planet: FC<PlanetProps> = ({
   const planetRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
+  const ringRef = useRef<THREE.Mesh>(null);
 
   const _axialTilt = THREE.MathUtils.degToRad(axialTilt);
 
-  const [map, normalMap, cloudsMap, atmosphereMap, ringMap] = useTexture([
-    textures.map,
-    textures.normal || textures.map,
-    textures.clouds || textures.map,
-    textures.atmosphere || textures.map,
-    textures.ring || textures.map,
-  ]);
+  const [map, normalMap, cloudsMap, atmosphereMap, ringMap] = useTexture(
+    [
+      textures.map,
+      textures.normal || textures.map,
+      textures.clouds || textures.map,
+      textures.atmosphere || textures.map,
+      textures.ring || textures.map,
+    ],
+    (textures) => {
+      const ring = textures[4];
+
+      if (ring) {
+        ring.center.set(0.5, 0.5);
+        ring.repeat.y = -1;
+        ring.rotation = Math.PI / 2;
+      }
+    }
+  );
 
   useFrame((_, delta) => {
     const direction = retrograde ? -1 : 1;
@@ -40,6 +52,9 @@ export const Planet: FC<PlanetProps> = ({
     }
     if (!!textures.atmosphere) {
       atmosphereRef.current!.rotation.y += delta * 0.39 * direction;
+    }
+    if (!!textures.ring) {
+      ringRef.current.rotation.z += delta * 0.01 * direction;
     }
   });
 
@@ -94,9 +109,16 @@ export const Planet: FC<PlanetProps> = ({
       )}
       {/* Ring */}
       {textures.ring && (
-        <mesh rotation={[5, 0, 0]}>
-          <ringGeometry args={[2.3, 2.4, 64]} />
-          <meshStandardMaterial map={ringMap} />
+        <mesh ref={ringRef} rotation={[4.9, 0, 0]}>
+          <ringGeometry args={[2.3, 2.8, 128]} />
+          <meshStandardMaterial
+            map={ringMap}
+            // transparent
+            // opacity={0.9}
+            side={THREE.DoubleSide}
+            depthWrite={false}
+            alphaTest={0.5}
+          />
         </mesh>
       )}
     </group>
