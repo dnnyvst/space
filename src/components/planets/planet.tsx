@@ -10,14 +10,14 @@ interface PlanetProps {
   axialTilt: number;
   retrograde?: boolean;
   textures: PlanetTextures;
-  textureOverrides: Set<string>;
+  textureOverrides?: Set<string>;
 }
 
 export const Planet: FC<PlanetProps> = ({
   axialTilt,
   retrograde = false,
   textures,
-  textureOverrides,
+  textureOverrides = new Set(),
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const planetRef = useRef<THREE.Mesh>(null);
