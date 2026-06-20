@@ -17,10 +17,10 @@ export const MainCanvas: FC = () => {
         {planets.map((planet) => (
           <button
             key={planet}
-            className={`cursor-pointer transition-opacity duration-200 ${
+            className={`cursor-pointer transition-all duration-300 ease-out ${
               planet === selectedPlanet
                 ? "underline underline-offset-4 decoration-2 opacity-100"
-                : "opacity-40 hover:opacity-80"
+                : "opacity-30 hover:opacity-70"
             }`}
             onClick={() => setSelectedPlanet(planet)}
           >
