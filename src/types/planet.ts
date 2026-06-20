@@ -3,6 +3,7 @@ export type Planet =
   | "venus"
   | "earth"
   | "mars"
+  | "jupiter"
   | "neptune"
   | "moon";
 

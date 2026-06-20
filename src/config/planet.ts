@@ -57,6 +57,14 @@ export const PLANET_CONFIG: PlanetConfigMap = {
       map: "/textures/mars/surface.jpg",
     },
   },
+  jupiter: {
+    id: "jupiter",
+    name: "jupiter",
+    tilt: 3.13,
+    textures: {
+      map: "/textures/jupiter/surface.jpg",
+    },
+  },
   neptune: {
     id: "neptune",
     name: "neptune",
