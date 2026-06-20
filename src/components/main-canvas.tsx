@@ -31,16 +31,14 @@ export const MainCanvas: FC = () => {
         <Canvas className="w-full h-full">
           <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
           <SunLight />
-          {selectedPlanet && selectedPlanetId !== "saturn" && (
-            <Planet
-              axialTilt={selectedPlanet.tilt}
-              retrograde={selectedPlanet.retrograde}
-              textures={selectedPlanet.textures}
-            />
-          )}
+          <Planet
+            axialTilt={selectedPlanet.tilt}
+            retrograde={selectedPlanet.retrograde}
+            textures={selectedPlanet.textures}
+          />
         </Canvas>
         {selectedPlanetId === "saturn" && (
-          <div className="absolute inset-0 flex justify-center items-center h-3/4 ">
+          <div className="absolute inset-0 flex justify-center items-center h-3/4 text-black">
             under construction.
             <br />
             <br />

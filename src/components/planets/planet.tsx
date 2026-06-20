@@ -32,16 +32,16 @@ export const Planet: FC<PlanetProps> = ({
       textures.clouds || textures.map,
       textures.atmosphere || textures.map,
       textures.ring || textures.map,
-    ],
-    (textures) => {
-      const ring = textures[4];
+    ]
+    // (textures) => {
+    //   const ring = textures[4];
 
-      if (ring) {
-        ring.center.set(0.5, 0.5);
-        ring.repeat.y = -1;
-        ring.rotation = Math.PI / 2;
-      }
-    }
+    //   if (ring) {
+    //     ring.center.set(0.5, 0.5);
+    //     ring.repeat.y = -1;
+    //     ring.rotation = Math.PI / 2;
+    //   }
+    // }
   );
 
   useFrame((_, delta) => {
