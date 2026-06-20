@@ -41,4 +41,13 @@ export const PLANET_CONFIG: PlanetConfigMap = {
       atmosphere: "/textures/venus/atmosphere.jpg",
     },
   },
+  neptune: {
+    id: "neptune",
+    name: "neptune",
+    tilt: 177.4,
+    textures: {
+      map: "/textures/venus/surface.jpg",
+      atmosphere: "/textures/venus/atmosphere.jpg",
+    },
+  },
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, type FC } from "react";
+import { useState, type FC } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Planet, SunLight } from "@/components";
 import { PLANET_CONFIG } from "@/config";
@@ -8,10 +8,7 @@ import { PLANET_CONFIG } from "@/config";
 export const MainCanvas: FC = () => {
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
 
-  const selectedPlanet = useMemo(
-    () => PLANET_CONFIG[selectedPlanetId],
-    [selectedPlanetId]
-  );
+  const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
   return (
     <div className=" h-screen flex flex-col">
@@ -31,7 +28,7 @@ export const MainCanvas: FC = () => {
         ))}
       </div>
       <Canvas className="w-full h-full flex-1">
-        <ambientLight intensity={0.1} />
+        <ambientLight intensity={selectedPlanetId === "earth" ? 0.4 : 0.1} />
         <SunLight noColor={selectedPlanetId === "moon"} />
         {selectedPlanet && (
           <Planet
