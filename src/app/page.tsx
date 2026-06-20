@@ -1,4 +1,4 @@
-import { MainCanvas } from "./main-canvas";
+import { MainCanvas } from "@/components";
 
 export default function Home() {
   return (

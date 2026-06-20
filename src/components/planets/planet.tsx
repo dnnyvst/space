@@ -1,19 +1,15 @@
+"use client";
+
 import { useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
-
-interface Textures {
-  map: string;
-  normal?: string;
-  clouds?: string;
-  atmosphere?: string;
-}
+import type { PlanetTextures } from "@/types";
 
 interface PlanetProps {
   axialTilt: number;
   retrograde?: boolean;
-  textures: Textures;
+  textures: PlanetTextures;
 }
 
 export const Planet: FC<PlanetProps> = ({
