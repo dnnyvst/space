@@ -3,7 +3,7 @@
 import { useState, type FC } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useMediaQuery } from "usehooks-ts";
-import { Planet, SunLight } from "@/components";
+import { Planet, SunLight, FlyByCamera } from "@/components";
 import { PLANET_CONFIG } from "@/config";
 
 export const MainCanvas: FC = () => {
@@ -79,7 +79,12 @@ export const MainCanvas: FC = () => {
         )}
       </div>
       {/* CANVAS (full screen) */}
-      <Canvas className="w-full h-full" gl={{ alpha: true }}>
+      <Canvas
+        className="w-full h-full"
+        gl={{ alpha: true }}
+        // camera={{ position: [0, 2.1, 0.75] }}
+      >
+        {/* <FlyByCamera /> */}
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         {selectedPlanetId !== "sun" && <SunLight />}
         <Planet
