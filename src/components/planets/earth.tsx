@@ -1,47 +1,14 @@
-import { useRef } from "react";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { Planet } from "@/components";
 
-const AXIAL_TILT = THREE.MathUtils.degToRad(23.44);
+const AXIAL_TILT = 23.44;
 
-export const Earth = () => {
-  const groupRef = useRef<THREE.Group>(null);
-  const earthRef = useRef<THREE.Mesh>(null);
-  const cloudsRef = useRef<THREE.Mesh>(null);
-
-  const [dayMap, normalMap, cloudsMap] = useTexture([
-    "/textures/earth/day.jpg",
-    "/textures/earth/normal.jpg",
-    "/textures/earth/clouds.jpg",
-  ]);
-
-  useFrame((state, delta) => {
-    earthRef.current!.rotation.y += delta * 0.1;
-    cloudsRef.current!.rotation.y += delta * 0.13;
-
-    groupRef.current!.rotation.z =
-      AXIAL_TILT + Math.sin(state.clock.elapsedTime * 0.1) * 0.002;
-  });
-
-  return (
-    <group ref={groupRef} rotation={[AXIAL_TILT, 0, 0]}>
-      {/* Earth */}
-      <mesh ref={earthRef}>
-        <sphereGeometry args={[2, 64, 64]} />
-        <meshStandardMaterial map={dayMap} normalMap={normalMap} />
-      </mesh>
-
-      {/* Clouds */}
-      <mesh ref={cloudsRef}>
-        <sphereGeometry args={[2.03, 64, 64]} />
-        <meshStandardMaterial
-          map={cloudsMap}
-          transparent
-          opacity={0.4}
-          depthWrite={false}
-        />
-      </mesh>
-    </group>
-  );
-};
+export const Earth = () => (
+  <Planet
+    axialTilt={AXIAL_TILT}
+    textures={{
+      map: "/textures/earth/day.jpg",
+      normal: "/textures/earth/normal.jpg",
+      clouds: "/textures/earth/clouds.jpg",
+    }}
+  />
+);
