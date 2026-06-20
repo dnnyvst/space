@@ -10,9 +10,15 @@ export const MainCanvas: FC = () => {
 
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
+  const toggleTextures = Object.fromEntries(
+    Object.entries(selectedPlanet.textures).filter(
+      ([key, value]) => !["map", "normal", "ring"].includes(key) && value
+    )
+  );
+
   return (
     <div className="h-screen relative font-mono">
-      {/* UI OVERLAY*/}
+      {/* UI overlay*/}
       <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10">
         {/* Planet select */}
         <div className="flex gap-6 bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg">
@@ -31,13 +37,25 @@ export const MainCanvas: FC = () => {
           ))}
         </div>
 
-        {/* Toggles (placeholder) */}
-        <div className="flex bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg">
-          test
-        </div>
+        {/* Toggles */}
+        {Object.keys(toggleTextures).length > 0 && (
+          <div className="flex bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg">
+            <ul>
+              {Object.keys(toggleTextures).map((key) => (
+                <li
+                  className="flex gap-3 opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out"
+                  key={key}
+                >
+                  <input className="cursor-pointer" type="checkbox" />
+                  {key}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
-      {/* CANVAS (full screen, never moves) */}
+      {/* CANVAS (full screen) */}
       <Canvas className="w-full h-full">
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         <SunLight />

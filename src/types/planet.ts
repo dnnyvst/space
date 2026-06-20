@@ -15,4 +15,5 @@ export interface PlanetTextures {
   clouds?: string;
   atmosphere?: string;
   ring?: string;
+  night?: string;
 }

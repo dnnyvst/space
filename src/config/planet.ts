@@ -39,6 +39,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
       map: "/textures/earth/day.jpg",
       normal: "/textures/earth/normal.jpg",
       clouds: "/textures/earth/clouds.jpg",
+      night: "/textures/earth/night.jpg",
     },
   },
   moon: {
