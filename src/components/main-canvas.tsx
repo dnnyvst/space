@@ -8,7 +8,7 @@ import { PLANET_CONFIG } from "@/config";
 export const MainCanvas: FC = () => {
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
-    new Set()
+    new Set(["clouds", "atmosphere"])
   );
 
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
@@ -42,7 +42,7 @@ export const MainCanvas: FC = () => {
 
         {/* Toggles */}
         {Object.keys(toggleTextures).length > 0 && (
-          <div className="flex bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg">
+          <div className="flex bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg opacity-75">
             <ul>
               {Object.keys(toggleTextures).map((property) => (
                 <li
@@ -62,13 +62,14 @@ export const MainCanvas: FC = () => {
                     })
                   }
                 >
-                  <input
-                    readOnly
-                    className="cursor-pointer"
-                    type="checkbox"
-                    checked={selectedProperties.has(property)}
-                  />
-                  {property}
+                  <div className="flex items-center gap-3 cursor-pointer">
+                    <div
+                      className={`w-4 h-4 border flex items-center justify-center rounded-sm ${
+                        selectedProperties.has(property) ? "bg-white" : ""
+                      }`}
+                    />
+                    <span>{property}</span>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -84,6 +85,7 @@ export const MainCanvas: FC = () => {
           axialTilt={selectedPlanet.tilt}
           retrograde={selectedPlanet.retrograde}
           textures={selectedPlanet.textures}
+          textureOverrides={selectedProperties}
         />
       </Canvas>
 
