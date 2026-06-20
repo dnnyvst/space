@@ -46,14 +46,17 @@ export const Planet: FC<PlanetProps> = ({
 
   useFrame((_, delta) => {
     const direction = retrograde ? -1 : 1;
-    planetRef.current!.rotation.y += delta * 0.1 * direction;
-    if (!!textures.clouds) {
-      cloudsRef.current!.rotation.y += delta * 0.13 * direction;
+
+    if (planetRef.current) {
+      planetRef.current.rotation.y += delta * 0.1 * direction;
     }
-    if (!!textures.atmosphere) {
-      atmosphereRef.current!.rotation.y += delta * 0.39 * direction;
+    if (cloudsRef.current) {
+      cloudsRef.current.rotation.y += delta * 0.13 * direction;
     }
-    if (!!textures.ring) {
+    if (atmosphereRef.current) {
+      atmosphereRef.current.rotation.y += delta * 0.39 * direction;
+    }
+    if (ringRef.current) {
       ringRef.current.rotation.z += delta * 0.01 * direction;
     }
   });
