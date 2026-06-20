@@ -12,10 +12,15 @@ interface Textures {
 
 interface PlanetProps {
   axialTilt: number;
+  retrograde?: boolean;
   textures: Textures;
 }
 
-export const Planet: FC<PlanetProps> = ({ axialTilt, textures }) => {
+export const Planet: FC<PlanetProps> = ({
+  axialTilt,
+  retrograde = false,
+  textures,
+}) => {
   const groupRef = useRef<THREE.Group>(null);
   const planetRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
@@ -30,18 +35,19 @@ export const Planet: FC<PlanetProps> = ({ axialTilt, textures }) => {
     textures.atmosphere || textures.map,
   ]);
 
-  useFrame((state, delta) => {
-    planetRef.current!.rotation.y += delta * 0.1;
+  useFrame((_, delta) => {
+    const direction = retrograde ? -1 : 1;
+    planetRef.current!.rotation.y += delta * 0.1 * direction;
     if (!!textures.clouds) {
-      cloudsRef.current!.rotation.y += delta * 0.13;
+      cloudsRef.current!.rotation.y += delta * 0.13 * direction;
     }
     if (!!textures.atmosphere) {
-      atmosphereRef.current!.rotation.y += delta * 0.39;
+      atmosphereRef.current!.rotation.y += delta * 0.39 * direction;
     }
   });
 
   return (
-    <group ref={groupRef} rotation={[_axialTilt, 0, 0]}>
+    <group ref={groupRef} rotation={[0, 0, _axialTilt]}>
       {/* Planet */}
       <mesh ref={planetRef}>
         <sphereGeometry args={[2, 64, 64]} />
