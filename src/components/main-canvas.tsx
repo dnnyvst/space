@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import { Canvas } from "@react-three/fiber";
 
 import {
@@ -20,17 +20,18 @@ import {
   UIOverlay,
 } from "@/components";
 import { PLANET_CONFIG } from "@/config";
-import { useIsMobile } from "@/hooks";
+import { useAppContext, useIsMobile } from "@/hooks";
 
 export const MainCanvas: FC = () => {
-  const isMobile = useIsMobile(640);
-  const [ready, setReady] = useState<boolean>(false);
+  const {
+    canvasReady,
+    setCanvasReady,
+    orbitMode,
+    selectedPlanetId,
+    selectedProperties,
+  } = useAppContext();
 
-  const [orbitMode, setOrbitMode] = useState<boolean>(false);
-  const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
-  const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
-    new Set(["clouds", "atmosphere"]),
-  );
+  const isMobile = useIsMobile(640);
 
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
@@ -42,29 +43,19 @@ export const MainCanvas: FC = () => {
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
       {/* loading */}
-      {!ready && (
+      {!canvasReady && (
         <div className="absolute inset-0 flex items-center justify-center animate-pulse">
           loading...
         </div>
       )}
       {/* ui overlay */}
-      {ready && (
-        <UIOverlay
-          isMobile={isMobile}
-          orbitMode={orbitMode}
-          setOrbitMode={setOrbitMode}
-          selectedPlanetId={selectedPlanetId}
-          setSelectedPlanetId={setSelectedPlanetId}
-          selectedProperties={selectedProperties}
-          setSelectedProperties={setSelectedProperties}
-        />
-      )}
+      {canvasReady && <UIOverlay />}
       {/* canvas (full screen) */}
       <Canvas
         className="w-full h-full"
         gl={{ alpha: true }}
         dpr={[1, 2]}
-        onCreated={() => setReady(true)}
+        onCreated={() => setCanvasReady(true)}
       >
         <Skybox />
         <ambientLight intensity={0.06} />

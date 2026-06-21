@@ -1,5 +1,6 @@
-import { type FC, type Dispatch, type SetStateAction } from "react";
+import { type FC } from "react";
 import { PLANET_CONFIG } from "@/config";
+import { useAppContext, useIsMobile } from "@/hooks";
 
 interface ListItemProps {
   selected: boolean;
@@ -25,31 +26,18 @@ const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
   </li>
 );
 
-interface UIOverlayProps {
-  isMobile: boolean;
+export const UIOverlay: FC = () => {
+  const {
+    orbitMode,
+    setOrbitMode,
+    selectedPlanetId,
+    setSelectedPlanetId,
+    selectedProperties,
+    setSelectedProperties,
+  } = useAppContext();
 
-  orbitMode: boolean;
-  setOrbitMode: Dispatch<SetStateAction<boolean>>;
+  const isMobile = useIsMobile(640);
 
-  selectedPlanetId: string;
-  setSelectedPlanetId: (id: string) => void;
-
-  selectedProperties: Set<string>;
-  setSelectedProperties: Dispatch<SetStateAction<Set<string>>>;
-}
-
-export const UIOverlay: FC<UIOverlayProps> = ({
-  isMobile,
-
-  orbitMode,
-  setOrbitMode,
-
-  selectedPlanetId,
-  setSelectedPlanetId,
-
-  selectedProperties,
-  setSelectedProperties,
-}) => {
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
   const toggleTextures = Object.fromEntries(

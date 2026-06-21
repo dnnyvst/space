@@ -1,9 +1,9 @@
-import { MainCanvas } from "../components/main-canvas";
+import { MainPage } from "../components/main-page";
 
 export default function Home() {
   return (
     <main>
-      <MainCanvas />
+      <MainPage />
     </main>
   );
 }
