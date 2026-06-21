@@ -7,7 +7,7 @@ import { useTexture } from "@react-three/drei";
 import type { PlanetTextures } from "@/types";
 import { atmosphereMaterial } from "@/components";
 
-const EMPTY_SHADER = { uniforms: {}, vertexShader: {}, fragmentShader: {} };
+const EMPTY_SHADER = { uniforms: {}, vertexShader: "", fragmentShader: "" };
 
 interface PlanetProps {
   axialTilt: number;
