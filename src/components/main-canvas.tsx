@@ -67,7 +67,7 @@ export const MainCanvas: FC = () => {
       {/* UI overlay*/}
       <div
         className={`h-screen ${
-          isMobile && "justify-between"
+          isMobile && "justify-between pb-12"
         } absolute py-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min`}
       >
         {/* planet select */}
