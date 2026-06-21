@@ -5,9 +5,9 @@ import { Canvas } from "@react-three/fiber";
 
 import {
   EffectComposer,
-  Noise,
-  HueSaturation,
-  DepthOfField,
+  // Noise,
+  // HueSaturation,
+  // DepthOfField,
   Bloom,
   Vignette,
 } from "@react-three/postprocessing";
@@ -15,57 +15,15 @@ import {
   Skybox,
   Planet,
   SunLight,
-  FlyByCamera,
   HandheldCamera,
   OrbitCamera,
-  ParallaxTiltCamera,
   UIOverlay,
 } from "@/components";
 import { PLANET_CONFIG } from "@/config";
 import { useIsMobile } from "@/hooks";
 
-// export const requestGyroPermission = async () => {
-//   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//   // @ts-ignore
-//   if (typeof DeviceOrientationEvent?.requestPermission === "function") {
-//     // iOS 13+
-//     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//     // @ts-ignore
-//     const response = await DeviceOrientationEvent.requestPermission();
-
-//     return response === "granted";
-//   }
-
-//   return true; // Android / desktop
-// };
-
-interface ListItemProps {
-  selected: boolean;
-  onClick: () => void;
-  text: string;
-}
-
-const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
-  <li
-    className={`flex gap-3 opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out ${
-      selected && "opacity-100 hover:opacity-100"
-    }`}
-    onClick={onClick}
-  >
-    <div className="flex items-center gap-3 cursor-pointer">
-      <div
-        className={`w-4 h-4 border flex items-center justify-center rounded-sm ${
-          selected && "bg-text"
-        }`}
-      />
-      <span>{text}</span>
-    </div>
-  </li>
-);
-
 export const MainCanvas: FC = () => {
   const isMobile = useIsMobile(640);
-  // const [gyroEnabled, setGyroEnabled] = useState(false);
   const [ready, setReady] = useState<boolean>(false);
 
   const [orbitMode, setOrbitMode] = useState<boolean>(false);
@@ -78,6 +36,13 @@ export const MainCanvas: FC = () => {
 
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
+      {/* loading */}
+      {!ready && (
+        <div className="absolute inset-0 flex items-center justify-center animate-pulse">
+          loading...
+        </div>
+      )}
+      {/* ui overlay */}
       {ready && (
         <UIOverlay
           isMobile={isMobile}
@@ -89,13 +54,6 @@ export const MainCanvas: FC = () => {
           setSelectedProperties={setSelectedProperties}
         />
       )}
-
-      {/* loading */}
-      {!ready && (
-        <div className="absolute inset-0 flex items-center justify-center animate-pulse">
-          loading...
-        </div>
-      )}
       {/* canvas (full screen) */}
       <Canvas
         className="w-full h-full"
@@ -104,13 +62,12 @@ export const MainCanvas: FC = () => {
         onCreated={() => setReady(true)}
       >
         <Skybox />
-        {/* <FlyByCamera /> */}
+        <ambientLight intensity={0.06} />
+        {selectedPlanetId !== "sun" && <SunLight />}
+
         <HandheldCamera />
         {orbitMode && <OrbitCamera />}
-        {/* <ParallaxTiltCamera enabled={isMobile && gyroEnabled} /> */}
 
-        <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
-        {selectedPlanetId !== "sun" && <SunLight />}
         <Planet
           axialTilt={selectedPlanet.tilt}
           retrograde={selectedPlanet.retrograde}
@@ -139,7 +96,6 @@ export const MainCanvas: FC = () => {
           <Vignette eskil={false} offset={0.1} darkness={0.7} />
         </EffectComposer>
       </Canvas>
-
       {/* saturn construction overlay */}
       {selectedPlanetId === "saturn" && (
         <div className="absolute inset-0 flex justify-center items-center text-black">
