@@ -78,15 +78,18 @@ export const MainCanvas: FC = () => {
 
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
-      <UIOverlay
-        isMobile={isMobile}
-        orbitMode={orbitMode}
-        setOrbitMode={setOrbitMode}
-        selectedPlanetId={selectedPlanetId}
-        setSelectedPlanetId={setSelectedPlanetId}
-        selectedProperties={selectedProperties}
-        setSelectedProperties={setSelectedProperties}
-      />
+      {ready && (
+        <UIOverlay
+          isMobile={isMobile}
+          orbitMode={orbitMode}
+          setOrbitMode={setOrbitMode}
+          selectedPlanetId={selectedPlanetId}
+          setSelectedPlanetId={setSelectedPlanetId}
+          selectedProperties={selectedProperties}
+          setSelectedProperties={setSelectedProperties}
+        />
+      )}
+
       {/* loading */}
       {!ready && (
         <div className="absolute inset-0 flex items-center justify-center animate-pulse">
