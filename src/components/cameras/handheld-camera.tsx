@@ -1,23 +1,30 @@
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import * as THREE from "three";
+import { useFrame, useThree } from "@react-three/fiber";
 
 export const HandheldCamera = () => {
-  const angleRef = useRef(0);
+  const { camera } = useThree();
 
-  useFrame((_, delta) => {
-    angleRef.current += delta * 0.2; // orbit speed
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
 
-    const radius = 4; // distance from planet center
+    // 🫁 slow breathing cycle (unchanged pace)
+    const breath = Math.sin(t * 0.15);
 
-    const x = Math.sin(angleRef.current) * radius;
-    const z = Math.cos(angleRef.current) * radius;
+    // smooth inhale/exhale shaping
+    const ease = breath * Math.abs(breath);
 
-    const y = 2; // fixed height (or add slight variation if you want)
+    // 🌊 stronger vertical breathing emphasis
+    const driftX = ease * 0.015; // reduced side sway
+    const driftY = ease * 0.055; // increased up/down breathing
+    const driftZ = ease * 0.02;
 
-    const camera = _.camera;
+    // ✋ minimal micro motion (kept subtle)
+    const micro = Math.sin(t * 2.2) * 0.0015 + Math.sin(t * 3.7) * 0.001;
 
-    camera.position.set(x, y, z);
+    // eslint-disable-next-line react-hooks/immutability
+    camera.position.x = driftX + micro;
+    camera.position.y = 0.05 + driftY + micro * 0.5;
+    camera.position.z = 5 + driftZ;
+
     camera.lookAt(0, 0, 0);
   });
 

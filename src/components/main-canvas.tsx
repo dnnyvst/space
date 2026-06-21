@@ -2,6 +2,7 @@
 
 import { useState, type FC } from "react";
 import { Canvas } from "@react-three/fiber";
+
 import {
   EffectComposer,
   Noise,
@@ -11,7 +12,13 @@ import {
   Vignette,
 } from "@react-three/postprocessing";
 import { useMediaQuery } from "usehooks-ts";
-import { Planet, SunLight, FlyByCamera, HandheldCamera } from "@/components";
+import {
+  Skybox,
+  Planet,
+  SunLight,
+  FlyByCamera,
+  HandheldCamera,
+} from "@/components";
 import { PLANET_CONFIG } from "@/config";
 
 export const MainCanvas: FC = () => {
@@ -30,7 +37,7 @@ export const MainCanvas: FC = () => {
   );
 
   return (
-    <div className="fixed inset-0 overflow-hidden font-mono bg-[url(/stars_milky_way.jpg)]">
+    <div className="fixed inset-0 overflow-hidden font-mono">
       {/* UI overlay*/}
       <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min">
         {/* planet select */}
@@ -87,13 +94,11 @@ export const MainCanvas: FC = () => {
         )}
       </div>
       {/* canvas (full screen) */}
-      <Canvas
-        className="w-full h-full"
-        gl={{ alpha: true }}
-        // camera={{ position: [0, 2.1, 0.75] }}
-      >
+      <Canvas className="w-full h-full" gl={{ alpha: true }}>
+        <Skybox />
         {/* <FlyByCamera /> */}
-        {/* <HandheldCamera /> */}
+        <HandheldCamera />
+
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         {selectedPlanetId !== "sun" && <SunLight />}
         <Planet
