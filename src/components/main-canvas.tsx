@@ -65,9 +65,17 @@ export const MainCanvas: FC = () => {
   return (
     <div className="fixed inset-0 overflow-hidden font-mono">
       {/* UI overlay*/}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min">
+      <div
+        className={`h-screen ${
+          isMobile && "justify-between"
+        } absolute py-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min`}
+      >
         {/* planet select */}
-        <div className="flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-black border border-white/30 py-2 px-4 rounded-lg">
+        <div
+          className={`${
+            orbitMode && "invisible opacity-0"
+          } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-black border border-white/30 py-2 px-4 rounded-lg`}
+        >
           {Object.values(PLANET_CONFIG).map(({ id, name }) => (
             <button
               key={id}
@@ -84,11 +92,11 @@ export const MainCanvas: FC = () => {
         </div>
 
         {/* toggles */}
-        <div className="flex bg-black w-min whitespace-nowrap border-1 border-white/20 py-2 px-4 rounded-lg">
+        <div className="flex bg-black whitespace-nowrap border border-white/20 py-2 px-4 rounded-lg z-10 w-min">
           <ul>
             <ListItem
               selected={orbitMode === true}
-              onClick={() => setOrbitMode((orbitMode) => !orbitMode)}
+              onClick={() => setOrbitMode((v) => !v)}
               text="orbit mode"
             />
             {Object.keys(toggleTextures).map((property) => (
@@ -96,13 +104,11 @@ export const MainCanvas: FC = () => {
                 key={property}
                 selected={selectedProperties.has(property)}
                 onClick={() =>
-                  setSelectedProperties((selectedProperties) => {
-                    if (selectedProperties.has(property)) {
-                      return new Set(
-                        [...selectedProperties].filter((p) => p !== property)
-                      );
+                  setSelectedProperties((prev) => {
+                    if (prev.has(property)) {
+                      return new Set([...prev].filter((p) => p !== property));
                     }
-                    return new Set([...selectedProperties, property]);
+                    return new Set([...prev, property]);
                   })
                 }
                 text={property}
