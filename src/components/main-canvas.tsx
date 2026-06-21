@@ -84,7 +84,7 @@ export const MainCanvas: FC = () => {
             height={480}
           /> */}
           <Bloom
-            intensity={isEarthAtNight ? 10 : 1}
+            intensity={isEarthAtNight ? 5 : 1}
             luminanceThreshold={isEarthAtNight ? 0 : 0.2}
             luminanceSmoothing={0.6}
           />
