@@ -1,28 +1,37 @@
 import { useFrame, useThree } from "@react-three/fiber";
 
+const smoothstep = (edge0: number, edge1: number, x: number) => {
+  const t = Math.min(Math.max((x - edge0) / (edge1 - edge0), 0), 1);
+  return t * t * (3 - 2 * t);
+};
+
 export const HandheldCamera = () => {
   const { camera } = useThree();
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
 
-    // 🫁 slow breathing cycle (unchanged pace)
-    const breath = Math.sin(t * 0.15);
+    // Breathing cycle
+    const breath = Math.sin(t * 0.18);
 
-    // smooth inhale/exhale shaping
+    // Gate motion so it only peaks during part of the breath
+    const breathGate = smoothstep(0.2, 0.8, Math.abs(breath));
+
+    // Shape inhale/exhale
     const ease = breath * Math.abs(breath);
 
-    // 🌊 stronger vertical breathing emphasis
-    const driftX = ease * 0.015; // reduced side sway
-    const driftY = ease * 0.055; // increased up/down breathing
-    const driftZ = ease * 0.02;
+    // Main handheld drift (stronger, but gated)
+    const driftX = ease * 0.025 * breathGate;
+    const driftY = ease * 0.075 * breathGate;
+    const driftZ = ease * 0.03 * breathGate;
 
-    // ✋ minimal micro motion (kept subtle)
-    const micro = Math.sin(t * 2.2) * 0.0015 + Math.sin(t * 3.7) * 0.001;
+    // Always-on micro motion (very subtle)
+    const micro = Math.sin(t * 2.2) * 0.0018 + Math.sin(t * 3.7) * 0.0012;
 
+    // Apply camera motion
     // eslint-disable-next-line react-hooks/immutability
     camera.position.x = driftX + micro;
-    camera.position.y = 0.05 + driftY + micro * 0.5;
+    camera.position.y = 0.06 + driftY + micro * 0.5;
     camera.position.z = 5 + driftZ;
 
     camera.lookAt(0, 0, 0);
