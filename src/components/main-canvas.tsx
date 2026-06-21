@@ -2,6 +2,14 @@
 
 import { useState, type FC } from "react";
 import { Canvas } from "@react-three/fiber";
+import {
+  EffectComposer,
+  Noise,
+  HueSaturation,
+  DepthOfField,
+  Bloom,
+  Vignette,
+} from "@react-three/postprocessing";
 import { useMediaQuery } from "usehooks-ts";
 import { Planet, SunLight, FlyByCamera } from "@/components";
 import { PLANET_CONFIG } from "@/config";
@@ -96,8 +104,23 @@ export const MainCanvas: FC = () => {
           speedMultiplier={selectedPlanetId === "sun" ? 0.2 : 1}
           emissive={selectedPlanetId === "sun"}
         />
-
         {/* postprocessing */}
+        <EffectComposer>
+          {/* <Noise opacity={0.08} /> */}
+          {/* <HueSaturation saturation={-0.1} /> */}
+          {/* <DepthOfField
+            focusDistance={0.02}
+            focalLength={0.05}
+            bokehScale={2}
+            height={480}
+          /> */}
+          <Bloom
+            intensity={1}
+            luminanceThreshold={0.1}
+            luminanceSmoothing={0.6}
+          />
+          <Vignette eskil={false} offset={0.1} darkness={0.7} />
+        </EffectComposer>
       </Canvas>
       {/* saturn construction overlay */}
       {selectedPlanetId === "saturn" && (

@@ -67,7 +67,7 @@ export const Planet: FC<PlanetProps> = ({
               depthWrite={false}
               map={textureOverrides.has("night") ? night : map}
             />
-            <mesh>
+            {/* <mesh>
               <sphereGeometry args={[2.15, 64, 64]} />
               <meshBasicMaterial
                 color="#ffb347"
@@ -86,7 +86,7 @@ export const Planet: FC<PlanetProps> = ({
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}
               />
-            </mesh>
+            </mesh> */}
           </>
         ) : (
           <meshStandardMaterial
