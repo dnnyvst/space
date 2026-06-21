@@ -36,7 +36,7 @@ export const Planet: FC<PlanetProps> = ({
   const _axialTilt = THREE.MathUtils.degToRad(axialTilt);
 
   const loadedTextures = useTexture(
-    Object.fromEntries(Object.entries(textures).filter(([, value]) => value))
+    Object.fromEntries(Object.entries(textures).filter(([, value]) => value)),
   ) as Partial<Record<keyof PlanetTextures, THREE.Texture>>;
 
   const { map, normal, clouds, atmosphere, ring, night } = loadedTextures;
@@ -51,7 +51,7 @@ export const Planet: FC<PlanetProps> = ({
       planetRef.current.rotation.y += delta * 0.1 * direction;
     }
     if (cloudsRef.current) {
-      cloudsRef.current.rotation.y += delta * 0.13 * direction;
+      cloudsRef.current.rotation.y += delta * 0.07 * direction;
     }
     if (atmosphereRef.current) {
       atmosphereRef.current.rotation.y += delta * 0.39 * direction;
@@ -111,6 +111,7 @@ export const Planet: FC<PlanetProps> = ({
             transparent
             opacity={0.4}
             depthWrite={false}
+            blending={THREE.NormalBlending}
           />
         </mesh>
       )}
