@@ -1,3 +1,4 @@
+import { PLANET_CONFIG, type PlanetConfig } from "@/config";
 import {
   createContext,
   useContext,
@@ -10,24 +11,24 @@ import {
 interface AppContextValue {
   canvasReady: boolean;
   orbitMode: boolean;
-  selectedPlanetId: string;
+  selectedPlanet: PlanetConfig;
   selectedProperties: Set<string>;
 
   setCanvasReady: Dispatch<SetStateAction<boolean>>;
   setOrbitMode: Dispatch<SetStateAction<boolean>>;
-  setSelectedPlanetId: (id: string) => void;
+  setSelectedPlanet: (planetConfig: PlanetConfig) => void;
   setSelectedProperties: Dispatch<SetStateAction<Set<string>>>;
 }
 
 const INIT: AppContextValue = {
   canvasReady: false,
   orbitMode: false,
-  selectedPlanetId: "earth",
+  selectedPlanet: PLANET_CONFIG["earth"],
   selectedProperties: new Set(["clouds", "atmosphere"]),
 
   setCanvasReady: () => {},
   setOrbitMode: () => {},
-  setSelectedPlanetId: () => {},
+  setSelectedPlanet: () => {},
   setSelectedProperties: () => {},
 };
 
@@ -38,8 +39,8 @@ export const useAppContext = () => useContext(AppContext);
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [canvasReady, setCanvasReady] = useState<boolean>(INIT.canvasReady);
   const [orbitMode, setOrbitMode] = useState<boolean>(INIT.orbitMode);
-  const [selectedPlanetId, setSelectedPlanetId] = useState<string>(
-    INIT.selectedPlanetId,
+  const [selectedPlanet, setSelectedPlanet] = useState<PlanetConfig>(
+    INIT.selectedPlanet,
   );
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
     INIT.selectedProperties,
@@ -50,12 +51,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       value={{
         canvasReady,
         orbitMode,
-        selectedPlanetId,
+        selectedPlanet,
         selectedProperties,
 
         setCanvasReady,
         setOrbitMode,
-        setSelectedPlanetId,
+        setSelectedPlanet,
         setSelectedProperties,
       }}
     >

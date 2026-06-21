@@ -19,7 +19,6 @@ import {
   OrbitCamera,
   UIOverlay,
 } from "@/components";
-import { PLANET_CONFIG } from "@/config";
 import { useAppContext, useIsMobile } from "@/hooks";
 
 export const MainCanvas: FC = () => {
@@ -27,13 +26,13 @@ export const MainCanvas: FC = () => {
     canvasReady,
     setCanvasReady,
     orbitMode,
-    selectedPlanetId,
+    selectedPlanet,
     selectedProperties,
   } = useAppContext();
 
   const isMobile = useIsMobile(640);
 
-  const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
+  const selectedPlanetId = selectedPlanet.id;
 
   const isEarthAtDay =
     selectedPlanetId === "earth" && !selectedProperties.has("night");

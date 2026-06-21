@@ -30,15 +30,13 @@ export const UIOverlay: FC = () => {
   const {
     orbitMode,
     setOrbitMode,
-    selectedPlanetId,
-    setSelectedPlanetId,
+    selectedPlanet,
+    setSelectedPlanet,
     selectedProperties,
     setSelectedProperties,
   } = useAppContext();
 
   const isMobile = useIsMobile(640);
-
-  const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
   const toggleTextures = Object.fromEntries(
     Object.entries(selectedPlanet.textures).filter(
@@ -62,11 +60,11 @@ export const UIOverlay: FC = () => {
           <button
             key={id}
             className={`cursor-pointer transition-all duration-300 ease-out ${
-              id === selectedPlanetId
+              id === selectedPlanet.id
                 ? "underline underline-offset-4 decoration-2 opacity-100"
                 : "opacity-30 hover:opacity-70"
             }`}
-            onClick={() => setSelectedPlanetId(id)}
+            onClick={() => setSelectedPlanet(PLANET_CONFIG[id])}
           >
             {name}
           </button>

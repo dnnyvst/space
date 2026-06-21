@@ -1,6 +1,6 @@
 import type { Planet, PlanetTextures } from "@/types";
 
-interface PlanetConfig {
+export interface PlanetConfig {
   id: string;
   name: Planet;
   retrograde?: boolean;
