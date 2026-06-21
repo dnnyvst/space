@@ -12,19 +12,21 @@ interface PlanetConfigMap {
   [id: string]: PlanetConfig;
 }
 
+const RESOLUTION = "8k";
+
 export const PLANET_CONFIG: PlanetConfigMap = {
   sun: {
     id: "sun",
     name: "sun",
     tilt: 7.25,
-    textures: { map: "/textures/sun/surface.jpg" },
+    textures: { map: `/textures/sun/${RESOLUTION}_surface.jpg` },
   },
   mercury: {
     id: "mercury",
     name: "mercury",
     tilt: 0.034,
     textures: {
-      map: "/textures/mercury/surface.jpg",
+      map: `/textures/mercury/${RESOLUTION}_surface.jpg`,
     },
   },
   venus: {
@@ -33,8 +35,8 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     retrograde: true,
     tilt: 177.4,
     textures: {
-      map: "/textures/venus/surface.jpg",
-      atmosphere: "/textures/venus/atmosphere.jpg",
+      map: `/textures/venus/${RESOLUTION}_surface.jpg`,
+      atmosphere: `/textures/venus/${RESOLUTION}_atmosphere.jpg`,
     },
   },
   earth: {
@@ -42,10 +44,10 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     name: "earth",
     tilt: 23.44,
     textures: {
-      map: "/textures/earth/day.jpg",
-      normal: "/textures/earth/normal.jpg",
-      clouds: "/textures/earth/clouds.jpg",
-      night: "/textures/earth/night.jpg",
+      map: `/textures/earth/${RESOLUTION}_day.jpg`,
+      normal: `/textures/earth/${RESOLUTION}_normal.jpg`,
+      clouds: `/textures/earth/${RESOLUTION}_clouds.jpg`,
+      night: `/textures/earth/${RESOLUTION}_night.jpg`,
     },
   },
   moon: {
@@ -53,7 +55,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     name: "moon",
     tilt: 1.54,
     textures: {
-      map: "/textures/moon/moon.jpg",
+      map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
   },
   mars: {
@@ -61,7 +63,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     name: "mars",
     tilt: 25.19,
     textures: {
-      map: "/textures/mars/surface.jpg",
+      map: `/textures/mars/${RESOLUTION}_surface.jpg`,
     },
   },
   jupiter: {
@@ -69,7 +71,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     name: "jupiter",
     tilt: 3.13,
     textures: {
-      map: "/textures/jupiter/surface.jpg",
+      map: `/textures/jupiter/${RESOLUTION}_surface.jpg`,
     },
   },
   saturn: {
@@ -77,8 +79,8 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     name: "saturn",
     tilt: 26.73,
     textures: {
-      map: "/textures/saturn/surface.jpg",
-      ring: "/textures/saturn/ring.png",
+      map: `/textures/saturn/${RESOLUTION}_surface.jpg`,
+      ring: `/textures/saturn/${RESOLUTION}_ring.png`,
     },
   },
   uranus: {
