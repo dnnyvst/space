@@ -124,7 +124,7 @@ export const Planet: FC<PlanetProps> = ({
             <meshStandardMaterial
               map={atmosphere}
               transparent
-              opacity={0.5}
+              opacity={0.4}
               depthWrite={false}
             />
           </mesh>
