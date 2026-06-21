@@ -18,11 +18,37 @@ import {
   SunLight,
   FlyByCamera,
   HandheldCamera,
+  OrbitCamera,
 } from "@/components";
 import { PLANET_CONFIG } from "@/config";
 
+interface ListItemProps {
+  selected: boolean;
+  onClick: () => void;
+  text: string;
+}
+
+const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
+  <li
+    className={`flex gap-3 opacity-20 hover:opacity-50 cursor-pointer transition-all duration-300 ease-out ${
+      selected && "opacity-75 hover:opacity-75"
+    }`}
+    onClick={onClick}
+  >
+    <div className="flex items-center gap-3 cursor-pointer">
+      <div
+        className={`w-4 h-4 border flex items-center justify-center rounded-sm ${
+          selected ? "bg-white" : ""
+        }`}
+      />
+      <span>{text}</span>
+    </div>
+  </li>
+);
+
 export const MainCanvas: FC = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const [orbitMode, setOrbitMode] = useState<boolean>(false);
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
     new Set(["clouds", "atmosphere"])
@@ -58,46 +84,39 @@ export const MainCanvas: FC = () => {
         </div>
 
         {/* toggles */}
-        {Object.keys(toggleTextures).length > 0 && (
-          <div className="flex bg-black w-min border-1 border-white/20 py-2 px-4 rounded-lg">
-            <ul>
-              {Object.keys(toggleTextures).map((property) => (
-                <li
-                  className={`flex gap-3 opacity-20 hover:opacity-50 cursor-pointer transition-all duration-300 ease-out ${
-                    selectedProperties.has(property) &&
-                    "opacity-75 hover:opacity-75"
-                  }`}
-                  key={property}
-                  onClick={() =>
-                    setSelectedProperties((selectedProperties) => {
-                      if (selectedProperties.has(property)) {
-                        return new Set(
-                          [...selectedProperties].filter((p) => p !== property)
-                        );
-                      }
-                      return new Set([...selectedProperties, property]);
-                    })
-                  }
-                >
-                  <div className="flex items-center gap-3 cursor-pointer">
-                    <div
-                      className={`w-4 h-4 border flex items-center justify-center rounded-sm ${
-                        selectedProperties.has(property) ? "bg-white" : ""
-                      }`}
-                    />
-                    <span>{property}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <div className="flex bg-black w-min whitespace-nowrap border-1 border-white/20 py-2 px-4 rounded-lg">
+          <ul>
+            <ListItem
+              selected={orbitMode === true}
+              onClick={() => setOrbitMode((orbitMode) => !orbitMode)}
+              text="orbit mode"
+            />
+            {Object.keys(toggleTextures).map((property) => (
+              <ListItem
+                key={property}
+                selected={selectedProperties.has(property)}
+                onClick={() =>
+                  setSelectedProperties((selectedProperties) => {
+                    if (selectedProperties.has(property)) {
+                      return new Set(
+                        [...selectedProperties].filter((p) => p !== property)
+                      );
+                    }
+                    return new Set([...selectedProperties, property]);
+                  })
+                }
+                text={property}
+              />
+            ))}
+          </ul>
+        </div>
       </div>
       {/* canvas (full screen) */}
       <Canvas className="w-full h-full" gl={{ alpha: true }} dpr={[1, 2]}>
         <Skybox />
         {/* <FlyByCamera /> */}
         <HandheldCamera />
+        {orbitMode && <OrbitCamera />}
 
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         {selectedPlanetId !== "sun" && <SunLight />}
@@ -109,6 +128,7 @@ export const MainCanvas: FC = () => {
           scale={isMobile ? 0.75 : 1}
           speedMultiplier={selectedPlanetId === "sun" ? 0.2 : 1}
           emissive={selectedPlanetId === "sun"}
+          noRotation={orbitMode}
         />
         {/* postprocessing */}
         <EffectComposer>

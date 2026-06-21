@@ -14,6 +14,7 @@ interface PlanetProps {
   scale?: number;
   speedMultiplier?: number;
   emissive?: boolean;
+  noRotation?: boolean;
 }
 
 export const Planet: FC<PlanetProps> = ({
@@ -24,6 +25,7 @@ export const Planet: FC<PlanetProps> = ({
   scale = 1,
   speedMultiplier = 1,
   emissive = false,
+  noRotation = false,
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const planetRef = useRef<THREE.Mesh>(null);
@@ -40,8 +42,11 @@ export const Planet: FC<PlanetProps> = ({
   const { map, normal, clouds, atmosphere, ring, night } = loadedTextures;
 
   useFrame((_, delta) => {
-    const direction = (retrograde ? -1 : 1) * speedMultiplier;
+    if (noRotation) {
+      return;
+    }
 
+    const direction = (retrograde ? -1 : 1) * speedMultiplier;
     if (planetRef.current) {
       planetRef.current.rotation.y += delta * 0.1 * direction;
     }
