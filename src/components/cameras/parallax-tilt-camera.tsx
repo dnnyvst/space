@@ -2,13 +2,14 @@
 
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
 
 export const ParallaxTiltCamera = ({ enabled }: { enabled: boolean }) => {
   const { camera } = useThree();
 
-  const target = useRef({ x: 0, y: 0 });
-  const current = useRef({ x: 0, y: 0 });
+  const target = useRef({ yaw: 0, pitch: 0 });
+  const current = useRef({ yaw: 0, pitch: 0 });
+
+  const radius = 5;
 
   useEffect(() => {
     if (!enabled) return;
@@ -16,14 +17,12 @@ export const ParallaxTiltCamera = ({ enabled }: { enabled: boolean }) => {
     const handleOrientation = (event: DeviceOrientationEvent) => {
       if (event.gamma == null || event.beta == null) return;
 
-      // gamma = left/right tilt (-90 to 90)
-      // beta = front/back tilt (-180 to 180)
+      // 📱 normalize input
+      const yaw = event.gamma / 45; // left/right
+      const pitch = event.beta / 45; // up/down
 
-      const x = THREE.MathUtils.clamp(event.gamma / 45, -1, 1);
-      const y = THREE.MathUtils.clamp(event.beta / 45, -1, 1);
-
-      target.current.x = x;
-      target.current.y = y;
+      target.current.yaw = yaw;
+      target.current.pitch = pitch;
     };
 
     window.addEventListener("deviceorientation", handleOrientation);
@@ -36,23 +35,24 @@ export const ParallaxTiltCamera = ({ enabled }: { enabled: boolean }) => {
   useFrame(() => {
     if (!enabled) return;
 
-    // smooth it (VERY important for “cinematic” feel)
-    current.current.x = THREE.MathUtils.lerp(
-      current.current.x,
-      target.current.x,
-      0.05
-    );
+    // 🧠 smooth damping (critical for cinematic feel)
+    current.current.yaw += (target.current.yaw - current.current.yaw) * 0.08;
 
-    current.current.y = THREE.MathUtils.lerp(
-      current.current.y,
-      target.current.y,
-      0.05
-    );
+    current.current.pitch +=
+      (target.current.pitch - current.current.pitch) * 0.08;
 
-    // subtle camera offset (NOT full rotation)
-    camera.position.x += current.current.x * 0.4;
-    camera.position.y += current.current.y * 0.3;
+    // 🔥 subtle amplification for readability
+    const yaw = current.current.yaw * 1.3;
+    const pitch = current.current.pitch * 1.1;
 
+    // 🪐 horizontal orbit (around planet)
+    const x = Math.sin(yaw) * radius;
+    const z = Math.cos(yaw) * radius;
+
+    // 🌍 upgraded vertical mapping (non-linear “planet wrap” feel)
+    const y = Math.sin(pitch * Math.PI * 0.5) * 2.2;
+
+    camera.position.set(x, y, z);
     camera.lookAt(0, 0, 0);
   });
 
