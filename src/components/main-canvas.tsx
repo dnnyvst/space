@@ -11,7 +11,6 @@ import {
   Bloom,
   Vignette,
 } from "@react-three/postprocessing";
-import { useMediaQuery } from "usehooks-ts";
 import {
   Skybox,
   Planet,
@@ -21,6 +20,7 @@ import {
   OrbitCamera,
 } from "@/components";
 import { PLANET_CONFIG } from "@/config";
+import { useIsMobile } from "@/hooks";
 
 interface ListItemProps {
   selected: boolean;
@@ -47,7 +47,7 @@ const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
 );
 
 export const MainCanvas: FC = () => {
-  const isMobile = useMediaQuery("(max-width: 640px)");
+  const isMobile = useIsMobile(640);
   const [orbitMode, setOrbitMode] = useState<boolean>(false);
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
