@@ -58,7 +58,7 @@ export const Planet: FC<PlanetProps> = ({
 
   return (
     <group ref={groupRef} rotation={[0, 0, _axialTilt]} scale={scale}>
-      {/* Planet */}
+      {/* planet */}
       <mesh ref={planetRef}>
         <sphereGeometry args={[2, 64, 64]} />
         {emissive ? (
@@ -97,7 +97,7 @@ export const Planet: FC<PlanetProps> = ({
         )}
       </mesh>
 
-      {/* Clouds */}
+      {/* clouds */}
       {clouds && textureOverrides.has("clouds") && (
         <mesh ref={cloudsRef}>
           <sphereGeometry args={[2.03, 64, 64]} />
@@ -110,7 +110,7 @@ export const Planet: FC<PlanetProps> = ({
         </mesh>
       )}
 
-      {/* Atmosphere */}
+      {/* atmosphere */}
       {atmosphere && textureOverrides.has("atmosphere") && (
         <>
           <mesh ref={atmosphereRef}>
@@ -122,7 +122,7 @@ export const Planet: FC<PlanetProps> = ({
               depthWrite={false}
             />
           </mesh>
-          {/* Glow shell */}
+          {/* glow shell */}
           {/* <mesh>
             <sphereGeometry args={[2.12, 64, 64]} />
             <meshBasicMaterial
@@ -135,7 +135,7 @@ export const Planet: FC<PlanetProps> = ({
           </mesh> */}
         </>
       )}
-      {/* Ring */}
+      {/* ring */}
       {ring && (
         <mesh ref={ringRef} rotation={[4.9, 0, 0]}>
           <ringGeometry args={[2.3, 2.8, 128]} />

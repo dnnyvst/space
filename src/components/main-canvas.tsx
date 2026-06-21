@@ -25,7 +25,7 @@ export const MainCanvas: FC = () => {
     <div className="fixed inset-0 overflow-hidden font-mono bg-[url(/stars_milky_way.jpg)]">
       {/* UI overlay*/}
       <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min">
-        {/* Planet select */}
+        {/* planet select */}
         <div className="flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-black border border-white/30 py-2 px-4 rounded-lg">
           {Object.values(PLANET_CONFIG).map(({ id, name }) => (
             <button
@@ -42,7 +42,7 @@ export const MainCanvas: FC = () => {
           ))}
         </div>
 
-        {/* Toggles */}
+        {/* toggles */}
         {Object.keys(toggleTextures).length > 0 && (
           <div className="flex bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg opacity-75">
             <ul>
@@ -78,7 +78,7 @@ export const MainCanvas: FC = () => {
           </div>
         )}
       </div>
-      {/* CANVAS (full screen) */}
+      {/* canvas (full screen) */}
       <Canvas
         className="w-full h-full"
         gl={{ alpha: true }}
@@ -96,8 +96,10 @@ export const MainCanvas: FC = () => {
           speedMultiplier={selectedPlanetId === "sun" ? 0.2 : 1}
           emissive={selectedPlanetId === "sun"}
         />
+
+        {/* postprocessing */}
       </Canvas>
-      {/* Saturn overlay */}
+      {/* saturn construction overlay */}
       {selectedPlanetId === "saturn" && (
         <div className="absolute inset-0 flex justify-center items-center text-black">
           under construction.
