@@ -94,7 +94,7 @@ export const MainCanvas: FC = () => {
         )}
       </div>
       {/* canvas (full screen) */}
-      <Canvas className="w-full h-full" gl={{ alpha: true }}>
+      <Canvas className="w-full h-full" gl={{ alpha: true }} dpr={[1, 2]}>
         <Skybox />
         {/* <FlyByCamera /> */}
         <HandheldCamera />
