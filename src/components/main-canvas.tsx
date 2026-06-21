@@ -11,7 +11,7 @@ import {
   Vignette,
 } from "@react-three/postprocessing";
 import { useMediaQuery } from "usehooks-ts";
-import { Planet, SunLight, FlyByCamera } from "@/components";
+import { Planet, SunLight, FlyByCamera, HandheldCamera } from "@/components";
 import { PLANET_CONFIG } from "@/config";
 
 export const MainCanvas: FC = () => {
@@ -93,6 +93,7 @@ export const MainCanvas: FC = () => {
         // camera={{ position: [0, 2.1, 0.75] }}
       >
         {/* <FlyByCamera /> */}
+        {/* <HandheldCamera /> */}
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         {selectedPlanetId !== "sun" && <SunLight />}
         <Planet
