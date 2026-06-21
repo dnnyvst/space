@@ -59,13 +59,13 @@ export const MainCanvas: FC = () => {
 
         {/* toggles */}
         {Object.keys(toggleTextures).length > 0 && (
-          <div className="flex bg-black w-min border-1 border-white/30 py-2 px-4 rounded-lg opacity-75">
+          <div className="flex bg-black w-min border-1 border-white/20 py-2 px-4 rounded-lg">
             <ul>
               {Object.keys(toggleTextures).map((property) => (
                 <li
-                  className={`flex gap-3 opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out ${
+                  className={`flex gap-3 opacity-20 hover:opacity-50 cursor-pointer transition-all duration-300 ease-out ${
                     selectedProperties.has(property) &&
-                    "opacity-100 hover:opacity-100"
+                    "opacity-75 hover:opacity-75"
                   }`}
                   key={property}
                   onClick={() =>
