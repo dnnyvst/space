@@ -46,8 +46,8 @@ interface ListItemProps {
 
 const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
   <li
-    className={`flex gap-3 opacity-20 hover:opacity-50 cursor-pointer transition-all duration-300 ease-out ${
-      selected && "opacity-75 hover:opacity-75"
+    className={`flex gap-3 opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out ${
+      selected && "opacity-100 hover:opacity-100"
     }`}
     onClick={onClick}
   >
@@ -93,7 +93,7 @@ export const MainCanvas: FC = () => {
         <div
           className={`${
             orbitMode && "invisible opacity-0"
-          } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-card border border-text/30 py-2 px-4 rounded-lg`}
+          } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-transparent border border-text/30 py-2 px-4 rounded-lg`}
         >
           {Object.values(PLANET_CONFIG).map(({ id, name }) => (
             <button
@@ -111,7 +111,7 @@ export const MainCanvas: FC = () => {
         </div>
 
         {/* toggles */}
-        <div className="flex bg-card whitespace-nowrap border border-text/20 py-2 px-4 rounded-lg z-10 w-min">
+        <div className="flex bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 w-min">
           <ul>
             {/* {isMobile && (
               <ListItem
