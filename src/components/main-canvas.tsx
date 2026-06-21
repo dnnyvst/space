@@ -19,6 +19,7 @@ import {
   HandheldCamera,
   OrbitCamera,
   ParallaxTiltCamera,
+  UIOverlay,
 } from "@/components";
 import { PLANET_CONFIG } from "@/config";
 import { useIsMobile } from "@/hooks";
@@ -75,81 +76,17 @@ export const MainCanvas: FC = () => {
 
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
-  const toggleTextures = Object.fromEntries(
-    Object.entries(selectedPlanet.textures).filter(
-      ([key, value]) => !["map", "normal", "ring"].includes(key) && value,
-    ),
-  );
-
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
-      {/* UI overlay*/}
-      <div
-        className={`h-screen ${
-          isMobile && "justify-between pb-12"
-        } absolute py-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min`}
-      >
-        {/* planet select */}
-        <div
-          className={`${
-            orbitMode && "invisible opacity-0"
-          } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-transparent border border-text/30 py-2 px-4 rounded-lg`}
-        >
-          {Object.values(PLANET_CONFIG).map(({ id, name }) => (
-            <button
-              key={id}
-              className={`cursor-pointer transition-all duration-300 ease-out ${
-                id === selectedPlanetId
-                  ? "underline underline-offset-4 decoration-2 opacity-100"
-                  : "opacity-30 hover:opacity-70"
-              }`}
-              onClick={() => setSelectedPlanetId(id)}
-            >
-              {name}
-            </button>
-          ))}
-        </div>
-
-        {/* toggles */}
-        <div className="flex bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 w-min">
-          <ul>
-            {/* {isMobile && (
-              <ListItem
-                selected={isMobile && gyroEnabled}
-                onClick={async () => {
-                  if (gyroEnabled) {
-                    setGyroEnabled(false);
-                    return;
-                  }
-                  const ok = await requestGyroPermission();
-                  setGyroEnabled(ok);
-                }}
-                text="enable tilt"
-              />
-            )} */}
-            <ListItem
-              selected={orbitMode === true}
-              onClick={() => setOrbitMode((v) => !v)}
-              text="orbit mode"
-            />
-            {Object.keys(toggleTextures).map((property) => (
-              <ListItem
-                key={property}
-                selected={selectedProperties.has(property)}
-                onClick={() =>
-                  setSelectedProperties((prev) => {
-                    if (prev.has(property)) {
-                      return new Set([...prev].filter((p) => p !== property));
-                    }
-                    return new Set([...prev, property]);
-                  })
-                }
-                text={property}
-              />
-            ))}
-          </ul>
-        </div>
-      </div>
+      <UIOverlay
+        isMobile={isMobile}
+        orbitMode={orbitMode}
+        setOrbitMode={setOrbitMode}
+        selectedPlanetId={selectedPlanetId}
+        setSelectedPlanetId={setSelectedPlanetId}
+        selectedProperties={selectedProperties}
+        setSelectedProperties={setSelectedProperties}
+      />
       {/* loading */}
       {!ready && (
         <div className="absolute inset-0 flex items-center justify-center animate-pulse">
