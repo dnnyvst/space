@@ -65,19 +65,20 @@ const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
 export const MainCanvas: FC = () => {
   const isMobile = useIsMobile(640);
   // const [gyroEnabled, setGyroEnabled] = useState(false);
+  const [ready, setReady] = useState<boolean>(false);
 
   const [orbitMode, setOrbitMode] = useState<boolean>(false);
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
-    new Set(["clouds", "atmosphere"])
+    new Set(["clouds", "atmosphere"]),
   );
 
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
   const toggleTextures = Object.fromEntries(
     Object.entries(selectedPlanet.textures).filter(
-      ([key, value]) => !["map", "normal", "ring"].includes(key) && value
-    )
+      ([key, value]) => !["map", "normal", "ring"].includes(key) && value,
+    ),
   );
 
   return (
@@ -149,8 +150,19 @@ export const MainCanvas: FC = () => {
           </ul>
         </div>
       </div>
+      {/* loading */}
+      {!ready && (
+        <div className="absolute inset-0 flex items-center justify-center animate-pulse">
+          loading...
+        </div>
+      )}
       {/* canvas (full screen) */}
-      <Canvas className="w-full h-full" gl={{ alpha: true }} dpr={[1, 2]}>
+      <Canvas
+        className="w-full h-full"
+        gl={{ alpha: true }}
+        dpr={[1, 2]}
+        onCreated={() => setReady(true)}
+      >
         <Skybox />
         {/* <FlyByCamera /> */}
         <HandheldCamera />
@@ -187,6 +199,7 @@ export const MainCanvas: FC = () => {
           <Vignette eskil={false} offset={0.1} darkness={0.7} />
         </EffectComposer>
       </Canvas>
+
       {/* saturn construction overlay */}
       {selectedPlanetId === "saturn" && (
         <div className="absolute inset-0 flex justify-center items-center text-black">
