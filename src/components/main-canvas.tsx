@@ -116,7 +116,7 @@ export const MainCanvas: FC = () => {
           /> */}
           <Bloom
             intensity={1}
-            luminanceThreshold={0.1}
+            luminanceThreshold={0.05}
             luminanceSmoothing={0.6}
           />
           <Vignette eskil={false} offset={0.1} darkness={0.7} />
