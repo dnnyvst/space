@@ -4,11 +4,17 @@ interface SunLightProps {
   noColor?: boolean;
 }
 
-export const SunLight: FC<SunLightProps> = () => (
+/*
+  some color ideas
+
+  #fff1d6
+*/
+
+export const SunLight: FC<SunLightProps> = ({ noColor = true }) => (
   <directionalLight
     position={[5, 5, 5]}
     intensity={2}
     castShadow
-    // color={noColor ? "white" : "#fff1d6"}
+    color={noColor ? "white" : "#fff1d6"}
   />
 );

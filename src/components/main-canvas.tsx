@@ -63,7 +63,9 @@ export const MainCanvas: FC = () => {
       >
         <Skybox />
         <ambientLight intensity={0.06} />
-        {selectedPlanetId !== "sun" && <SunLight />}
+        {selectedPlanetId !== "sun" && (
+          <SunLight noColor={selectedPlanetId !== "earth"} />
+        )}
 
         <HandheldCamera />
         {orbitMode && <OrbitCamera />}
