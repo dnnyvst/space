@@ -1,7 +1,7 @@
 import { type FC } from "react";
 
 interface SunLightProps {
-  noColor?: boolean;
+  natural?: boolean;
 }
 
 /*
@@ -10,11 +10,11 @@ interface SunLightProps {
   #fff1d6
 */
 
-export const SunLight: FC<SunLightProps> = ({ noColor = true }) => (
+export const SunLight: FC<SunLightProps> = ({ natural = false }) => (
   <directionalLight
     position={[5, 5, 5]}
     intensity={2}
     castShadow
-    color={noColor ? "white" : "#fff1d6"}
+    color={natural ? "#fff1d6" : "white"}
   />
 );

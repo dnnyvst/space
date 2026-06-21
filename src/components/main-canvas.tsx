@@ -34,6 +34,11 @@ export const MainCanvas: FC = () => {
 
   const selectedPlanet = PLANET_CONFIG[selectedPlanetId];
 
+  const isEarthAtDay =
+    selectedPlanetId === "earth" && !selectedProperties.has("night");
+  const isEarthAtNight =
+    selectedPlanetId === "earth" && selectedProperties.has("night");
+
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
       {/* loading */}
@@ -63,9 +68,7 @@ export const MainCanvas: FC = () => {
       >
         <Skybox />
         <ambientLight intensity={0.06} />
-        {selectedPlanetId !== "sun" && (
-          <SunLight noColor={selectedPlanetId !== "earth"} />
-        )}
+        {selectedPlanetId !== "sun" && <SunLight natural={isEarthAtDay} />}
 
         <HandheldCamera />
         {orbitMode && <OrbitCamera />}
@@ -91,8 +94,8 @@ export const MainCanvas: FC = () => {
             height={480}
           /> */}
           <Bloom
-            intensity={1}
-            luminanceThreshold={0.2}
+            intensity={isEarthAtNight ? 10 : 1}
+            luminanceThreshold={isEarthAtNight ? 0 : 0.2}
             luminanceSmoothing={0.6}
           />
           <Vignette eskil={false} offset={0.1} darkness={0.7} />

@@ -78,12 +78,12 @@ export const Planet: FC<PlanetProps> = ({
           <>
             <meshBasicMaterial
               depthWrite={false}
-              map={textureOverrides.has("night") ? night : map}
+              map={night && textureOverrides.has("night") ? night : map}
             />
           </>
         ) : (
           <meshStandardMaterial
-            map={textureOverrides.has("night") ? night : map}
+            map={night && textureOverrides.has("night") ? night : map}
             normalMap={textures.normal ? normal : null}
             normalScale={normal ? new THREE.Vector2(8, -8) : undefined}
           />
