@@ -18,9 +18,25 @@ import {
   FlyByCamera,
   HandheldCamera,
   OrbitCamera,
+  ParallaxTiltCamera,
 } from "@/components";
 import { PLANET_CONFIG } from "@/config";
 import { useIsMobile } from "@/hooks";
+
+export const requestGyroPermission = async () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  if (typeof DeviceOrientationEvent?.requestPermission === "function") {
+    // iOS 13+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const response = await DeviceOrientationEvent.requestPermission();
+
+    return response === "granted";
+  }
+
+  return true; // Android / desktop
+};
 
 interface ListItemProps {
   selected: boolean;
@@ -48,6 +64,8 @@ const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
 
 export const MainCanvas: FC = () => {
   const isMobile = useIsMobile(640);
+  const [gyroEnabled, setGyroEnabled] = useState(false);
+
   const [orbitMode, setOrbitMode] = useState<boolean>(false);
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
@@ -94,6 +112,20 @@ export const MainCanvas: FC = () => {
         {/* toggles */}
         <div className="flex bg-black whitespace-nowrap border border-white/20 py-2 px-4 rounded-lg z-10 w-min">
           <ul>
+            {isMobile && (
+              <ListItem
+                selected={isMobile && gyroEnabled}
+                onClick={async () => {
+                  if (gyroEnabled) {
+                    setGyroEnabled(false);
+                    return;
+                  }
+                  const ok = await requestGyroPermission();
+                  setGyroEnabled(ok);
+                }}
+                text="enable tilt"
+              />
+            )}
             <ListItem
               selected={orbitMode === true}
               onClick={() => setOrbitMode((v) => !v)}
@@ -123,6 +155,7 @@ export const MainCanvas: FC = () => {
         {/* <FlyByCamera /> */}
         <HandheldCamera />
         {orbitMode && <OrbitCamera />}
+        <ParallaxTiltCamera enabled={isMobile && gyroEnabled} />
 
         <ambientLight intensity={selectedPlanetId === "earth" ? 0.2 : 0.1} />
         {selectedPlanetId !== "sun" && <SunLight />}
