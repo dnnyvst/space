@@ -54,7 +54,7 @@ const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
     <div className="flex items-center gap-3 cursor-pointer">
       <div
         className={`w-4 h-4 border flex items-center justify-center rounded-sm ${
-          selected ? "bg-white" : ""
+          selected && "bg-text"
         }`}
       />
       <span>{text}</span>
@@ -82,7 +82,7 @@ export const MainCanvas: FC = () => {
   );
 
   return (
-    <div className="fixed inset-0 overflow-hidden font-mono">
+    <div className="fixed inset-0 overflow-hidden font-mono text-text">
       {/* UI overlay*/}
       <div
         className={`h-screen ${
@@ -93,7 +93,7 @@ export const MainCanvas: FC = () => {
         <div
           className={`${
             orbitMode && "invisible opacity-0"
-          } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-black border border-white/30 py-2 px-4 rounded-lg`}
+          } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-card border border-text/30 py-2 px-4 rounded-lg`}
         >
           {Object.values(PLANET_CONFIG).map(({ id, name }) => (
             <button
@@ -111,7 +111,7 @@ export const MainCanvas: FC = () => {
         </div>
 
         {/* toggles */}
-        <div className="flex bg-black whitespace-nowrap border border-white/20 py-2 px-4 rounded-lg z-10 w-min">
+        <div className="flex bg-card whitespace-nowrap border border-text/20 py-2 px-4 rounded-lg z-10 w-min">
           <ul>
             {/* {isMobile && (
               <ListItem

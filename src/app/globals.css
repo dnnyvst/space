@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* custom */
+  --card: rgba(20, 22, 28, 0.72);
+  --text: #e6e8ee;
 }
 
 @theme inline {
@@ -10,6 +14,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* custom */
+  --color-card: var(--card);
+  --color-text: var(--text);
 }
 
 @media (prefers-color-scheme: dark) {
