@@ -5,6 +5,9 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import type { PlanetTextures } from "@/types";
+import { atmosphereMaterial } from "@/components";
+
+const EMPTY_SHADER = { uniforms: {}, vertexShader: {}, fragmentShader: {} };
 
 interface PlanetProps {
   axialTilt: number;
@@ -41,6 +44,11 @@ export const Planet: FC<PlanetProps> = ({
 
   const { map, normal, clouds, atmosphere, ring, night } = loadedTextures;
 
+  let atmosphereShader = EMPTY_SHADER;
+  if (atmosphere) {
+    atmosphereShader = atmosphereMaterial(atmosphere, "#e8c082");
+  }
+
   useFrame((_, delta) => {
     if (noRotation) {
       return;
@@ -72,26 +80,6 @@ export const Planet: FC<PlanetProps> = ({
               depthWrite={false}
               map={textureOverrides.has("night") ? night : map}
             />
-            {/* <mesh>
-              <sphereGeometry args={[2.15, 64, 64]} />
-              <meshBasicMaterial
-                color="#ffb347"
-                transparent
-                opacity={0.06}
-                blending={THREE.AdditiveBlending}
-                depthWrite={false}
-              />
-            </mesh>
-            <mesh>
-              <sphereGeometry args={[2.3, 64, 64]} />
-              <meshBasicMaterial
-                color="#ff9a3d"
-                transparent
-                opacity={0.04}
-                blending={THREE.AdditiveBlending}
-                depthWrite={false}
-              />
-            </mesh> */}
           </>
         ) : (
           <meshStandardMaterial
@@ -101,7 +89,6 @@ export const Planet: FC<PlanetProps> = ({
           />
         )}
       </mesh>
-
       {/* clouds */}
       {clouds && textureOverrides.has("clouds") && (
         <mesh ref={cloudsRef}>
@@ -115,18 +102,27 @@ export const Planet: FC<PlanetProps> = ({
           />
         </mesh>
       )}
-
       {/* atmosphere */}
       {atmosphere && textureOverrides.has("atmosphere") && (
         <>
-          <mesh ref={atmosphereRef}>
+          <mesh ref={atmosphereRef} renderOrder={10}>
             <sphereGeometry args={[2.08, 64, 64]} />
-            <meshStandardMaterial
+            <shaderMaterial
+              uniforms={atmosphereShader.uniforms}
+              vertexShader={atmosphereShader.vertexShader}
+              fragmentShader={atmosphereShader.fragmentShader}
+              premultipliedAlpha
+              transparent
+              blending={THREE.AdditiveBlending}
+              depthWrite={false}
+              toneMapped={false}
+            />
+            {/* <meshStandardMaterial
               map={atmosphere}
               transparent
               opacity={0.4}
               depthWrite={false}
-            />
+            /> */}
           </mesh>
           {/* glow shell */}
           {/* <mesh>
