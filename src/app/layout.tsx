@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "planets",
+  title: "space",
   description:
     "learning and testing things with three.js and react-three-fiber",
 };
