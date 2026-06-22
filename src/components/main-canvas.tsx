@@ -51,10 +51,15 @@ export const MainCanvas: FC = () => {
       {/* canvas (full screen) */}
       <Canvas
         className="w-full h-full"
-        gl={{ alpha: true }}
+        gl={{
+          alpha: true,
+        }}
         dpr={[1, 2]}
-        onCreated={() => setCanvasReady(true)}
-        shadows="soft"
+        onCreated={({ gl }) => {
+          gl.shadowMap.enabled = true;
+          gl.shadowMap.type = THREE.VSMShadowMap;
+          setCanvasReady(true);
+        }}
       >
         <SceneTimeDriver />
         <Skybox />

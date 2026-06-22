@@ -17,6 +17,9 @@ interface AppContextValue {
   setOrbitMode: Dispatch<SetStateAction<boolean>>;
   setSelectedCelestialBodyId: (id: string) => void;
   setSelectedProperties: Dispatch<SetStateAction<Set<string>>>;
+
+  cameraZoom: number;
+  setCameraZoom: (zoom: number) => void;
 }
 
 const INIT: AppContextValue = {
@@ -29,6 +32,9 @@ const INIT: AppContextValue = {
   setOrbitMode: () => {},
   setSelectedCelestialBodyId: () => {},
   setSelectedProperties: () => {},
+
+  cameraZoom: 1,
+  setCameraZoom: () => {},
 };
 
 const AppContext = createContext(INIT);
@@ -44,6 +50,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     INIT.selectedProperties,
   );
 
+  const [cameraZoom, setCameraZoom] = useState<number>(INIT.cameraZoom);
+
   return (
     <AppContext.Provider
       value={{
@@ -56,6 +64,9 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setOrbitMode,
         setSelectedCelestialBodyId,
         setSelectedProperties,
+
+        cameraZoom,
+        setCameraZoom,
       }}
     >
       {children}

@@ -34,6 +34,9 @@ export const UIOverlay: FC = () => {
     setSelectedCelestialBodyId,
     selectedProperties,
     setSelectedProperties,
+
+    cameraZoom,
+    setCameraZoom,
   } = useAppContext();
 
   const isMobile = useIsMobile(640);
@@ -74,6 +77,23 @@ export const UIOverlay: FC = () => {
       </div>
       {/* toggles */}
       <div className="flex bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 w-min">
+        <input
+          type="range"
+          min={1}
+          max={22}
+          className="vertical"
+          value={cameraZoom}
+          onChange={(e) => setCameraZoom(parseInt(e.target.value, 10))}
+        />
+
+        <style jsx>{`
+          .vertical {
+            -webkit-appearance: slider-vertical;
+            writing-mode: bt-lr;
+            height: 160px;
+            width: 16px;
+          }
+        `}</style>
         <ul>
           {/* {isMobile && (
                 <ListItem

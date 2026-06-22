@@ -2,6 +2,7 @@ import { useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { sceneTime } from "@/utils";
+import { useAppContext } from "@/hooks";
 
 const smoothstep = (edge0: number, edge1: number, x: number) => {
   const t = Math.min(Math.max((x - edge0) / (edge1 - edge0), 0), 1);
@@ -16,6 +17,8 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
   enabled = false,
 }) => {
   const { camera } = useThree();
+
+  const { cameraZoom } = useAppContext();
 
   const _position = useRef(new THREE.Vector3());
 
@@ -42,8 +45,30 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
     // Always-on micro motion (very subtle)
     const micro = Math.sin(time * 2.2) * 0.0018 + Math.sin(time * 3.7) * 0.0012;
 
+    const xInterpolatedZoom = THREE.MathUtils.lerp(
+      position.x,
+      driftX + micro + cameraZoom * 0.1,
+      0.1,
+    );
+
+    const yInterpolatedZoom = THREE.MathUtils.lerp(
+      position.y,
+      0.06 + driftY + micro * 0.5 - cameraZoom * 0.1,
+      0.1,
+    );
+
+    const zInterpolatedZoom = THREE.MathUtils.lerp(
+      position.z,
+      5 + driftZ - cameraZoom * 0.25,
+      0.1,
+    );
+
     // Build target position
-    position.set(driftX + micro, 0.06 + driftY + micro * 0.5, 5 + driftZ);
+    position.set(
+      cameraZoom > 1 ? xInterpolatedZoom : driftX + micro,
+      cameraZoom > 1 ? yInterpolatedZoom : 0.06 + driftY + micro * 0.5,
+      cameraZoom > 1 ? zInterpolatedZoom : 5 + driftZ,
+    );
 
     // Apply
     camera.position.copy(position);
