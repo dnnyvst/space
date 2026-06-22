@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import { CameraZoomSlider } from "@/components";
 import { CELESTIAL_BODY_CONFIG } from "@/config";
 import { useAppContext, useIsMobile } from "@/hooks";
 
@@ -34,9 +35,6 @@ export const UIOverlay: FC = () => {
     setSelectedCelestialBodyId,
     selectedProperties,
     setSelectedProperties,
-
-    cameraZoom,
-    setCameraZoom,
   } = useAppContext();
 
   const isMobile = useIsMobile(640);
@@ -76,24 +74,7 @@ export const UIOverlay: FC = () => {
         ))}
       </div>
       {/* toggles */}
-      <div className="flex bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 w-min">
-        <input
-          type="range"
-          min={1}
-          max={22}
-          className="vertical"
-          value={cameraZoom}
-          onChange={(e) => setCameraZoom(parseInt(e.target.value, 10))}
-        />
-
-        <style jsx>{`
-          .vertical {
-            -webkit-appearance: slider-vertical;
-            writing-mode: bt-lr;
-            height: 160px;
-            width: 16px;
-          }
-        `}</style>
+      <div className="gap-4 flex flex-col bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 w-min">
         <ul>
           {/* {isMobile && (
                 <ListItem
@@ -130,6 +111,11 @@ export const UIOverlay: FC = () => {
             />
           ))}
         </ul>
+        {/* zoom slider */}
+        <span className={`flex flex-col ${orbitMode && "invisible opacity-0"}`}>
+          <span className="text-center">camera</span>
+          <CameraZoomSlider />
+        </span>
       </div>
     </div>
   );
