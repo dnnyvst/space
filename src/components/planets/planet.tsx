@@ -124,17 +124,6 @@ export const Planet: FC<PlanetProps> = ({
               depthWrite={false}
             /> */}
           </mesh>
-          {/* glow shell */}
-          {/* <mesh>
-            <sphereGeometry args={[2.12, 64, 64]} />
-            <meshBasicMaterial
-              color="#f6d2a2"
-              transparent
-              opacity={0.12}
-              blending={THREE.AdditiveBlending}
-              depthWrite={false}
-            />
-          </mesh> */}
         </>
       )}
       {/* ring */}
