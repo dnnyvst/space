@@ -17,6 +17,7 @@ import {
   HandheldCamera,
   OrbitCamera,
   UIOverlay,
+  SceneTimeDriver,
 } from "@/components";
 import { useAppContext, useIsMobile } from "@/hooks";
 import { PLANET_CONFIG } from "@/config";
@@ -58,6 +59,7 @@ export const MainCanvas: FC = () => {
         dpr={[1, 2]}
         onCreated={() => setCanvasReady(true)}
       >
+        <SceneTimeDriver />
         <Skybox />
         <ambientLight intensity={0.06} />
         {selectedPlanetId !== "sun" && <SunLight natural={isEarthAtDay} />}

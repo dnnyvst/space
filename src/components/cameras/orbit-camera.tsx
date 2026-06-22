@@ -1,6 +1,7 @@
 import { useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
+import { sceneTime } from "@/components";
 
 // Orbit settings
 const RADIUS = 5;
@@ -19,14 +20,12 @@ interface OrbitCameraProps {
 export const OrbitCamera: FC<OrbitCameraProps> = ({ enabled = false }) => {
   const { camera } = useThree();
 
-  const _time = useRef(0);
   const _orbitPosition = useRef(new THREE.Vector3());
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (!enabled) return;
+    const time = sceneTime.get();
 
-    _time.current += delta;
-    const time = _time.current;
     const orbitPosition = _orbitPosition.current;
 
     // Start at a point on the Z axis

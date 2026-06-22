@@ -1,6 +1,7 @@
 import { useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
+import { sceneTime } from "@/components";
 
 const smoothstep = (edge0: number, edge1: number, x: number) => {
   const t = Math.min(Math.max((x - edge0) / (edge1 - edge0), 0), 1);
@@ -16,14 +17,12 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
 }) => {
   const { camera } = useThree();
 
-  const _time = useRef(0);
   const _position = useRef(new THREE.Vector3());
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (!enabled) return;
 
-    _time.current += delta;
-    const time = _time.current;
+    const time = sceneTime.get();
     const position = _position.current;
 
     // Breathing cycle

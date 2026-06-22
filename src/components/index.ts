@@ -6,3 +6,4 @@ export * from "./cameras";
 export * from "./skybox";
 export * from "./shaders";
 export * from "./ui";
+export * from "./utils";
