@@ -1,5 +1,6 @@
 import * as THREE from "three";
 
+// old color #8fd3ff
 export const atmosphereMaterial = (
   atmosphereTexture: THREE.Texture,
   color: string,
@@ -7,7 +8,7 @@ export const atmosphereMaterial = (
   uniforms: {
     uTexture: { value: atmosphereTexture },
     uOpacity: { value: 0.3 },
-    uColor: { value: new THREE.Color(color ?? "#8fd3ff") },
+    uColor: { value: new THREE.Color(color ?? "#e8c082") },
   },
 
   vertexShader: `

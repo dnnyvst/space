@@ -14,6 +14,7 @@ interface CelestialBodyProps {
   retrograde?: boolean;
   textures: CelestialBodyTextures;
   textureOverrides?: Set<string>;
+  atmosphereColor?: string;
   scale?: number;
   position?: THREE.Vector3Tuple;
   speedMultiplier?: number;
@@ -26,6 +27,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   retrograde = false,
   textures,
   textureOverrides = new Set(),
+  atmosphereColor = "#e8c082",
   scale = 1,
   speedMultiplier = 1,
   emissive = false,
@@ -48,7 +50,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
 
   let atmosphereShader = EMPTY_SHADER;
   if (atmosphere) {
-    atmosphereShader = atmosphereMaterial(atmosphere, "#e8c082");
+    atmosphereShader = atmosphereMaterial(atmosphere, atmosphereColor);
   }
 
   useFrame((_, delta) => {
