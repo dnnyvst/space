@@ -50,7 +50,7 @@ export const UIOverlay: FC = () => {
         isMobile && "justify-between pb-12"
       } absolute py-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min`}
     >
-      {/* planet select */}
+      {/* celestial body select */}
       <div
         className={`${
           orbitMode && "invisible opacity-0"
