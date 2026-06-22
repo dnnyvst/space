@@ -2,7 +2,6 @@
 
 import { type FC } from "react";
 import { Canvas } from "@react-three/fiber";
-
 import {
   EffectComposer,
   // Noise,
@@ -20,6 +19,7 @@ import {
   UIOverlay,
 } from "@/components";
 import { useAppContext, useIsMobile } from "@/hooks";
+import { PLANET_CONFIG } from "@/config";
 
 export const MainCanvas: FC = () => {
   const {
@@ -38,6 +38,8 @@ export const MainCanvas: FC = () => {
     selectedPlanetId === "earth" && !selectedProperties.has("night");
   const isEarthAtNight =
     selectedPlanetId === "earth" && selectedProperties.has("night");
+
+  const earthsMoon = PLANET_CONFIG["moon"];
 
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
@@ -73,6 +75,17 @@ export const MainCanvas: FC = () => {
           emissive={selectedPlanetId === "sun"}
           noRotation={orbitMode}
         />
+        {/* moon test*/}
+        {/* <Planet
+          axialTilt={earthsMoon.tilt}
+          retrograde={earthsMoon.retrograde}
+          textures={earthsMoon.textures}
+          textureOverrides={selectedProperties}
+          scale={0.27}
+          noRotation={orbitMode}
+          position={[4, 2, -2]}
+        /> */}
+
         {/* postprocessing */}
         <EffectComposer>
           {/* <Noise opacity={0.08} /> */}

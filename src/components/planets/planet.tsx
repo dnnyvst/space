@@ -15,6 +15,7 @@ interface PlanetProps {
   textures: PlanetTextures;
   textureOverrides?: Set<string>;
   scale?: number;
+  position?: THREE.Vector3Tuple;
   speedMultiplier?: number;
   emissive?: boolean;
   noRotation?: boolean;
@@ -29,6 +30,7 @@ export const Planet: FC<PlanetProps> = ({
   speedMultiplier = 1,
   emissive = false,
   noRotation = false,
+  position = [0, 0, 0],
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const planetRef = useRef<THREE.Mesh>(null);
@@ -70,7 +72,12 @@ export const Planet: FC<PlanetProps> = ({
   });
 
   return (
-    <group ref={groupRef} rotation={[0, 0, _axialTilt]} scale={scale}>
+    <group
+      ref={groupRef}
+      rotation={[0, 0, _axialTilt]}
+      scale={scale}
+      position={position}
+    >
       {/* planet */}
       <mesh ref={planetRef}>
         <sphereGeometry args={[2, 64, 64]} />
