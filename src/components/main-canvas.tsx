@@ -85,7 +85,7 @@ export const MainCanvas: FC = () => {
           textureOverrides={selectedProperties}
           scale={0.27}
           noRotation={orbitMode}
-          position={[4, 2, -2]}
+          position={[3.5, 2, -1]}
         /> */}
 
         {/* postprocessing */}
