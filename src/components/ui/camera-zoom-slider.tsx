@@ -3,15 +3,21 @@ import { useAppContext } from "@/hooks";
 export const CameraZoomSlider = () => {
   const { cameraZoom, setCameraZoom } = useAppContext();
 
+  const min = 1;
+  const max = 22;
+
+  const percent = ((cameraZoom - min) / (max - min)) * 100;
+
   return (
     <>
       <input
         type="range"
-        min={1}
-        max={22}
+        min={min}
+        max={max}
         value={cameraZoom}
         onChange={(e) => setCameraZoom(+e.target.value)}
         className="custom-slider"
+        style={{ ["--fill" as never]: `${percent}%` }}
       />
 
       <style jsx>{`
@@ -25,23 +31,39 @@ export const CameraZoomSlider = () => {
           background: transparent;
           margin: 0;
           padding: 0;
+
+          --fill: 0%;
         }
 
-        /* Track */
+        /* TRACK (with fill effect) */
         .custom-slider::-webkit-slider-runnable-track {
           height: 8px;
-          background: #cfc8bb;
           border-radius: 3px;
-          border: 1px solid black;
+          border: 1px solid #cfc8bb;
           box-sizing: border-box;
+
+          background: linear-gradient(
+            to right,
+            #cfc8bb 0%,
+            #cfc8bb var(--fill),
+            transparent var(--fill),
+            transparent 100%
+          );
         }
 
         .custom-slider::-moz-range-track {
           height: 8px;
-          background: #cfc8bb;
           border-radius: 3px;
-          border: 1px solid black;
+          border: 1px solid #cfc8bb;
           box-sizing: border-box;
+
+          background: linear-gradient(
+            to right,
+            #cfc8bb 0%,
+            #cfc8bb var(--fill),
+            transparent var(--fill),
+            transparent 100%
+          );
         }
 
         /* Thumb */
@@ -53,13 +75,11 @@ export const CameraZoomSlider = () => {
           height: 22px;
 
           background: #cfc8bb;
+          border: 1px solid black;
           border-radius: 3px;
 
-          border: 1px solid black;
-
           cursor: pointer;
-
-          margin-top: -7px;
+          margin-top: -8px;
         }
 
         .custom-slider::-moz-range-thumb {
@@ -67,9 +87,8 @@ export const CameraZoomSlider = () => {
           height: 22px;
 
           background: #cfc8bb;
+          border: 1px solid #black;
           border-radius: 3px;
-
-          border: 1px solid black;
 
           cursor: pointer;
         }
