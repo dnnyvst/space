@@ -1,7 +1,7 @@
 import { useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { sceneTime } from "@/components";
+import { sceneTime } from "@/utils";
 
 const smoothstep = (edge0: number, edge1: number, x: number) => {
   const t = Math.min(Math.max((x - edge0) / (edge1 - edge0), 0), 1);

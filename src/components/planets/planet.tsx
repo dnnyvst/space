@@ -4,8 +4,8 @@ import { useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
+import { atmosphereMaterial } from "@/shaders";
 import type { PlanetTextures } from "@/types";
-import { atmosphereMaterial } from "@/components";
 
 const EMPTY_SHADER = { uniforms: {}, vertexShader: "", fragmentShader: "" };
 

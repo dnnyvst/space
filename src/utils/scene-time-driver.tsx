@@ -1,5 +1,5 @@
 import { useFrame } from "@react-three/fiber";
-import { sceneTime } from "@/components";
+import { sceneTime } from "@/utils";
 
 export const SceneTimeDriver = () => {
   useFrame((_, delta) => {

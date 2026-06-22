@@ -10,17 +10,12 @@ import {
   Bloom,
   Vignette,
 } from "@react-three/postprocessing";
-import {
-  Skybox,
-  Planet,
-  SunLight,
-  HandheldCamera,
-  OrbitCamera,
-  UIOverlay,
-  SceneTimeDriver,
-} from "@/components";
-import { useAppContext, useIsMobile } from "@/hooks";
+import { Skybox, Planet, UIOverlay } from "@/components";
+import { HandheldCamera, OrbitCamera } from "@/cameras";
+import { SunLight } from "@/lights";
 import { PLANET_CONFIG } from "@/config";
+import { SceneTimeDriver } from "@/utils";
+import { useAppContext, useIsMobile } from "@/hooks";
 
 export const MainCanvas: FC = () => {
   const {
@@ -63,7 +58,6 @@ export const MainCanvas: FC = () => {
         <Skybox />
         <ambientLight intensity={0.06} />
         {selectedPlanetId !== "sun" && <SunLight natural={isEarthAtDay} />}
-
         <HandheldCamera enabled={!orbitMode} />
         <OrbitCamera enabled={orbitMode} />
 

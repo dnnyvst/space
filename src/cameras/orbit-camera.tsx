@@ -1,7 +1,7 @@
 import { useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { sceneTime } from "@/components";
+import { sceneTime } from "@/utils";
 
 // Orbit settings
 const RADIUS = 5;
