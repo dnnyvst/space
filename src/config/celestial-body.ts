@@ -98,6 +98,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     textures: {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
+    initialPosition: [3.5, 2, -1],
   },
 };
 

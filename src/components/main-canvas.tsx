@@ -1,6 +1,7 @@
 "use client";
 
 import { type FC } from "react";
+import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import {
   EffectComposer,
@@ -13,7 +14,7 @@ import {
 import { Skybox, CelestialBody, UIOverlay } from "@/components";
 import { HandheldCamera, OrbitCamera } from "@/cameras";
 import { SunLight } from "@/lights";
-import { PLANET_CONFIG } from "@/config";
+import { PLANET_CONFIG, MOON_CONFIG } from "@/config";
 import { SceneTimeDriver } from "@/utils";
 import { useAppContext, useIsMobile } from "@/hooks";
 
@@ -35,7 +36,7 @@ export const MainCanvas: FC = () => {
   const isEarthAtNight =
     selectedCelestialBodyId === "earth" && selectedProperties.has("night");
 
-  const earthsMoon = PLANET_CONFIG["moon"];
+  const earthsMoon = MOON_CONFIG["moon"];
 
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
@@ -53,6 +54,7 @@ export const MainCanvas: FC = () => {
         gl={{ alpha: true }}
         dpr={[1, 2]}
         onCreated={() => setCanvasReady(true)}
+        shadows="soft"
       >
         <SceneTimeDriver />
         <Skybox />
@@ -79,9 +81,9 @@ export const MainCanvas: FC = () => {
           retrograde={earthsMoon.retrograde}
           textures={earthsMoon.textures}
           textureOverrides={selectedProperties}
-          scale={0.27}
+          scale={earthsMoon.scale}
+          position={earthsMoon.initialPosition}
           noRotation={orbitMode}
-          position={[3.5, 2, -1]}
         /> */}
 
         {/* postprocessing */}

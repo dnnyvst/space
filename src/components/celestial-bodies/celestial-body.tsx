@@ -35,7 +35,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   position = [0, 0, 0],
 }) => {
   const groupRef = useRef<THREE.Group>(null);
-  const celestialBodyRef = useRef<THREE.Mesh>(null);
+  const mainRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
   const ringRef = useRef<THREE.Mesh>(null);
@@ -59,8 +59,8 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
     }
 
     const direction = (retrograde ? -1 : 1) * speedMultiplier;
-    if (celestialBodyRef.current) {
-      celestialBodyRef.current.rotation.y += delta * 0.1 * direction;
+    if (mainRef.current) {
+      mainRef.current.rotation.y += delta * 0.1 * direction;
     }
     if (cloudsRef.current) {
       cloudsRef.current.rotation.y += delta * 0.07 * direction;
@@ -80,8 +80,8 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       scale={scale}
       position={position}
     >
-      {/* celestialBody */}
-      <mesh ref={celestialBodyRef}>
+      {/* main */}
+      <mesh ref={mainRef} castShadow receiveShadow>
         <sphereGeometry args={[2, 64, 64]} />
         {emissive ? (
           <>
@@ -100,7 +100,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       </mesh>
       {/* clouds */}
       {clouds && textureOverrides.has("clouds") && (
-        <mesh ref={cloudsRef}>
+        <mesh ref={cloudsRef} castShadow={false} receiveShadow={false}>
           <sphereGeometry args={[2.03, 64, 64]} />
           <meshStandardMaterial
             map={clouds}
@@ -114,7 +114,12 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       {/* atmosphere */}
       {atmosphere && textureOverrides.has("atmosphere") && (
         <>
-          <mesh ref={atmosphereRef} renderOrder={10}>
+          <mesh
+            ref={atmosphereRef}
+            renderOrder={10}
+            castShadow={false}
+            receiveShadow={false}
+          >
             <sphereGeometry args={[2.08, 64, 64]} />
             <shaderMaterial
               uniforms={atmosphereShader.uniforms}
