@@ -30,13 +30,15 @@ export const UIOverlay: FC = () => {
   const {
     orbitMode,
     setOrbitMode,
-    selectedCelestialBody,
-    setSelectedCelestialBody,
+    selectedCelestialBodyId,
+    setSelectedCelestialBodyId,
     selectedProperties,
     setSelectedProperties,
   } = useAppContext();
 
   const isMobile = useIsMobile(640);
+
+  const selectedCelestialBody = CELESTIAL_BODY_CONFIG[selectedCelestialBodyId];
 
   const toggleTextures = Object.fromEntries(
     Object.entries(selectedCelestialBody.textures).filter(
@@ -64,7 +66,7 @@ export const UIOverlay: FC = () => {
                 ? "underline underline-offset-4 decoration-2 opacity-100"
                 : "opacity-30 hover:opacity-70"
             }`}
-            onClick={() => setSelectedCelestialBody(CELESTIAL_BODY_CONFIG[id])}
+            onClick={() => setSelectedCelestialBodyId(id)}
           >
             {name}
           </button>

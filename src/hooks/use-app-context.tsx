@@ -6,29 +6,28 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import { CELESTIAL_BODY_CONFIG } from "@/config";
-import type { CelestialBody } from "@/types";
+
 interface AppContextValue {
   canvasReady: boolean;
   orbitMode: boolean;
-  selectedCelestialBody: CelestialBody;
+  selectedCelestialBodyId: string;
   selectedProperties: Set<string>;
 
   setCanvasReady: Dispatch<SetStateAction<boolean>>;
   setOrbitMode: Dispatch<SetStateAction<boolean>>;
-  setSelectedCelestialBody: (celestialBody: CelestialBody) => void;
+  setSelectedCelestialBodyId: (id: string) => void;
   setSelectedProperties: Dispatch<SetStateAction<Set<string>>>;
 }
 
 const INIT: AppContextValue = {
   canvasReady: false,
   orbitMode: false,
-  selectedCelestialBody: CELESTIAL_BODY_CONFIG["earth"],
+  selectedCelestialBodyId: "earth",
   selectedProperties: new Set(["clouds", "atmosphere"]),
 
   setCanvasReady: () => {},
   setOrbitMode: () => {},
-  setSelectedCelestialBody: () => {},
+  setSelectedCelestialBodyId: () => {},
   setSelectedProperties: () => {},
 };
 
@@ -39,8 +38,8 @@ export const useAppContext = () => useContext(AppContext);
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [canvasReady, setCanvasReady] = useState<boolean>(INIT.canvasReady);
   const [orbitMode, setOrbitMode] = useState<boolean>(INIT.orbitMode);
-  const [selectedCelestialBody, setSelectedCelestialBody] =
-    useState<CelestialBody>(INIT.selectedCelestialBody);
+  const [selectedCelestialBodyId, setSelectedCelestialBodyId] =
+    useState<string>(INIT.selectedCelestialBodyId);
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
     INIT.selectedProperties,
   );
@@ -50,12 +49,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       value={{
         canvasReady,
         orbitMode,
-        selectedCelestialBody,
+        selectedCelestialBodyId,
         selectedProperties,
 
         setCanvasReady,
         setOrbitMode,
-        setSelectedCelestialBody,
+        setSelectedCelestialBodyId,
         setSelectedProperties,
       }}
     >
