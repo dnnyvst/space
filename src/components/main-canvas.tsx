@@ -14,7 +14,7 @@ import {
 import { Skybox, CelestialBody, UIOverlay } from "@/components";
 import { HandheldCamera, OrbitCamera } from "@/cameras";
 import { SunLight } from "@/lights";
-import { PLANET_CONFIG, MOON_CONFIG, CELESTIAL_BODY_CONFIG } from "@/config";
+import { CELESTIAL_BODY_CONFIG } from "@/config";
 import { SceneTimeDriver } from "@/utils";
 import { useAppContext, useIsMobile } from "@/hooks";
 
@@ -36,7 +36,7 @@ export const MainCanvas: FC = () => {
   const isEarthAtNight =
     selectedCelestialBodyId === "earth" && selectedProperties.has("night");
 
-  const earthsMoon = MOON_CONFIG["moon"];
+  // const earthsMoon = MOON_CONFIG["moon"];
 
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
@@ -71,6 +71,7 @@ export const MainCanvas: FC = () => {
         <OrbitCamera enabled={orbitMode} />
 
         <CelestialBody
+          id={selectedCelestialBodyId}
           axialTilt={selectedCelestialBody.tilt}
           retrograde={selectedCelestialBody.retrograde}
           textures={selectedCelestialBody.textures}
@@ -89,6 +90,7 @@ export const MainCanvas: FC = () => {
           scale={earthsMoon.scale}
           position={earthsMoon.initialPosition}
           noRotation={orbitMode}
+          orbitEnabled={true}
         /> */}
 
         {/* postprocessing */}

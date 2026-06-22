@@ -93,13 +93,25 @@ export const MOON_CONFIG: MoonConfigMap = {
     id: "moon",
     name: "moon",
     parent: "earth",
-    scale: 0.27,
+    relativeScale: 0.27,
+    relativeSpeed: 0.0366,
     tilt: 1.54,
     textures: {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
-    initialPosition: [3.5, 2, -1],
+    initialPosition: [4, 0, -1],
   },
+  // "moon-2": {
+  //   id: "moon-2",
+  //   name: "moon-2",
+  //   parent: "earth",
+  //   scale: 0.27,
+  //   tilt: 1.54,
+  //   textures: {
+  //     map: `/textures/moon/${RESOLUTION}_surface.jpg`,
+  //   },
+  //   initialPosition: [-3, 1, -1],
+  // },
 };
 
 export const CELESTIAL_BODY_CONFIG: CelestialBodyConfigMap = {

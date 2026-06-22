@@ -1,15 +1,19 @@
 "use client";
 
-import { useRef, type FC } from "react";
+import { useMemo, useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { atmosphereMaterial } from "@/shaders";
 import type { CelestialBodyTextures } from "@/types";
+import { Moon } from "@/components";
+// import { useOrbit } from "@/hooks";
+import { MOON_CONFIG } from "@/config";
 
 const EMPTY_SHADER = { uniforms: {}, vertexShader: "", fragmentShader: "" };
 
-interface CelestialBodyProps {
+export interface CelestialBodyProps {
+  id: string;
   axialTilt: number;
   retrograde?: boolean;
   textures: CelestialBodyTextures;
@@ -20,9 +24,11 @@ interface CelestialBodyProps {
   speedMultiplier?: number;
   emissive?: boolean;
   noRotation?: boolean;
+  // orbitEnabled?: boolean;
 }
 
 export const CelestialBody: FC<CelestialBodyProps> = ({
+  id,
   axialTilt,
   retrograde = false,
   textures,
@@ -33,6 +39,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   emissive = false,
   noRotation = false,
   position = [0, 0, 0],
+  // orbitEnabled = false,
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const mainRef = useRef<THREE.Mesh>(null);
@@ -47,6 +54,11 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   ) as Partial<Record<keyof CelestialBodyTextures, THREE.Texture>>;
 
   const { map, normal, clouds, atmosphere, ring, night } = loadedTextures;
+
+  const moons = useMemo(
+    () => Object.values(MOON_CONFIG).filter((moon) => moon.parent === id),
+    [id],
+  );
 
   let atmosphereShader = EMPTY_SHADER;
   if (atmosphere) {
@@ -72,6 +84,8 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       ringRef.current.rotation.z += delta * 0.01 * direction;
     }
   });
+
+  // useOrbit({ ref: mainRef, enabled: orbitEnabled });
 
   return (
     <group
@@ -154,6 +168,11 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
           />
         </mesh>
       )}
+
+      {/* moons */}
+      {moons.map((moon) => (
+        <Moon key={moon.id} {...moon} />
+      ))}
     </group>
   );
 };
