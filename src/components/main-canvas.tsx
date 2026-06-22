@@ -62,8 +62,8 @@ export const MainCanvas: FC = () => {
         <ambientLight intensity={0.06} />
         {selectedPlanetId !== "sun" && <SunLight natural={isEarthAtDay} />}
 
-        <HandheldCamera />
-        {orbitMode && <OrbitCamera />}
+        <HandheldCamera enabled={!orbitMode} />
+        <OrbitCamera enabled={orbitMode} />
 
         <Planet
           axialTilt={selectedPlanet.tilt}
