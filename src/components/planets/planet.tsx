@@ -5,14 +5,14 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { atmosphereMaterial } from "@/shaders";
-import type { PlanetTextures } from "@/types";
+import type { CelestialBodyTextures } from "@/types";
 
 const EMPTY_SHADER = { uniforms: {}, vertexShader: "", fragmentShader: "" };
 
 interface PlanetProps {
   axialTilt: number;
   retrograde?: boolean;
-  textures: PlanetTextures;
+  textures: CelestialBodyTextures;
   textureOverrides?: Set<string>;
   scale?: number;
   position?: THREE.Vector3Tuple;
@@ -42,7 +42,7 @@ export const Planet: FC<PlanetProps> = ({
 
   const loadedTextures = useTexture(
     Object.fromEntries(Object.entries(textures).filter(([, value]) => value)),
-  ) as Partial<Record<keyof PlanetTextures, THREE.Texture>>;
+  ) as Partial<Record<keyof CelestialBodyTextures, THREE.Texture>>;
 
   const { map, normal, clouds, atmosphere, ring, night } = loadedTextures;
 

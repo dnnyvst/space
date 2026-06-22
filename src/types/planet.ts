@@ -1,3 +1,5 @@
+import type { CelestialBody } from "@/types";
+
 export type Planet =
   | "sun"
   | "mercury"
@@ -10,11 +12,6 @@ export type Planet =
   | "neptune"
   | "moon";
 
-export interface PlanetTextures {
-  map: string;
-  normal?: string;
-  clouds?: string;
-  atmosphere?: string;
-  ring?: string;
-  night?: string;
+export interface PlanetConfig extends CelestialBody {
+  name: Planet;
 }

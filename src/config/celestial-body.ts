@@ -1,15 +1,11 @@
-import type { Planet, PlanetTextures } from "@/types";
-
-export interface PlanetConfig {
-  id: string;
-  name: Planet;
-  retrograde?: boolean;
-  tilt: number;
-  textures: PlanetTextures;
-}
+import type { PlanetConfig, MoonConfig } from "@/types";
 
 interface PlanetConfigMap {
   [id: string]: PlanetConfig;
+}
+
+interface MoonConfigMap {
+  [id: string]: MoonConfig;
 }
 
 const RESOLUTION = "8k";
@@ -98,6 +94,19 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     tilt: 28.32,
     textures: {
       map: "/textures/neptune/surface.jpg",
+    },
+  },
+};
+
+export const MOON_CONFIG: MoonConfigMap = {
+  moon: {
+    id: "moon",
+    name: "moon",
+    parent: "earth",
+    scale: 0.27,
+    tilt: 1.54,
+    textures: {
+      map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
   },
 };

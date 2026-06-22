@@ -1,1 +1,1 @@
-export * from "./planet";
+export * from "./celestial-body";
