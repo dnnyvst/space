@@ -10,7 +10,7 @@ import {
   Bloom,
   Vignette,
 } from "@react-three/postprocessing";
-import { Skybox, Planet, UIOverlay } from "@/components";
+import { Skybox, CelestialBody, UIOverlay } from "@/components";
 import { HandheldCamera, OrbitCamera } from "@/cameras";
 import { SunLight } from "@/lights";
 import { PLANET_CONFIG } from "@/config";
@@ -22,18 +22,18 @@ export const MainCanvas: FC = () => {
     canvasReady,
     setCanvasReady,
     orbitMode,
-    selectedPlanet,
+    selectedCelestialBody,
     selectedProperties,
   } = useAppContext();
 
   const isMobile = useIsMobile(640);
 
-  const selectedPlanetId = selectedPlanet.id;
+  const selectedCelestialBodyId = selectedCelestialBody.id;
 
   const isEarthAtDay =
-    selectedPlanetId === "earth" && !selectedProperties.has("night");
+    selectedCelestialBodyId === "earth" && !selectedProperties.has("night");
   const isEarthAtNight =
-    selectedPlanetId === "earth" && selectedProperties.has("night");
+    selectedCelestialBodyId === "earth" && selectedProperties.has("night");
 
   const earthsMoon = PLANET_CONFIG["moon"];
 
@@ -57,22 +57,24 @@ export const MainCanvas: FC = () => {
         <SceneTimeDriver />
         <Skybox />
         <ambientLight intensity={0.06} />
-        {selectedPlanetId !== "sun" && <SunLight natural={isEarthAtDay} />}
+        {selectedCelestialBodyId !== "sun" && (
+          <SunLight natural={isEarthAtDay} />
+        )}
         <HandheldCamera enabled={!orbitMode} />
         <OrbitCamera enabled={orbitMode} />
 
-        <Planet
-          axialTilt={selectedPlanet.tilt}
-          retrograde={selectedPlanet.retrograde}
-          textures={selectedPlanet.textures}
+        <CelestialBody
+          axialTilt={selectedCelestialBody.tilt}
+          retrograde={selectedCelestialBody.retrograde}
+          textures={selectedCelestialBody.textures}
           textureOverrides={selectedProperties}
           scale={isMobile ? 0.75 : 1}
-          speedMultiplier={selectedPlanetId === "sun" ? 0.2 : 1}
-          emissive={selectedPlanetId === "sun"}
+          speedMultiplier={selectedCelestialBodyId === "sun" ? 0.2 : 1}
+          emissive={selectedCelestialBodyId === "sun"}
           noRotation={orbitMode}
         />
         {/* moon test*/}
-        {/* <Planet
+        {/* <CelestialBody
           axialTilt={earthsMoon.tilt}
           retrograde={earthsMoon.retrograde}
           textures={earthsMoon.textures}
@@ -101,7 +103,7 @@ export const MainCanvas: FC = () => {
         </EffectComposer>
       </Canvas>
       {/* saturn construction overlay */}
-      {selectedPlanetId === "saturn" && (
+      {selectedCelestialBodyId === "saturn" && (
         <div className="absolute inset-0 flex justify-center items-center text-black">
           under construction.
           <br />

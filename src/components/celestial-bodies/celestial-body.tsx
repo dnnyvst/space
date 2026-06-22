@@ -9,7 +9,7 @@ import type { CelestialBodyTextures } from "@/types";
 
 const EMPTY_SHADER = { uniforms: {}, vertexShader: "", fragmentShader: "" };
 
-interface PlanetProps {
+interface CelestialBodyProps {
   axialTilt: number;
   retrograde?: boolean;
   textures: CelestialBodyTextures;
@@ -21,7 +21,7 @@ interface PlanetProps {
   noRotation?: boolean;
 }
 
-export const Planet: FC<PlanetProps> = ({
+export const CelestialBody: FC<CelestialBodyProps> = ({
   axialTilt,
   retrograde = false,
   textures,
@@ -33,7 +33,7 @@ export const Planet: FC<PlanetProps> = ({
   position = [0, 0, 0],
 }) => {
   const groupRef = useRef<THREE.Group>(null);
-  const planetRef = useRef<THREE.Mesh>(null);
+  const celestialBodyRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
   const ringRef = useRef<THREE.Mesh>(null);
@@ -57,8 +57,8 @@ export const Planet: FC<PlanetProps> = ({
     }
 
     const direction = (retrograde ? -1 : 1) * speedMultiplier;
-    if (planetRef.current) {
-      planetRef.current.rotation.y += delta * 0.1 * direction;
+    if (celestialBodyRef.current) {
+      celestialBodyRef.current.rotation.y += delta * 0.1 * direction;
     }
     if (cloudsRef.current) {
       cloudsRef.current.rotation.y += delta * 0.07 * direction;
@@ -78,8 +78,8 @@ export const Planet: FC<PlanetProps> = ({
       scale={scale}
       position={position}
     >
-      {/* planet */}
-      <mesh ref={planetRef}>
+      {/* celestialBody */}
+      <mesh ref={celestialBodyRef}>
         <sphereGeometry args={[2, 64, 64]} />
         {emissive ? (
           <>

@@ -1,3 +1,4 @@
+import type { Planet, Moon } from "@/types";
 export interface CelestialBodyTextures {
   map: string;
   normal?: string;
@@ -9,6 +10,7 @@ export interface CelestialBodyTextures {
 
 export interface CelestialBody {
   id: string;
+  name: Planet | Moon;
   retrograde?: boolean;
   tilt: number;
   textures: CelestialBodyTextures;

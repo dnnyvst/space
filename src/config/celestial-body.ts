@@ -1,4 +1,4 @@
-import type { PlanetConfig, MoonConfig } from "@/types";
+import type { PlanetConfig, MoonConfig, CelestialBody } from "@/types";
 
 interface PlanetConfigMap {
   [id: string]: PlanetConfig;
@@ -8,15 +8,13 @@ interface MoonConfigMap {
   [id: string]: MoonConfig;
 }
 
+interface CelestialBodyConfigMap {
+  [id: string]: CelestialBody;
+}
+
 const RESOLUTION = "8k";
 
 export const PLANET_CONFIG: PlanetConfigMap = {
-  sun: {
-    id: "sun",
-    name: "sun",
-    tilt: 7.25,
-    textures: { map: `/textures/sun/${RESOLUTION}_surface.jpg` },
-  },
   mercury: {
     id: "mercury",
     name: "mercury",
@@ -44,14 +42,6 @@ export const PLANET_CONFIG: PlanetConfigMap = {
       normal: `/textures/earth/${RESOLUTION}_normal.jpg`,
       clouds: `/textures/earth/${RESOLUTION}_clouds.jpg`,
       night: `/textures/earth/${RESOLUTION}_night.jpg`,
-    },
-  },
-  moon: {
-    id: "moon",
-    name: "moon",
-    tilt: 1.54,
-    textures: {
-      map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
   },
   mars: {
@@ -109,4 +99,15 @@ export const MOON_CONFIG: MoonConfigMap = {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
   },
+};
+
+export const CELESTIAL_BODY_CONFIG: CelestialBodyConfigMap = {
+  sun: {
+    id: "sun",
+    name: "sun",
+    tilt: 7.25,
+    textures: { map: `/textures/sun/${RESOLUTION}_surface.jpg` },
+  },
+  ...MOON_CONFIG,
+  ...PLANET_CONFIG,
 };

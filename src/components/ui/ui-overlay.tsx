@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { PLANET_CONFIG } from "@/config";
+import { CELESTIAL_BODY_CONFIG } from "@/config";
 import { useAppContext, useIsMobile } from "@/hooks";
 
 interface ListItemProps {
@@ -30,8 +30,8 @@ export const UIOverlay: FC = () => {
   const {
     orbitMode,
     setOrbitMode,
-    selectedPlanet,
-    setSelectedPlanet,
+    selectedCelestialBody,
+    setSelectedCelestialBody,
     selectedProperties,
     setSelectedProperties,
   } = useAppContext();
@@ -39,7 +39,7 @@ export const UIOverlay: FC = () => {
   const isMobile = useIsMobile(640);
 
   const toggleTextures = Object.fromEntries(
-    Object.entries(selectedPlanet.textures).filter(
+    Object.entries(selectedCelestialBody.textures).filter(
       ([key, value]) => !["map", "normal", "ring"].includes(key) && value,
     ),
   );
@@ -56,15 +56,15 @@ export const UIOverlay: FC = () => {
           orbitMode && "invisible opacity-0"
         } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-transparent border border-text/30 py-2 px-4 rounded-lg`}
       >
-        {Object.values(PLANET_CONFIG).map(({ id, name }) => (
+        {Object.values(CELESTIAL_BODY_CONFIG).map(({ id, name }) => (
           <button
             key={id}
             className={`cursor-pointer transition-all duration-300 ease-out ${
-              id === selectedPlanet.id
+              id === selectedCelestialBody.id
                 ? "underline underline-offset-4 decoration-2 opacity-100"
                 : "opacity-30 hover:opacity-70"
             }`}
-            onClick={() => setSelectedPlanet(PLANET_CONFIG[id])}
+            onClick={() => setSelectedCelestialBody(CELESTIAL_BODY_CONFIG[id])}
           >
             {name}
           </button>
