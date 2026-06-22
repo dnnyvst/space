@@ -2,4 +2,4 @@ learning and testing things with [three.js](https://threejs.org/) and [react-thr
 
 all textures sourced from Solar System Scope (https://www.solarsystemscope.com/textures/)
 
-![Demo](./public/demo-5.png)
+![Demo](./public/demo-6.png)
