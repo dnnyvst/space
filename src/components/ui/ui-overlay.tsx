@@ -93,7 +93,7 @@ export const UIOverlay: FC = () => {
             <ListItem
               selected={orbitMode === true}
               onClick={() => setOrbitMode((orbitMode) => !orbitMode)}
-              text="orbit mode"
+              text="orbit cam"
             />
             {Object.keys(toggleTextures).map((property) => (
               <ListItem
