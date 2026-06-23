@@ -54,7 +54,7 @@ export const UIOverlay: FC = () => {
       <div
         className={`${
           orbitMode && "invisible opacity-0"
-        } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-transparent border border-text/30 py-2 px-4 rounded-lg`}
+        } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-card/0 border border-text/30 py-2 px-4 rounded-lg`}
       >
         {Object.values(CELESTIAL_BODY_CONFIG).map(({ id, name }) => (
           <button
@@ -75,7 +75,7 @@ export const UIOverlay: FC = () => {
         className={`flex flex-col gap-2 ${!isMobile && "w-min"} ${isMobile && "flex-row justify-between"}`}
       >
         {/* sliders */}
-        <div className="flex flex-col gap-2 bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
+        <div className="flex flex-col gap-2 bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
           <span className="flex flex-col">
             <span className="text-center">fov: {fov}&deg;</span>
             <FOVSlider />
@@ -88,7 +88,7 @@ export const UIOverlay: FC = () => {
           </span>
         </div>
         {/* toggles */}
-        <div className="bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
+        <div className="bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
           <ul>
             <ListItem
               selected={orbitMode === true}
