@@ -88,12 +88,14 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   },
 };
 
+const JUPITER_SCALE = 3.0;
+
 export const MOON_CONFIG: MoonConfigMap = {
   moon: {
     id: "moon",
     name: "moon",
     parent: "earth",
-    relativeScale: 0.27,
+    relativeScale: 0.273,
     relativeSpeed: 0.0366,
     orbitRadius: 4,
     orbitPhase: Math.random() * Math.PI * 2,
@@ -102,19 +104,58 @@ export const MOON_CONFIG: MoonConfigMap = {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
   },
-  // "moon-2": {
-  //   id: "moon-2",
-  //   name: "moon",
-  //   parent: "earth",
-  //   relativeScale: 0.2,
-  //   relativeSpeed: 0.5,
-  //   orbitRadius: 5,
-  //   orbitPhase: Math.random() * Math.PI * 3,
-  //   tilt: 6.25,
-  //   textures: {
-  //     map: `/textures/moon/${RESOLUTION}_surface.jpg`,
-  //   },
-  // },
+  io: {
+    id: "io",
+    name: "io",
+    parent: "jupiter",
+    relativeScale: 0.026 * JUPITER_SCALE,
+    relativeSpeed: 0.5,
+    orbitRadius: 3.25,
+    orbitPhase: Math.random() * Math.PI * 2,
+    tilt: 0,
+    textures: {
+      map: "/textures/io/surface.jpg",
+    },
+  },
+  europa: {
+    id: "europa",
+    name: "europa",
+    parent: "jupiter",
+    relativeScale: 0.022 * JUPITER_SCALE,
+    relativeSpeed: 0.5,
+    orbitRadius: 3.75,
+    orbitPhase: Math.random() * Math.PI * 2,
+    tilt: 0,
+    textures: {
+      map: "/textures/europa/surface.jpg",
+    },
+  },
+  ganymede: {
+    id: "ganymede",
+    name: "ganymede",
+    parent: "jupiter",
+    relativeScale: 0.038 * JUPITER_SCALE,
+    relativeSpeed: 0.5,
+    orbitRadius: 4.25,
+    orbitPhase: Math.random() * Math.PI * 2,
+    tilt: 0,
+    textures: {
+      map: "/textures/ganymede/surface.jpg",
+    },
+  },
+  callisto: {
+    id: "callisto",
+    name: "callisto",
+    parent: "jupiter",
+    relativeScale: 0.034 * JUPITER_SCALE,
+    relativeSpeed: 0.5,
+    orbitRadius: 4.75,
+    orbitPhase: Math.random() * Math.PI * 2,
+    tilt: 0,
+    textures: {
+      map: "/textures/callisto/surface.jpg",
+    },
+  },
 };
 
 export const CELESTIAL_BODY_CONFIG: CelestialBodyConfigMap = {
@@ -124,6 +165,6 @@ export const CELESTIAL_BODY_CONFIG: CelestialBodyConfigMap = {
     tilt: 7.25,
     textures: { map: `/textures/sun/${RESOLUTION}_surface.jpg` },
   },
-  ...MOON_CONFIG,
+  moon: MOON_CONFIG["moon"],
   ...PLANET_CONFIG,
 };

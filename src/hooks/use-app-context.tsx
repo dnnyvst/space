@@ -25,7 +25,7 @@ interface AppContextValue {
 const INIT: AppContextValue = {
   canvasReady: false,
   orbitMode: false,
-  selectedCelestialBodyId: "earth",
+  selectedCelestialBodyId: "jupiter",
   selectedProperties: new Set(["clouds", "atmosphere"]),
 
   setCanvasReady: () => {},
