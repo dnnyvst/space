@@ -17,7 +17,7 @@ export const Moon: FC<
   relativeScale,
   relativeSpeed,
   orbitRadius,
-  tilt,
+  axialTilt,
   textures,
   parentRef,
   orbitPhase,
@@ -50,7 +50,7 @@ export const Moon: FC<
         castShadow
         receiveShadow
         scale={relativeScale * FINAL_SCALE}
-        rotation={[0, 0, tilt]}
+        rotation={[0, 0, axialTilt]}
       >
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial map={map} />

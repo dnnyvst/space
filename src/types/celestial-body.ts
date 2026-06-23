@@ -12,6 +12,6 @@ export interface CelestialBody {
   id: string;
   name: Planet | Moon;
   retrograde?: boolean;
-  tilt: number;
+  axialTilt: number;
   textures: CelestialBodyTextures;
 }

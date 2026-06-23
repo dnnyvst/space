@@ -72,7 +72,7 @@ export const MainCanvas: FC = () => {
 
         <CelestialBody
           id={selectedCelestialBodyId}
-          axialTilt={selectedCelestialBody.tilt}
+          axialTilt={selectedCelestialBody.axialTilt}
           retrograde={selectedCelestialBody.retrograde}
           textures={selectedCelestialBody.textures}
           textureOverrides={selectedProperties}
@@ -81,17 +81,6 @@ export const MainCanvas: FC = () => {
           emissive={selectedCelestialBodyId === "sun"}
           noRotation={orbitMode}
         />
-        {/* moon test*/}
-        {/* <CelestialBody
-          axialTilt={earthsMoon.tilt}
-          retrograde={earthsMoon.retrograde}
-          textures={earthsMoon.textures}
-          textureOverrides={selectedProperties}
-          scale={earthsMoon.scale}
-          position={earthsMoon.initialPosition}
-          noRotation={orbitMode}
-          orbitEnabled={true}
-        /> */}
 
         {/* postprocessing */}
         <EffectComposer>
