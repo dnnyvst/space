@@ -11,19 +11,17 @@ interface ListItemProps {
 
 const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
   <li
-    className={`flex gap-3 opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out ${
+    className={`flex gap-3 items-center cursor-pointer opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out ${
       selected && "opacity-100 hover:opacity-100"
     }`}
     onClick={onClick}
   >
-    <div className="flex items-center gap-3 cursor-pointer">
-      <div
-        className={`w-4 h-4 border flex items-center justify-center rounded-sm ${
-          selected && "bg-text"
-        }`}
-      />
-      <span>{text}</span>
-    </div>
+    <div
+      className={`w-4 h-4 border flex items-center justify-center rounded-sm ${
+        selected && "bg-text"
+      }`}
+    />
+    <span>{text}</span>
   </li>
 );
 
@@ -50,7 +48,7 @@ export const UIOverlay: FC = () => {
     <div
       className={`h-screen ${
         isMobile && "justify-between pb-16"
-      } absolute py-6 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min`}
+      } absolute py-4 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min`}
     >
       {/* celestial body select */}
       <div
@@ -73,9 +71,11 @@ export const UIOverlay: FC = () => {
         ))}
       </div>
       {/* controls */}
-      <div className={"gap-4 flex w-min"}>
+      <div
+        className={`flex flex-col gap-2 ${!isMobile && "w-min"} ${isMobile && "flex-row justify-between"}`}
+      >
         {/* sliders */}
-        <div className="gap-4 flex flex-col bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
+        <div className="flex flex-col gap-2 bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
           <span className="flex flex-col">
             <span className="text-center">fov: {fov}&deg;</span>
             <FOVSlider />
@@ -88,7 +88,7 @@ export const UIOverlay: FC = () => {
           </span>
         </div>
         {/* toggles */}
-        <div className="gap-4 flex flex-col bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
+        <div className="bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
           <ul>
             <ListItem
               selected={orbitMode === true}
