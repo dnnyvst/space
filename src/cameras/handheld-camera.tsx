@@ -17,7 +17,7 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
   enabled = false,
 }) => {
   const { camera } = useThree();
-  const { cameraZoom } = useCameraContext();
+  const { handheldZoom } = useCameraContext();
 
   const _position = useRef(new THREE.Vector3());
 
@@ -44,9 +44,9 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
     // Always-on micro motion (very subtle)
     const micro = Math.sin(time * 2.2) * 0.0018 + Math.sin(time * 3.7) * 0.0012;
 
-    const targetX = driftX + micro + cameraZoom * 0.1;
-    const targetY = 0.06 + driftY + micro * 0.5 - cameraZoom * 0.1;
-    const targetZ = 5 + driftZ - cameraZoom * 0.25;
+    const targetX = driftX + micro + handheldZoom * 0.1;
+    const targetY = 0.06 + driftY + micro * 0.5 - handheldZoom * 0.1;
+    const targetZ = 5 + driftZ - handheldZoom * 0.25;
 
     // Build target position
     position.set(

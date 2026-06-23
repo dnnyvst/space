@@ -1,12 +1,12 @@
 import { useCameraContext } from "@/hooks";
 
 export const CameraZoomSlider = () => {
-  const { cameraZoom, setCameraZoom } = useCameraContext();
+  const { handheldZoom, setHandheldZoom } = useCameraContext();
 
   const min = 1;
   const max = 22;
 
-  const percent = ((cameraZoom - min) / (max - min)) * 100;
+  const percent = ((handheldZoom - min) / (max - min)) * 100;
 
   return (
     <>
@@ -14,8 +14,8 @@ export const CameraZoomSlider = () => {
         type="range"
         min={min}
         max={max}
-        value={cameraZoom}
-        onChange={(e) => setCameraZoom(+e.target.value)}
+        value={handheldZoom}
+        onChange={(e) => setHandheldZoom(+e.target.value)}
         className="custom-slider"
         style={{ ["--fill" as never]: `${percent}%` }}
       />

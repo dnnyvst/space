@@ -9,21 +9,21 @@ import {
 
 interface CameraContextValue {
   orbitMode: boolean;
-  cameraZoom: number;
+  handheldZoom: number;
   fov: number;
 
   setOrbitMode: Dispatch<SetStateAction<boolean>>;
-  setCameraZoom: (zoom: number) => void;
+  setHandheldZoom: (zoom: number) => void;
   setFov: (fov: number) => void;
 }
 
 const INIT: CameraContextValue = {
   orbitMode: false,
-  cameraZoom: 1,
+  handheldZoom: 1,
   fov: 75,
 
   setOrbitMode: () => {},
-  setCameraZoom: () => {},
+  setHandheldZoom: () => {},
   setFov: () => {},
 };
 
@@ -37,18 +37,18 @@ export const CameraContextProvider = ({
   children: ReactNode;
 }) => {
   const [orbitMode, setOrbitMode] = useState<boolean>(INIT.orbitMode);
-  const [cameraZoom, setCameraZoom] = useState<number>(INIT.cameraZoom);
+  const [handheldZoom, setHandheldZoom] = useState<number>(INIT.handheldZoom);
   const [fov, setFov] = useState<number>(INIT.fov);
 
   return (
     <CameraContext.Provider
       value={{
         orbitMode,
-        cameraZoom,
+        handheldZoom,
         fov,
 
         setOrbitMode,
-        setCameraZoom,
+        setHandheldZoom,
         setFov,
       }}
     >
