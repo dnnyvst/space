@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -38,8 +38,18 @@ export const MainCanvas: FC = () => {
 
   // const earthsMoon = MOON_CONFIG["moon"];
 
+  const [cameraFov, setCameraFov] = useState<number>(75);
+
+  console.log(cameraFov);
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
+      <input
+        type="range"
+        min={75}
+        max={120}
+        value={cameraFov}
+        onChange={(e) => setCameraFov(+e.target.value)}
+      />
       {/* loading */}
       {!canvasReady && (
         <div className="absolute inset-0 flex items-center justify-center animate-pulse">
@@ -67,7 +77,7 @@ export const MainCanvas: FC = () => {
         {selectedCelestialBodyId !== "sun" && (
           <SunLight natural={isEarthAtDay} />
         )}
-        <HandheldCamera enabled={!orbitMode} />
+        <HandheldCamera enabled={!orbitMode} fov={cameraFov} />
         <OrbitCamera enabled={orbitMode} />
 
         <CelestialBody

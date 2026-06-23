@@ -11,10 +11,12 @@ const smoothstep = (edge0: number, edge1: number, x: number) => {
 
 interface HandheldCameraProps {
   enabled?: boolean;
+  fov?: number;
 }
 
 export const HandheldCamera: FC<HandheldCameraProps> = ({
   enabled = false,
+  fov = 75,
 }) => {
   const { camera } = useThree();
 
@@ -73,6 +75,9 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
     // Apply
     camera.position.copy(position);
     camera.lookAt(0, 0, 0);
+
+    camera.fov = fov;
+    camera.updateProjectionMatrix();
   });
 
   return null;
