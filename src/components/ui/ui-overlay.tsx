@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { CameraZoomSlider } from "@/components";
+import { CameraZoomSlider, FOVSlider } from "@/components";
 import { CELESTIAL_BODY_CONFIG } from "@/config";
 import { useAppContext, useCameraContext, useIsMobile } from "@/hooks";
 
@@ -34,7 +34,7 @@ export const UIOverlay: FC = () => {
     selectedProperties,
     setSelectedProperties,
   } = useAppContext();
-  const { orbitMode, setOrbitMode } = useCameraContext();
+  const { orbitMode, fov, setOrbitMode } = useCameraContext();
 
   const isMobile = useIsMobile(640);
 
@@ -72,49 +72,46 @@ export const UIOverlay: FC = () => {
           </button>
         ))}
       </div>
-      {/* toggles */}
-      <div className="gap-4 flex flex-col bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 w-min">
-        <ul>
-          {/* {isMobile && (
-                <ListItem
-                selected={isMobile && gyroEnabled}
-                onClick={async () => {
-                    if (gyroEnabled) {
-                    setGyroEnabled(false);
-                    return;
-                    }
-                    const ok = await requestGyroPermission();
-                    setGyroEnabled(ok);
-                }}
-                text="enable tilt"
-                />
-            )} */}
-          <ListItem
-            selected={orbitMode === true}
-            onClick={() => setOrbitMode((orbitMode) => !orbitMode)}
-            text="orbit mode"
-          />
-          {Object.keys(toggleTextures).map((property) => (
+      {/* controls */}
+      <div className={"gap-4 flex w-min"}>
+        {/* sliders */}
+        <div className="gap-4 flex flex-col bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
+          <span className="flex flex-col">
+            <span className="text-center">fov: {fov}&deg;</span>
+            <FOVSlider />
+          </span>
+          <span className="flex flex-col">
+            <span className={`text-center ${orbitMode && "opacity-20"}`}>
+              zoom
+            </span>
+            <CameraZoomSlider disabled={orbitMode} />
+          </span>
+        </div>
+        {/* toggles */}
+        <div className="gap-4 flex flex-col bg-transparent whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
+          <ul>
             <ListItem
-              key={property}
-              selected={selectedProperties.has(property)}
-              onClick={() =>
-                setSelectedProperties((prev) => {
-                  if (prev.has(property)) {
-                    return new Set([...prev].filter((p) => p !== property));
-                  }
-                  return new Set([...prev, property]);
-                })
-              }
-              text={property}
+              selected={orbitMode === true}
+              onClick={() => setOrbitMode((orbitMode) => !orbitMode)}
+              text="orbit mode"
             />
-          ))}
-        </ul>
-        {/* zoom slider */}
-        <span className={`flex flex-col ${orbitMode && "invisible opacity-0"}`}>
-          <span className="text-center">camera</span>
-          <CameraZoomSlider />
-        </span>
+            {Object.keys(toggleTextures).map((property) => (
+              <ListItem
+                key={property}
+                selected={selectedProperties.has(property)}
+                onClick={() =>
+                  setSelectedProperties((prev) => {
+                    if (prev.has(property)) {
+                      return new Set([...prev].filter((p) => p !== property));
+                    }
+                    return new Set([...prev, property]);
+                  })
+                }
+                text={property}
+              />
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

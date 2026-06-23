@@ -25,7 +25,7 @@ export const MainCanvas: FC = () => {
     selectedCelestialBodyId,
     selectedProperties,
   } = useAppContext();
-  const { orbitMode, fov, setFov } = useCameraContext();
+  const { orbitMode } = useCameraContext();
 
   const isMobile = useIsMobile(640);
 
@@ -40,13 +40,6 @@ export const MainCanvas: FC = () => {
 
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
-      <input
-        type="range"
-        min={75}
-        max={90}
-        value={fov}
-        onChange={(e) => setFov(+e.target.value)}
-      />
       {/* loading */}
       {!canvasReady && (
         <div className="absolute inset-0 flex items-center justify-center animate-pulse">
