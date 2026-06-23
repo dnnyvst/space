@@ -20,6 +20,9 @@ interface AppContextValue {
 
   cameraZoom: number;
   setCameraZoom: (zoom: number) => void;
+
+  fov: number;
+  setFov: (fov: number) => void;
 }
 
 const INIT: AppContextValue = {
@@ -35,6 +38,9 @@ const INIT: AppContextValue = {
 
   cameraZoom: 1,
   setCameraZoom: () => {},
+
+  fov: 75,
+  setFov: () => {},
 };
 
 const AppContext = createContext(INIT);
@@ -51,6 +57,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const [cameraZoom, setCameraZoom] = useState<number>(INIT.cameraZoom);
+  const [fov, setFov] = useState<number>(INIT.fov);
 
   return (
     <AppContext.Provider
@@ -67,6 +74,9 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
         cameraZoom,
         setCameraZoom,
+
+        fov,
+        setFov,
       }}
     >
       {children}

@@ -12,7 +12,7 @@ import {
   Vignette,
 } from "@react-three/postprocessing";
 import { Skybox, CelestialBody, UIOverlay } from "@/components";
-import { HandheldCamera, OrbitCamera } from "@/cameras";
+import { CameraController, HandheldCamera, OrbitCamera } from "@/cameras";
 import { SunLight } from "@/lights";
 import { CELESTIAL_BODY_CONFIG } from "@/config";
 import { SceneTimeDriver } from "@/utils";
@@ -25,6 +25,9 @@ export const MainCanvas: FC = () => {
     orbitMode,
     selectedCelestialBodyId,
     selectedProperties,
+
+    fov,
+    setFov,
   } = useAppContext();
 
   const isMobile = useIsMobile(640);
@@ -38,17 +41,16 @@ export const MainCanvas: FC = () => {
 
   // const earthsMoon = MOON_CONFIG["moon"];
 
-  const [cameraFov, setCameraFov] = useState<number>(75);
-
-  console.log(cameraFov);
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
       <input
         type="range"
         min={75}
         max={90}
-        value={cameraFov}
-        onChange={(e) => setCameraFov(+e.target.value)}
+        value={fov}
+        onChange={(e) =>
+          setFov(THREE.MathUtils.lerp(fov, +e.target.value, 0.1))
+        }
       />
       {/* loading */}
       {!canvasReady && (
@@ -61,7 +63,6 @@ export const MainCanvas: FC = () => {
       {/* canvas (full screen) */}
       <Canvas
         className="w-full h-full"
-        camera={{ near: 0.1, far: 5000 }}
         gl={{
           alpha: true,
         }}
@@ -72,14 +73,14 @@ export const MainCanvas: FC = () => {
           setCanvasReady(true);
         }}
       >
-        <SceneTimeDriver />
         <Skybox />
+        <SceneTimeDriver />
+        <CameraController />
+
         <ambientLight intensity={0.06} />
         {selectedCelestialBodyId !== "sun" && (
           <SunLight natural={isEarthAtDay} />
         )}
-        <HandheldCamera enabled={!orbitMode} fov={cameraFov} />
-        <OrbitCamera enabled={orbitMode} />
 
         <CelestialBody
           id={selectedCelestialBodyId}
