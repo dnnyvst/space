@@ -41,7 +41,6 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   position = [0, 0, 0],
   // orbitEnabled = false,
 }) => {
-  const groupRef = useRef<THREE.Group>(null);
   const mainRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
@@ -88,87 +87,78 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   // useOrbit({ ref: mainRef, enabled: orbitEnabled });
 
   return (
-    <group
-      ref={groupRef}
-      rotation={[0, 0, _axialTilt]}
-      scale={scale}
-      position={position}
-    >
-      {/* main */}
-      <mesh ref={mainRef} castShadow receiveShadow>
-        <sphereGeometry args={[2, 64, 64]} />
-        {emissive ? (
-          <>
-            <meshBasicMaterial
-              depthWrite={false}
+    <group scale={scale} position={position}>
+      <group rotation={[0, 0, _axialTilt]}>
+        {/* main */}
+        <mesh ref={mainRef} castShadow receiveShadow>
+          <sphereGeometry args={[2, 64, 64]} />
+          {emissive ? (
+            <>
+              <meshBasicMaterial
+                depthWrite={false}
+                map={night && textureOverrides.has("night") ? night : map}
+              />
+            </>
+          ) : (
+            <meshStandardMaterial
               map={night && textureOverrides.has("night") ? night : map}
+              normalMap={textures.normal ? normal : null}
+              normalScale={normal ? new THREE.Vector2(8, -8) : undefined}
             />
-          </>
-        ) : (
-          <meshStandardMaterial
-            map={night && textureOverrides.has("night") ? night : map}
-            normalMap={textures.normal ? normal : null}
-            normalScale={normal ? new THREE.Vector2(8, -8) : undefined}
-          />
-        )}
-      </mesh>
-      {/* clouds */}
-      {clouds && textureOverrides.has("clouds") && (
-        <mesh ref={cloudsRef} castShadow={false} receiveShadow={false}>
-          <sphereGeometry args={[2.03, 64, 64]} />
-          <meshStandardMaterial
-            map={clouds}
-            transparent
-            opacity={0.4}
-            depthWrite={false}
-            blending={THREE.NormalBlending}
-          />
+          )}
         </mesh>
-      )}
-      {/* atmosphere */}
-      {atmosphere && textureOverrides.has("atmosphere") && (
-        <>
-          <mesh
-            ref={atmosphereRef}
-            renderOrder={10}
-            castShadow={false}
-            receiveShadow={false}
-          >
-            <sphereGeometry args={[2.08, 64, 64]} />
-            <shaderMaterial
-              uniforms={atmosphereShader.uniforms}
-              vertexShader={atmosphereShader.vertexShader}
-              fragmentShader={atmosphereShader.fragmentShader}
-              premultipliedAlpha
+        {/* clouds */}
+        {clouds && textureOverrides.has("clouds") && (
+          <mesh ref={cloudsRef}>
+            <sphereGeometry args={[2.03, 64, 64]} />
+            <meshStandardMaterial
+              map={clouds}
               transparent
-              blending={THREE.AdditiveBlending}
+              opacity={0.4}
               depthWrite={false}
-              toneMapped={false}
+              blending={THREE.NormalBlending}
             />
-            {/* <meshStandardMaterial
+          </mesh>
+        )}
+        {/* atmosphere */}
+        {atmosphere && textureOverrides.has("atmosphere") && (
+          <>
+            <mesh ref={atmosphereRef} renderOrder={10}>
+              <sphereGeometry args={[2.08, 64, 64]} />
+              <shaderMaterial
+                uniforms={atmosphereShader.uniforms}
+                vertexShader={atmosphereShader.vertexShader}
+                fragmentShader={atmosphereShader.fragmentShader}
+                premultipliedAlpha
+                transparent
+                blending={THREE.AdditiveBlending}
+                depthWrite={false}
+                toneMapped={false}
+              />
+              {/* <meshStandardMaterial
               map={atmosphere}
               transparent
               opacity={0.4}
               depthWrite={false}
             /> */}
+            </mesh>
+          </>
+        )}
+        {/* ring */}
+        {ring && (
+          <mesh ref={ringRef} rotation={[4.9, 0, 0]}>
+            <ringGeometry args={[2.3, 2.8, 128]} />
+            <meshStandardMaterial
+              map={ring}
+              // transparent
+              // opacity={0.9}
+              side={THREE.DoubleSide}
+              depthWrite={false}
+              alphaTest={0.5}
+            />
           </mesh>
-        </>
-      )}
-      {/* ring */}
-      {ring && (
-        <mesh ref={ringRef} rotation={[4.9, 0, 0]}>
-          <ringGeometry args={[2.3, 2.8, 128]} />
-          <meshStandardMaterial
-            map={ring}
-            // transparent
-            // opacity={0.9}
-            side={THREE.DoubleSide}
-            depthWrite={false}
-            alphaTest={0.5}
-          />
-        </mesh>
-      )}
-
+        )}
+      </group>
       {/* moons */}
       {moons.map((moon) => (
         <Moon key={moon.id} {...moon} />
