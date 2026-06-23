@@ -7,12 +7,12 @@ import { useFrame } from "@react-three/fiber";
 import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
 
-// not very fun if they barely spin
+// For now, increase the speed so it's more obvious
 const ROTATIONAL_SPEED_MULTIPLIER = 10;
-// TODO: should be a prop, different for each moon in config
-const ORBIT_SPEED = 0.06;
 
-const FINAL_SCALE = 0.4;
+const ORBITAL_SPEED_SCALE = 0.4;
+
+const FINAL_SIZE_SCALE = 0.4;
 
 export const Moon: FC<
   MoonConfig & { parentRef: RefObject<THREE.Mesh | null> }
@@ -21,10 +21,11 @@ export const Moon: FC<
   relativeScale,
   relativeRotationalSpeed,
   orbitRadius,
+  orbitPhase,
+  orbitalSpeed,
   axialTilt,
   textures,
   parentRef,
-  orbitPhase,
 }) => {
   const ref = useRef<THREE.Mesh>(null);
 
@@ -43,8 +44,13 @@ export const Moon: FC<
     // orbit, using global scene time
     const center = parentRef.current.position;
 
-    const phase = orbitPhase + sceneTime.get() * ORBIT_SPEED;
+    let phase =
+      orbitPhase + sceneTime.get() * orbitalSpeed * ORBITAL_SPEED_SCALE;
 
+    // TODO - temporary special scale for jupiters moons
+    if (parent === "jupiter") {
+      phase /= 3;
+    }
     const x = Math.sin(phase) * orbitRadius;
     const z = Math.cos(phase) * orbitRadius;
 
@@ -57,7 +63,7 @@ export const Moon: FC<
         ref={ref}
         castShadow
         receiveShadow
-        scale={relativeScale * FINAL_SCALE}
+        scale={relativeScale * FINAL_SIZE_SCALE}
         rotation={[0, 0, axialTilt]}
       >
         <sphereGeometry args={[2, 64, 64]} />

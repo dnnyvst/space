@@ -108,6 +108,9 @@ export const MOON_CONFIG: MoonConfigMap = {
     relativeRotationalSpeed: 0.03663,
     orbitRadius: 4,
     orbitPhase: Math.random() * Math.PI * 2,
+    // orbitalSpeed: 0.06,
+    // orbitalSpeed: 0.01,
+    orbitalSpeed: 0.2,
     axialTilt: 1.54,
     textures: {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
@@ -121,6 +124,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     relativeRotationalSpeed: 0.565,
     orbitRadius: 3.25,
     orbitPhase: Math.random() * Math.PI * 2,
+    orbitalSpeed: 1.54,
     axialTilt: 0.05,
     textures: {
       map: "/textures/io/surface.jpg",
@@ -134,6 +138,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     relativeRotationalSpeed: 0.281,
     orbitRadius: 3.75,
     orbitPhase: Math.random() * Math.PI * 2,
+    orbitalSpeed: 0.77,
     axialTilt: 0.1,
     textures: {
       map: "/textures/europa/surface.jpg",
@@ -147,6 +152,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     relativeRotationalSpeed: 0.139,
     orbitRadius: 4.25,
     orbitPhase: Math.random() * Math.PI * 2,
+    orbitalSpeed: 0.38,
     axialTilt: 0.33,
     textures: {
       map: "/textures/ganymede/surface.jpg",
@@ -160,6 +166,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     relativeRotationalSpeed: 0.06,
     orbitRadius: 4.75,
     orbitPhase: Math.random() * Math.PI * 2,
+    orbitalSpeed: 0.16,
     axialTilt: 0.51,
     textures: {
       map: "/textures/callisto/surface.jpg",
