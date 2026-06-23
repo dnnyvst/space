@@ -96,6 +96,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     relativeScale: 0.27,
     relativeSpeed: 0.0366,
     orbitRadius: 4,
+    orbitPhase: Math.random() * Math.PI * 2,
     tilt: 1.54,
     textures: {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,

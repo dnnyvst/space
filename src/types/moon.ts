@@ -10,4 +10,5 @@ export interface MoonConfig extends CelestialBody {
   relativeSpeed: number;
   orbitRadius: number;
   initialPosition?: THREE.Vector3Tuple;
+  orbitPhase: number;
 }

@@ -84,8 +84,6 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
     }
   });
 
-  // useOrbit({ ref: mainRef, enabled: orbitEnabled });
-
   return (
     <group scale={scale} position={position}>
       <group rotation={[0, 0, _axialTilt]}>
@@ -101,9 +99,12 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
             </>
           ) : (
             <meshStandardMaterial
+              key={id}
               map={night && textureOverrides.has("night") ? night : map}
-              normalMap={textures.normal ? normal : null}
-              normalScale={normal ? new THREE.Vector2(8, -8) : undefined}
+              normalMap={textures.normal && normal ? normal : null}
+              normalScale={
+                textures.normal && normal ? new THREE.Vector2(8, -8) : undefined
+              }
             />
           )}
         </mesh>

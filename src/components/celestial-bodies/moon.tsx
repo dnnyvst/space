@@ -1,9 +1,10 @@
-import { useEffect, useRef, type FC, type RefObject } from "react";
+import { useRef, type FC, type RefObject } from "react";
 import * as THREE from "three";
 import { useTexture } from "@react-three/drei";
 // import { useOrbit } from "@/hooks";
 import { MoonConfig } from "@/types";
 import { useFrame } from "@react-three/fiber";
+import { sceneTime } from "@/utils";
 
 // TODO: should be a prop, different for each moon in config
 const ORBIT_SPEED = 0.06;
@@ -19,15 +20,9 @@ export const Moon: FC<
   tilt,
   textures,
   parentRef,
+  orbitPhase,
 }) => {
   const ref = useRef<THREE.Mesh>(null);
-  // const angle = useRef(0);
-  const phase = useRef(0);
-
-  // random starting point
-  useEffect(() => {
-    phase.current = Math.random() * Math.PI * 2;
-  }, []);
 
   const map = useTexture(textures.map);
 
@@ -37,13 +32,13 @@ export const Moon: FC<
     // independent rotation
     ref.current.rotation.y += delta * relativeSpeed;
 
-    // orbit
+    // orbit, using global scene time
     const center = parentRef.current.position;
 
-    phase.current += delta * ORBIT_SPEED;
+    const phase = orbitPhase + sceneTime.get() * ORBIT_SPEED;
 
-    const x = Math.sin(phase.current) * orbitRadius;
-    const z = Math.cos(phase.current) * orbitRadius;
+    const x = Math.sin(phase) * orbitRadius;
+    const z = Math.cos(phase) * orbitRadius;
 
     ref.current.position.set(center.x + x, center.y, center.z + z);
   });
