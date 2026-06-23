@@ -88,6 +88,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   },
 };
 
+const SPEED_MULTIPLIER = 10;
 const JUPITER_SCALE = 3.0;
 
 export const MOON_CONFIG: MoonConfigMap = {
@@ -96,7 +97,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "moon",
     parent: "earth",
     relativeScale: 0.273,
-    relativeSpeed: 0.0366,
+    relativeSpeed: 0.003663 * SPEED_MULTIPLIER,
     orbitRadius: 4,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 1.54,
@@ -109,7 +110,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "io",
     parent: "jupiter",
     relativeScale: 0.026 * JUPITER_SCALE,
-    relativeSpeed: 0.5,
+    relativeSpeed: 0.0565 * SPEED_MULTIPLIER,
     orbitRadius: 3.25,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 0.05,
@@ -122,7 +123,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "europa",
     parent: "jupiter",
     relativeScale: 0.022 * JUPITER_SCALE,
-    relativeSpeed: 0.5,
+    relativeSpeed: 0.0281 * SPEED_MULTIPLIER,
     orbitRadius: 3.75,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 0.1,
@@ -135,7 +136,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "ganymede",
     parent: "jupiter",
     relativeScale: 0.038 * JUPITER_SCALE,
-    relativeSpeed: 0.5,
+    relativeSpeed: 0.0139 * SPEED_MULTIPLIER,
     orbitRadius: 4.25,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 0.33,
@@ -148,7 +149,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "callisto",
     parent: "jupiter",
     relativeScale: 0.034 * JUPITER_SCALE,
-    relativeSpeed: 0.5,
+    relativeSpeed: 0.006 * SPEED_MULTIPLIER,
     orbitRadius: 4.75,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 0.51,
