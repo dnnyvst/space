@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -12,7 +12,7 @@ import {
   Vignette,
 } from "@react-three/postprocessing";
 import { Skybox, CelestialBody, UIOverlay } from "@/components";
-import { CameraController, HandheldCamera, OrbitCamera } from "@/cameras";
+import { CameraController } from "@/cameras";
 import { SunLight } from "@/lights";
 import { CELESTIAL_BODY_CONFIG } from "@/config";
 import { SceneTimeDriver } from "@/utils";
@@ -48,9 +48,7 @@ export const MainCanvas: FC = () => {
         min={75}
         max={90}
         value={fov}
-        onChange={(e) =>
-          setFov(THREE.MathUtils.lerp(fov, +e.target.value, 0.1))
-        }
+        onChange={(e) => setFov(+e.target.value)}
       />
       {/* loading */}
       {!canvasReady && (
