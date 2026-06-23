@@ -15,7 +15,7 @@ export const Moon: FC<
   MoonConfig & { parentRef: RefObject<THREE.Mesh | null> }
 > = ({
   relativeScale,
-  relativeSpeed,
+  relativeRotationalSpeed,
   orbitRadius,
   axialTilt,
   textures,
@@ -30,7 +30,7 @@ export const Moon: FC<
     if (!ref.current || !parentRef.current) return;
 
     // independent rotation
-    ref.current.rotation.y += delta * relativeSpeed;
+    ref.current.rotation.y += delta * relativeRotationalSpeed;
 
     // orbit, using global scene time
     const center = parentRef.current.position;
