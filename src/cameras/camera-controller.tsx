@@ -13,8 +13,14 @@ export const CameraController = () => {
 
   const cameraRef = useRef<THREE.PerspectiveCamera>(null!);
 
+  // fov smoothing
   useFrame((_, delta) => {
+    if (!cameraRef.current) return;
+
     const clamped = THREE.MathUtils.clamp(fov, MIN_FOV, MAX_FOV);
+
+    // skip update if already basically there
+    if (Math.abs(cameraRef.current.fov - clamped) < 0.01) return;
 
     cameraRef.current.fov = THREE.MathUtils.damp(
       cameraRef.current.fov,
