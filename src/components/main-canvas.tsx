@@ -46,7 +46,7 @@ export const MainCanvas: FC = () => {
       <input
         type="range"
         min={75}
-        max={120}
+        max={90}
         value={cameraFov}
         onChange={(e) => setCameraFov(+e.target.value)}
       />
@@ -61,6 +61,7 @@ export const MainCanvas: FC = () => {
       {/* canvas (full screen) */}
       <Canvas
         className="w-full h-full"
+        camera={{ near: 0.1, far: 5000 }}
         gl={{
           alpha: true,
         }}

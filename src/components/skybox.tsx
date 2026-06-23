@@ -21,7 +21,7 @@ export const Skybox = () => {
 
   return (
     <mesh ref={meshRef}>
-      <sphereGeometry args={[1000, 64, 64]} />
+      <sphereGeometry args={[4750, 64, 64]} />
       <meshBasicMaterial
         map={starTexture}
         side={THREE.BackSide}
