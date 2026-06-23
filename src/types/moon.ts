@@ -8,5 +8,6 @@ export interface MoonConfig extends CelestialBody {
   parent: Planet;
   relativeScale: number;
   relativeSpeed: number;
-  initialPosition: THREE.Vector3Tuple;
+  orbitRadius: number;
+  initialPosition?: THREE.Vector3Tuple;
 }

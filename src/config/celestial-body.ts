@@ -95,23 +95,25 @@ export const MOON_CONFIG: MoonConfigMap = {
     parent: "earth",
     relativeScale: 0.27,
     relativeSpeed: 0.0366,
+    orbitRadius: 4,
     tilt: 1.54,
     textures: {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
-    initialPosition: [4, 2, -1],
+    //initialPosition: [4, 2, -1],
     // initialPosition: [2, 1, 2],
   },
   // "moon-2": {
   //   id: "moon-2",
   //   name: "moon-2",
   //   parent: "earth",
-  //   scale: 0.27,
+  //   relativeScale: 0.27,
+  //   relativeSpeed: 0.0366,
   //   tilt: 1.54,
   //   textures: {
   //     map: `/textures/moon/${RESOLUTION}_surface.jpg`,
   //   },
-  //   initialPosition: [-3, 1, -1],
+  //   initialPosition: [-3, 5, -1],
   // },
 };
 

@@ -161,7 +161,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       </group>
       {/* moons */}
       {moons.map((moon) => (
-        <Moon key={moon.id} {...moon} />
+        <Moon key={moon.id} parentRef={mainRef} {...moon} />
       ))}
     </group>
   );
