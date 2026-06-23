@@ -16,19 +16,16 @@ import { CameraController } from "@/cameras";
 import { SunLight } from "@/lights";
 import { CELESTIAL_BODY_CONFIG } from "@/config";
 import { SceneTimeDriver } from "@/utils";
-import { useAppContext, useIsMobile } from "@/hooks";
+import { useAppContext, useCameraContext, useIsMobile } from "@/hooks";
 
 export const MainCanvas: FC = () => {
   const {
     canvasReady,
     setCanvasReady,
-    orbitMode,
     selectedCelestialBodyId,
     selectedProperties,
-
-    fov,
-    setFov,
   } = useAppContext();
+  const { orbitMode, fov, setFov } = useCameraContext();
 
   const isMobile = useIsMobile(640);
 

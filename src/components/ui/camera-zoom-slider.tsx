@@ -1,7 +1,7 @@
-import { useAppContext } from "@/hooks";
+import { useCameraContext } from "@/hooks";
 
 export const CameraZoomSlider = () => {
-  const { cameraZoom, setCameraZoom } = useAppContext();
+  const { cameraZoom, setCameraZoom } = useCameraContext();
 
   const min = 1;
   const max = 22;

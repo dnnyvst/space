@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { CameraZoomSlider } from "@/components";
 import { CELESTIAL_BODY_CONFIG } from "@/config";
-import { useAppContext, useIsMobile } from "@/hooks";
+import { useAppContext, useCameraContext, useIsMobile } from "@/hooks";
 
 interface ListItemProps {
   selected: boolean;
@@ -29,13 +29,12 @@ const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
 
 export const UIOverlay: FC = () => {
   const {
-    orbitMode,
-    setOrbitMode,
     selectedCelestialBodyId,
     setSelectedCelestialBodyId,
     selectedProperties,
     setSelectedProperties,
   } = useAppContext();
+  const { orbitMode, setOrbitMode } = useCameraContext();
 
   const isMobile = useIsMobile(640);
 

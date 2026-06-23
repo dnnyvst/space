@@ -1,10 +1,12 @@
 "use client";
 
 import { MainCanvas } from "@/components";
-import { AppContextProvider } from "@/hooks";
+import { AppContextProvider, CameraContextProvider } from "@/hooks";
 
 export const MainPage = () => (
   <AppContextProvider>
-    <MainCanvas />
+    <CameraContextProvider>
+      <MainCanvas />
+    </CameraContextProvider>
   </AppContextProvider>
 );

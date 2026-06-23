@@ -3,13 +3,13 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
 import { HandheldCamera, OrbitCamera } from "@/cameras";
-import { useAppContext } from "@/hooks";
+import { useCameraContext } from "@/hooks";
 
 export const MIN_FOV = 75;
 export const MAX_FOV = 90;
 
 export const CameraController = () => {
-  const { orbitMode, fov } = useAppContext();
+  const { orbitMode, fov } = useCameraContext();
 
   const cameraRef = useRef<THREE.PerspectiveCamera>(null!);
 
