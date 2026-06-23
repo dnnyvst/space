@@ -33,7 +33,7 @@ export const Slider: FC<SliderProps> = ({
           appearance: none;
           -webkit-appearance: none;
 
-          width: 160px;
+          width: auto;
           height: 20px;
 
           background: transparent;
