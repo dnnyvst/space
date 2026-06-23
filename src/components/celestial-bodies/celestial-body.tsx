@@ -22,6 +22,7 @@ export interface CelestialBodyProps {
   scale?: number;
   position?: THREE.Vector3Tuple;
   speedMultiplier?: number;
+  rotationalSpeed?: number;
   emissive?: boolean;
   noRotation?: boolean;
   // orbitEnabled?: boolean;
@@ -35,7 +36,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   textureOverrides = new Set(),
   atmosphereColor = "#e8c082",
   scale = 1,
-  speedMultiplier = 1,
+  rotationalSpeed = 0.1,
   emissive = false,
   noRotation = false,
   position = [0, 0, 0],
@@ -69,18 +70,19 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       return;
     }
 
-    const direction = (retrograde ? -1 : 1) * speedMultiplier;
+    const multipliers = (retrograde ? -1 : 1) * rotationalSpeed;
+
     if (mainRef.current) {
-      mainRef.current.rotation.y += delta * 0.1 * direction;
+      mainRef.current.rotation.y += delta * multipliers;
     }
     if (cloudsRef.current) {
-      cloudsRef.current.rotation.y += delta * 0.07 * direction;
+      cloudsRef.current.rotation.y += delta * 0.7 * multipliers;
     }
     if (atmosphereRef.current) {
-      atmosphereRef.current.rotation.y += delta * 0.39 * direction;
+      atmosphereRef.current.rotation.y += delta * 3.9 * multipliers;
     }
     if (ringRef.current) {
-      ringRef.current.rotation.z += delta * 0.01 * direction;
+      ringRef.current.rotation.z += delta * 0.1 * multipliers;
     }
   });
 

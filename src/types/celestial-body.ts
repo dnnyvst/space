@@ -14,4 +14,5 @@ export interface CelestialBody {
   retrograde?: boolean;
   axialTilt: number;
   textures: CelestialBodyTextures;
+  rotationalSpeed?: number;
 }

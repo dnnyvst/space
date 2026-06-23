@@ -77,7 +77,8 @@ export const MainCanvas: FC = () => {
           textures={selectedCelestialBody.textures}
           textureOverrides={selectedProperties}
           scale={isMobile ? 0.75 : 1}
-          speedMultiplier={selectedCelestialBodyId === "sun" ? 0.2 : 1}
+          // speedMultiplier={selectedCelestialBodyId === "sun" ? 0.2 : 1}
+          rotationalSpeed={selectedCelestialBody.rotationalSpeed}
           emissive={selectedCelestialBodyId === "sun"}
           noRotation={orbitMode}
         />

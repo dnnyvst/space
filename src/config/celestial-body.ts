@@ -19,6 +19,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     id: "mercury",
     name: "mercury",
     axialTilt: 0.034,
+    rotationalSpeed: 0.1,
     textures: {
       map: `/textures/mercury/${RESOLUTION}_surface.jpg`,
     },
@@ -28,6 +29,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     name: "venus",
     retrograde: true,
     axialTilt: 177.4,
+    rotationalSpeed: 0.1,
     textures: {
       map: `/textures/venus/${RESOLUTION}_surface.jpg`,
       atmosphere: `/textures/venus/${RESOLUTION}_atmosphere.jpg`,
@@ -37,6 +39,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     id: "earth",
     name: "earth",
     axialTilt: 23.44,
+    rotationalSpeed: 0.1,
     textures: {
       map: `/textures/earth/${RESOLUTION}_day.jpg`,
       normal: `/textures/earth/${RESOLUTION}_normal.jpg`,
@@ -48,6 +51,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     id: "mars",
     name: "mars",
     axialTilt: 25.19,
+    rotationalSpeed: 0.1,
     textures: {
       map: `/textures/mars/${RESOLUTION}_surface.jpg`,
     },
@@ -56,6 +60,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     id: "jupiter",
     name: "jupiter",
     axialTilt: 3.13,
+    rotationalSpeed: 0.1,
     textures: {
       map: `/textures/jupiter/${RESOLUTION}_surface.jpg`,
     },
@@ -64,6 +69,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     id: "saturn",
     name: "saturn",
     axialTilt: 26.73,
+    rotationalSpeed: 0.1,
     textures: {
       map: `/textures/saturn/${RESOLUTION}_surface.jpg`,
       ring: `/textures/saturn/${RESOLUTION}_ring.png`,
@@ -74,6 +80,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     name: "uranus",
     retrograde: true,
     axialTilt: 97.77,
+    rotationalSpeed: 0.1,
     textures: {
       map: "/textures/uranus/surface.jpg",
     },
@@ -82,13 +89,13 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     id: "neptune",
     name: "neptune",
     axialTilt: 28.32,
+    rotationalSpeed: 0.1,
     textures: {
       map: "/textures/neptune/surface.jpg",
     },
   },
 };
 
-const SPEED_MULTIPLIER = 10;
 const JUPITER_SCALE = 3.0;
 
 export const MOON_CONFIG: MoonConfigMap = {
@@ -97,7 +104,8 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "moon",
     parent: "earth",
     relativeScale: 0.273,
-    relativeRotationalSpeed: 0.003663 * SPEED_MULTIPLIER,
+    rotationalSpeed: 0.1,
+    relativeRotationalSpeed: 0.03663,
     orbitRadius: 4,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 1.54,
@@ -110,7 +118,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "io",
     parent: "jupiter",
     relativeScale: 0.026 * JUPITER_SCALE,
-    relativeRotationalSpeed: 0.0565 * SPEED_MULTIPLIER,
+    relativeRotationalSpeed: 0.565,
     orbitRadius: 3.25,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 0.05,
@@ -123,7 +131,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "europa",
     parent: "jupiter",
     relativeScale: 0.022 * JUPITER_SCALE,
-    relativeRotationalSpeed: 0.0281 * SPEED_MULTIPLIER,
+    relativeRotationalSpeed: 0.281,
     orbitRadius: 3.75,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 0.1,
@@ -136,7 +144,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "ganymede",
     parent: "jupiter",
     relativeScale: 0.038 * JUPITER_SCALE,
-    relativeRotationalSpeed: 0.0139 * SPEED_MULTIPLIER,
+    relativeRotationalSpeed: 0.139,
     orbitRadius: 4.25,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 0.33,
@@ -149,7 +157,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "callisto",
     parent: "jupiter",
     relativeScale: 0.034 * JUPITER_SCALE,
-    relativeRotationalSpeed: 0.006 * SPEED_MULTIPLIER,
+    relativeRotationalSpeed: 0.06,
     orbitRadius: 4.75,
     orbitPhase: Math.random() * Math.PI * 2,
     axialTilt: 0.51,
@@ -164,8 +172,9 @@ export const CELESTIAL_BODY_CONFIG: CelestialBodyConfigMap = {
     id: "sun",
     name: "sun",
     axialTilt: 7.25,
+    rotationalSpeed: 0.02,
     textures: { map: `/textures/sun/${RESOLUTION}_surface.jpg` },
-  },
+  } as PlanetConfig,
   moon: MOON_CONFIG["moon"],
   ...PLANET_CONFIG,
 };

@@ -4,8 +4,11 @@ import { useTexture } from "@react-three/drei";
 // import { useOrbit } from "@/hooks";
 import { MoonConfig } from "@/types";
 import { useFrame } from "@react-three/fiber";
+import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
 
+// not very fun if they barely spin
+const ROTATIONAL_SPEED_MULTIPLIER = 10;
 // TODO: should be a prop, different for each moon in config
 const ORBIT_SPEED = 0.06;
 
@@ -14,6 +17,7 @@ const FINAL_SCALE = 0.4;
 export const Moon: FC<
   MoonConfig & { parentRef: RefObject<THREE.Mesh | null> }
 > = ({
+  parent,
   relativeScale,
   relativeRotationalSpeed,
   orbitRadius,
@@ -30,7 +34,11 @@ export const Moon: FC<
     if (!ref.current || !parentRef.current) return;
 
     // independent rotation
-    ref.current.rotation.y += delta * relativeRotationalSpeed;
+    ref.current.rotation.y +=
+      delta *
+      PLANET_CONFIG[parent].rotationalSpeed *
+      relativeRotationalSpeed *
+      ROTATIONAL_SPEED_MULTIPLIER;
 
     // orbit, using global scene time
     const center = parentRef.current.position;

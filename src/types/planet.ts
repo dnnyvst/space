@@ -14,4 +14,5 @@ export type Planet =
 
 export interface PlanetConfig extends CelestialBody {
   name: Planet;
+  rotationalSpeed: number;
 }
