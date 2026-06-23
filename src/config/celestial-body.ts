@@ -101,20 +101,19 @@ export const MOON_CONFIG: MoonConfigMap = {
     textures: {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
-    //initialPosition: [4, 2, -1],
-    // initialPosition: [2, 1, 2],
   },
   // "moon-2": {
   //   id: "moon-2",
-  //   name: "moon-2",
+  //   name: "moon",
   //   parent: "earth",
-  //   relativeScale: 0.27,
-  //   relativeSpeed: 0.0366,
-  //   tilt: 1.54,
+  //   relativeScale: 0.2,
+  //   relativeSpeed: 0.5,
+  //   orbitRadius: 5,
+  //   orbitPhase: Math.random() * Math.PI * 3,
+  //   tilt: 6.25,
   //   textures: {
   //     map: `/textures/moon/${RESOLUTION}_surface.jpg`,
   //   },
-  //   initialPosition: [-3, 5, -1],
   // },
 };
 
