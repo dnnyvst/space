@@ -47,7 +47,7 @@ export const UIOverlay: FC = () => {
   return (
     <div
       className={`h-screen ${
-        isMobile && "justify-between pb-16"
+        isMobile && "justify-between pb-14"
       } absolute py-4 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min`}
     >
       {/* celestial body select */}
