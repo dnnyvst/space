@@ -89,12 +89,20 @@ export const Moon: FC<
       {(hovered || beingFollowed) && (
         <Billboard>
           <Float speed={4}>
-            <Text key={id} color="#cfc8bb" anchorX="center" anchorY={-4}>
+            <Text
+              key={id}
+              color="#cfc8bb"
+              anchorX="center"
+              anchorY={-3.8}
+              font="/fonts/GeistMono-Regular.ttf"
+              raycast={undefined}
+            >
               {name}
             </Text>
           </Float>
         </Billboard>
       )}
+
       {/* invisible selection mesh */}
       <mesh
         onPointerEnter={() => {
