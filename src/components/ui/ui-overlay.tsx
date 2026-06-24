@@ -45,14 +45,12 @@ export const UIOverlay: FC = () => {
   );
 
   return (
-    <div
-      className={`flex justify-center h-screen absolute py-4 px-4 z-10 w-full ${isMobile && "pb-14"}`}
-    >
+    <div className="flex justify-center h-screen absolute py-4 px-4 z-10 w-full">
       <div
-        className={`${isMobile ? "justify-between" : " lg:justify-center justify-end"} items-center flex flex-col-reverse gap-4 w-max lg:w-auto lg:items-start lg:flex-row`}
+        className={`${isMobile ? "justify-between pb-10" : " lg:justify-center justify-end"} items-center flex flex-col-reverse gap-4 w-max lg:w-auto lg:items-start lg:flex-row`}
       >
         {/* controls */}
-        <div className={`flex gap-2 lg:flex-col lg:justify-start w-full`}>
+        <div className="flex gap-2 lg:flex-col lg:justify-start w-full">
           {/* sliders */}
           <div className="flex flex-col gap-2 bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
             <span className="flex flex-col">
@@ -94,7 +92,7 @@ export const UIOverlay: FC = () => {
         </div>
         {/* celestial body select */}
         <div
-          className={`flex flex-wrap gap-3 bg-card/0 border border-text/30 py-2 px-4 rounded-lg h-min lg:w-min lg:flex-nowrap lg:gap-6 ${orbitMode && "invisible opacity-0"} `}
+          className={`flex flex-wrap gap-3 bg-card/0 border border-text/30 py-2 px-4 rounded-lg h-min lg:w-min lg:flex-nowrap lg:gap-6 ${orbitMode && "invisible opacity-0"}`}
         >
           {Object.values(CELESTIAL_BODY_CONFIG).map(({ id, name }) => (
             <button
