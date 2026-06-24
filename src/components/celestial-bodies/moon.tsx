@@ -88,7 +88,7 @@ export const Moon: FC<
     <group name={name} ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
       {(hovered || beingFollowed) && (
         <Billboard>
-          <Float>
+          <Float speed={4}>
             <Text key={id} color="#cfc8bb" anchorX="center" anchorY={-4}>
               {name}
             </Text>
