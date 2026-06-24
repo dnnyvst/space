@@ -78,15 +78,9 @@ export const Moon: FC<
   };
 
   return (
-    <>
-      {/* todo - invisible selection mesh */}
-      {/* todo - show name on follow */}
+    <group ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
+      {/* invisible selection mesh */}
       <mesh
-        ref={ref}
-        castShadow
-        receiveShadow
-        scale={relativeScale * FINAL_SIZE_SCALE}
-        rotation={[0, 0, axialTilt]}
         onPointerEnter={() => {
           if (
             !(followRef?.current === ref.current && activeCamera === "follow")
@@ -97,6 +91,11 @@ export const Moon: FC<
         onPointerLeave={() => setHovered(false)}
         onPointerUp={handleClick}
       >
+        <sphereGeometry args={[3, 16, 16]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+      {/* todo - show name on follow */}
+      <mesh castShadow receiveShadow rotation={[0, 0, axialTilt]}>
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial map={map} />
         <Outlines
@@ -106,6 +105,6 @@ export const Moon: FC<
           opacity={hovered ? 1 : 0}
         />
       </mesh>
-    </>
+    </group>
   );
 };
