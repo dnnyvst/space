@@ -48,10 +48,10 @@ export const UIOverlay: FC = () => {
     <div
       className={`flex justify-center h-screen absolute py-4 px-4 z-10 w-full ${isMobile && "pb-14"}`}
     >
-      {/* controls */}
       <div
-        className={`items-center flex flex-col-reverse gap-4 w-max lg:w-auto lg:items-start lg:flex-row lg:justify-center justify-end`}
+        className={`${isMobile ? "justify-between" : " lg:justify-center justify-end"} items-center flex flex-col-reverse gap-4 w-max lg:w-auto lg:items-start lg:flex-row`}
       >
+        {/* controls */}
         <div className={`flex gap-2 lg:flex-col lg:justify-start w-full`}>
           {/* sliders */}
           <div className="flex flex-col gap-2 bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
