@@ -8,7 +8,7 @@ import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
 import { useCameraContext } from "@/hooks";
 
-// For now, increase the speed so it's more obvious
+// for now, increase the speed so it's more obvious
 const ROTATIONAL_SPEED_MULTIPLIER = 10;
 
 const ORBITAL_SPEED_SCALE = 0.4;
@@ -53,7 +53,7 @@ export const Moon: FC<
     let phase =
       orbitPhase + sceneTime.get() * orbitalSpeed * ORBITAL_SPEED_SCALE;
 
-    // TODO - temporary special scale for jupiters moons
+    // todo - temporary special scale for jupiters moons
     if (parent === "jupiter") {
       phase /= 3;
     }
@@ -79,8 +79,8 @@ export const Moon: FC<
 
   return (
     <>
-      {/* TODO - invisible selection mesh */}
-      {/* TODO - show name on follow */}
+      {/* todo - invisible selection mesh */}
+      {/* todo - show name on follow */}
       <mesh
         ref={ref}
         castShadow

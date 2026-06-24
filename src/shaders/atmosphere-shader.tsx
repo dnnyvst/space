@@ -51,7 +51,6 @@ void main() {
 
   vec4 tex = texture2D(uTexture, vUv);
 
-  // 🎯 THIS is the key change:
   // texture drives base atmosphere everywhere
   float density = dot(tex.rgb, vec3(0.299, 0.587, 0.114));
 
@@ -59,7 +58,7 @@ void main() {
   float n = hash(vUv * 30.0 + uTime * 0.03);
   float flow = mix(0.85, 1.15, n);
 
-  // 🌫️ IMPORTANT: texture is NOT gated by rim anymore
+  // texture is NOT gated by rim anymore
   float base = density * uOpacity * flow;
 
   // rim only gently enhances edges (not defines them)

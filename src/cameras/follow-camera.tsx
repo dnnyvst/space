@@ -20,7 +20,7 @@ export const FollowCamera: FC<FollowCameraProps> = ({ enabled = false }) => {
     if (!enabled || !followRef?.current) return;
 
     const target = followRef.current.position;
-    // TODO - use parent center via
+    // todo - use parent center via
     // target.clone().sub(planet.position).normalize()
     direction.copy(target).normalize();
 

@@ -3,11 +3,11 @@ import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { sceneTime } from "@/utils";
 
-// Orbit settings
+// orbit settings
 const RADIUS = 5;
 const ORBIT_SPEED = 0.12;
 
-// Very slow vertical drift
+// very slow vertical drift
 const VERTICAL_AMPLITUDE = 0.15; // keep this small
 const VERTICAL_SPEED = 0.25; // VERY slow (≈30s per cycle) (EDITED, was 0.03)
 
@@ -28,16 +28,16 @@ export const OrbitCamera: FC<OrbitCameraProps> = ({ enabled = false }) => {
 
     const orbitPosition = _orbitPosition.current;
 
-    // Start at a point on the Z axis
+    // start at a point on the Z axis
     orbitPosition.set(0, 0, RADIUS);
 
-    // Rotate that point around the Y axis
+    // rotate that point around the Y axis
     orbitPosition.applyAxisAngle(Y_AXIS, time * ORBIT_SPEED);
 
-    // Add slow vertical motion
+    // add slow vertical motion
     orbitPosition.y = Math.sin(time * VERTICAL_SPEED) * VERTICAL_AMPLITUDE;
 
-    // Apply to camera
+    // apply to camera
     camera.position.copy(orbitPosition);
     camera.lookAt(0, 0, 0);
   });
