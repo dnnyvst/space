@@ -7,6 +7,7 @@ import {
   Outlines,
   Billboard,
   Text,
+  Float,
 } from "@react-three/drei";
 import { MoonConfig } from "@/types";
 import { PLANET_CONFIG } from "@/config";
@@ -90,9 +91,11 @@ export const Moon: FC<
     <group ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
       {(hovered || beingFollowed) && (
         <Billboard>
-          <Text key={id} color="#cfc8bb" anchorX="center" anchorY={-4}>
-            {name}
-          </Text>
+          <Float>
+            <Text key={id} color="#cfc8bb" anchorX="center" anchorY={-4}>
+              {name}
+            </Text>
+          </Float>
         </Billboard>
       )}
       {/* invisible selection mesh */}
