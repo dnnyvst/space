@@ -25,7 +25,7 @@ export const MainCanvas: FC = () => {
     selectedCelestialBodyId,
     selectedProperties,
   } = useAppContext();
-  const { activeCamera } = useCameraContext();
+  const { activeCamera, setActiveCamera } = useCameraContext();
 
   const isMobile = useIsMobile(640);
 
@@ -50,6 +50,11 @@ export const MainCanvas: FC = () => {
       {canvasReady && <UIOverlay />}
       {/* canvas (full screen) */}
       <Canvas
+        onPointerMissed={() => {
+          if (activeCamera === "follow") {
+            setActiveCamera("handheld");
+          }
+        }}
         className="w-full h-full"
         gl={{
           alpha: true,

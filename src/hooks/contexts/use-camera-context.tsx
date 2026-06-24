@@ -21,7 +21,6 @@ interface CameraContextValue {
   setActiveCamera: Dispatch<SetStateAction<Camera>>;
   setHandheldZoom: Dispatch<SetStateAction<number>>;
   setFov: Dispatch<SetStateAction<number>>;
-  // setFollowRef: (followRef: RefObject<THREE.Mesh | null>) => void;
 }
 
 const INIT: CameraContextValue = {
@@ -33,7 +32,6 @@ const INIT: CameraContextValue = {
   setActiveCamera: () => {},
   setHandheldZoom: () => {},
   setFov: () => {},
-  // setFollowRef: () => {},
 };
 
 const CameraContext = createContext(INIT);
@@ -50,6 +48,11 @@ export const CameraContextProvider = ({
   const [fov, setFov] = useState<number>(INIT.fov);
 
   const followRef = useRef(null);
+
+  // const stopFollowing = () => {
+  //   setActiveCamera("handheld");
+  //   followRef.current = null;
+  // };
 
   return (
     <CameraContext.Provider

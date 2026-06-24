@@ -111,7 +111,12 @@ export const UIOverlay: FC = () => {
                   ? "underline underline-offset-4 decoration-2 opacity-100"
                   : "opacity-30 hover:opacity-70"
               }`}
-              onClick={() => setSelectedCelestialBodyId(id)}
+              onClick={() => {
+                setSelectedCelestialBodyId(id);
+                if (activeCamera === "follow") {
+                  setActiveCamera("handheld");
+                }
+              }}
             >
               {name}
             </button>

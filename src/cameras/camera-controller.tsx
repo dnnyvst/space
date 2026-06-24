@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
@@ -12,6 +12,15 @@ export const CameraController = () => {
   const { activeCamera, fov, followRef } = useCameraContext();
 
   const cameraRef = useRef<THREE.PerspectiveCamera>(null!);
+
+  // remove follow ref when camera changes
+  useEffect(() => {
+    if (!followRef?.current) return;
+
+    if (activeCamera !== "follow") {
+      followRef.current = null;
+    }
+  }, [activeCamera, followRef]);
 
   // fov smoothing
   useFrame((_, delta) => {

@@ -28,7 +28,7 @@ export const Moon: FC<
   textures,
   parentRef,
 }) => {
-  const { followRef, setActiveCamera } = useCameraContext();
+  const { followRef, activeCamera, setActiveCamera } = useCameraContext();
 
   const ref = useRef<THREE.Mesh>(null);
 
@@ -70,10 +70,15 @@ export const Moon: FC<
         rotation={[0, 0, axialTilt]}
         onPointerUp={() => {
           if (ref.current && followRef) {
-            followRef.current = ref.current;
-            setActiveCamera((activeCamera) =>
-              activeCamera === "follow" ? "handheld" : "follow",
-            );
+            if (
+              followRef.current === ref.current &&
+              activeCamera === "follow"
+            ) {
+              setActiveCamera("handheld");
+            } else {
+              followRef.current = ref.current;
+              setActiveCamera("follow");
+            }
           }
         }}
       >
