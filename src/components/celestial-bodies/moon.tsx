@@ -1,6 +1,6 @@
 import { useRef, useState, type FC, type RefObject } from "react";
 import * as THREE from "three";
-import { useTexture, Outlines } from "@react-three/drei";
+import { useTexture, useCursor, Outlines } from "@react-three/drei";
 // import { useOrbit } from "@/hooks";
 import { MoonConfig } from "@/types";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
@@ -33,6 +33,7 @@ export const Moon: FC<
   const ref = useRef<THREE.Mesh>(null);
 
   const [hovered, setHovered] = useState<boolean>(false);
+  useCursor(hovered, "zoom-in");
 
   const map = useTexture(textures.map);
 
