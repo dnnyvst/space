@@ -1,9 +1,14 @@
 import { useRef, useState, type FC, type RefObject } from "react";
 import * as THREE from "three";
-import { useTexture, useCursor, Outlines } from "@react-three/drei";
-// import { useOrbit } from "@/hooks";
-import { MoonConfig } from "@/types";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
+import {
+  useTexture,
+  useCursor,
+  Outlines,
+  Billboard,
+  Text,
+} from "@react-three/drei";
+import { MoonConfig } from "@/types";
 import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
 import { useCameraContext } from "@/hooks";
@@ -18,6 +23,8 @@ const FINAL_SIZE_SCALE = 0.4;
 export const Moon: FC<
   MoonConfig & { parentRef: RefObject<THREE.Mesh | null> }
 > = ({
+  id,
+  name,
   parent,
   relativeScale,
   relativeRotationalSpeed,
@@ -31,7 +38,7 @@ export const Moon: FC<
   const { followRef, activeCamera, setActiveCamera } = useCameraContext();
 
   const ref = useRef<THREE.Mesh>(null);
-
+  const [beingFollowed, setBeingFollowed] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
   useCursor(hovered, "zoom-in");
 
@@ -66,12 +73,14 @@ export const Moon: FC<
   const handleClick = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     if (ref.current && followRef) {
-      if (followRef.current === ref.current && activeCamera === "follow") {
+      if (beingFollowed && activeCamera === "follow") {
         setActiveCamera("handheld");
+        setBeingFollowed(false);
         setHovered(false);
       } else {
         followRef.current = ref.current;
         setActiveCamera("follow");
+        setBeingFollowed(true);
         setHovered(false);
       }
     }
@@ -79,12 +88,17 @@ export const Moon: FC<
 
   return (
     <group ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
+      {(hovered || beingFollowed) && (
+        <Billboard>
+          <Text key={id} color="#cfc8bb" anchorX="center" anchorY={-4}>
+            {name}
+          </Text>
+        </Billboard>
+      )}
       {/* invisible selection mesh */}
       <mesh
         onPointerEnter={() => {
-          if (
-            !(followRef?.current === ref.current && activeCamera === "follow")
-          ) {
+          if (!(beingFollowed && activeCamera === "follow")) {
             setHovered(true);
           }
         }}
