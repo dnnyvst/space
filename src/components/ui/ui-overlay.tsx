@@ -44,6 +44,9 @@ export const UIOverlay: FC = () => {
     ),
   );
 
+  const handheldZoomDisabled =
+    activeCamera === "orbit" || activeCamera === "follow";
+
   return (
     <div className="pointer-events-none flex justify-center h-screen absolute py-4 px-4 z-10 w-full">
       <div
@@ -59,11 +62,11 @@ export const UIOverlay: FC = () => {
             </span>
             <span className="flex flex-col">
               <span
-                className={`text-center ${activeCamera === "orbit" && "opacity-20"}`}
+                className={`text-center ${handheldZoomDisabled && "opacity-20"}`}
               >
                 zoom
               </span>
-              <CameraZoomSlider disabled={activeCamera === "orbit"} />
+              <CameraZoomSlider disabled={handheldZoomDisabled} />
             </span>
           </div>
           {/* toggles */}

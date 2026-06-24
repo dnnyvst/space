@@ -6,6 +6,7 @@ import { MoonConfig } from "@/types";
 import { useFrame } from "@react-three/fiber";
 import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
+import { useCameraContext } from "@/hooks";
 
 // For now, increase the speed so it's more obvious
 const ROTATIONAL_SPEED_MULTIPLIER = 10;
@@ -27,6 +28,8 @@ export const Moon: FC<
   textures,
   parentRef,
 }) => {
+  const { followRef, setActiveCamera } = useCameraContext();
+
   const ref = useRef<THREE.Mesh>(null);
 
   const map = useTexture(textures.map);
@@ -65,11 +68,13 @@ export const Moon: FC<
         receiveShadow
         scale={relativeScale * FINAL_SIZE_SCALE}
         rotation={[0, 0, axialTilt]}
-        onPointerMove={() => {
-          console.log("click");
-          // setActiveCamera((activeCamera) =>
-          //   activeCamera === "follow" ? "handheld" : "follow",
-          // );
+        onPointerUp={() => {
+          if (ref.current && followRef) {
+            followRef.current = ref.current;
+            setActiveCamera((activeCamera) =>
+              activeCamera === "follow" ? "handheld" : "follow",
+            );
+          }
         }}
       >
         <sphereGeometry args={[2, 64, 64]} />

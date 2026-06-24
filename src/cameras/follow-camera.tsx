@@ -1,18 +1,7 @@
-import { useRef, type FC } from "react";
+import { type FC } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { sceneTime } from "@/utils";
 import { useCameraContext } from "@/hooks";
-
-// // Orbit settings
-// const RADIUS = 5;
-// const ORBIT_SPEED = 0.12;
-
-// // Very slow vertical drift
-// const VERTICAL_AMPLITUDE = 0.15; // keep this small
-// const VERTICAL_SPEED = 0.25; // VERY slow (≈30s per cycle) (EDITED, was 0.03)
-
-// const Y_AXIS = new THREE.Vector3(0, 1, 0);
 
 interface FollowCameraProps {
   enabled?: boolean;
@@ -23,23 +12,35 @@ export const FollowCamera: FC<FollowCameraProps> = ({ enabled = false }) => {
 
   const { followRef } = useCameraContext();
 
-  const newCameraPosition = useRef(new THREE.Vector3());
+  const offset = new THREE.Vector3();
+  const direction = new THREE.Vector3();
+  const newCameraPosition = new THREE.Vector3();
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!enabled || !followRef?.current) return;
 
-    // const time = sceneTime.get();
+    const target = followRef.current.position;
+    // TODO - use parent center via
+    // target.clone().sub(planet.position).normalize()
+    direction.copy(target).normalize();
 
-    const targetPosition = followRef.current.position;
+    // copy direction
+    // multiply (x "farther" from parent)
+    // add vertical lift
+    offset
+      .copy(direction)
+      .multiplyScalar(0.5)
+      .add(new THREE.Vector3(0, 0.25, 0));
 
-    newCameraPosition.current.set(
-      targetPosition.x,
-      targetPosition.y + 1,
-      targetPosition.z + 1,
+    newCameraPosition.copy(target).add(offset);
+
+    camera.position.set(
+      THREE.MathUtils.damp(camera.position.x, newCameraPosition.x, 3, delta),
+      THREE.MathUtils.damp(camera.position.y, newCameraPosition.y, 3, delta),
+      THREE.MathUtils.damp(camera.position.z, newCameraPosition.z, 3, delta),
     );
 
-    // camera.position.copy(newCameraPosition.current);
-    camera.lookAt(followRef.current.position);
+    camera.lookAt(target);
   });
 
   return null;
