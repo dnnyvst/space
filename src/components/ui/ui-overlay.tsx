@@ -46,12 +46,10 @@ export const UIOverlay: FC = () => {
 
   return (
     <div
-      className={`flex gap-4 justify-center h-screen absolute p-4 z-10 w-full ${isMobile && "justify-between pb-14"}`}
+      className={`items-center flex flex-col-reverse justify-between gap-4 h-screen absolute py-4 px-16 z-10 w-full lg:items-start lg:px-4 lg:flex-row lg:justify-center ${isMobile && "pb-14"}`}
     >
       {/* controls */}
-      <div
-        className={`flex flex-col ${!isMobile && "gap-2"} ${isMobile && "flex-row justify-between"}`}
-      >
+      <div className="flex gap-2 justify-around lg:flex-col lg:justify-start">
         {/* sliders */}
         <div className="flex flex-col gap-2 bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
           <span className="flex flex-col">
@@ -93,12 +91,12 @@ export const UIOverlay: FC = () => {
       </div>
       {/* celestial body select */}
       <div
-        className={`flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-card/0 border border-text/30 py-2 px-4 rounded-lg w-min h-min ${orbitMode && "invisible opacity-0"} `}
+        className={`flex flex-wrap gap-3 bg-card/0 border border-text/30 py-2 px-4 rounded-lg h-min lg:w-min lg:flex-nowrap lg:gap-6 ${orbitMode && "invisible opacity-0"} `}
       >
         {Object.values(CELESTIAL_BODY_CONFIG).map(({ id, name }) => (
           <button
             key={id}
-            className={`cursor-pointer transition-all duration-300 ease-out ${
+            className={`block cursor-pointer transition-all duration-300 ease-out ${
               id === selectedCelestialBody.id
                 ? "underline underline-offset-4 decoration-2 opacity-100"
                 : "opacity-30 hover:opacity-70"
