@@ -46,33 +46,11 @@ export const UIOverlay: FC = () => {
 
   return (
     <div
-      className={`h-screen ${
-        isMobile && "justify-between pb-14"
-      } absolute py-4 left-1/2 -translate-x-1/2 flex flex-col gap-4 z-10 w-3/4 md:w-min ${isMobile && "w-5/6"}`}
+      className={`grid grid-cols-12 items-start gap-4 h-screen absolute p-4 z-10 md:w-full ${isMobile && "justify-between pb-14 w-5/6"}`}
     >
-      {/* celestial body select */}
-      <div
-        className={`${
-          orbitMode && "invisible opacity-0"
-        } flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-card/0 border border-text/30 py-2 px-4 rounded-lg`}
-      >
-        {Object.values(CELESTIAL_BODY_CONFIG).map(({ id, name }) => (
-          <button
-            key={id}
-            className={`cursor-pointer transition-all duration-300 ease-out ${
-              id === selectedCelestialBody.id
-                ? "underline underline-offset-4 decoration-2 opacity-100"
-                : "opacity-30 hover:opacity-70"
-            }`}
-            onClick={() => setSelectedCelestialBodyId(id)}
-          >
-            {name}
-          </button>
-        ))}
-      </div>
       {/* controls */}
       <div
-        className={`flex flex-col ${!isMobile && "gap-2 md:w-1/4 w-1/3"} ${isMobile && "flex-row justify-between"}`}
+        className={`w-5/6 col-span-2 flex flex-col ${!isMobile && "gap-2"} ${isMobile && "flex-row justify-between"}`}
       >
         {/* sliders */}
         <div className="flex flex-col gap-2 bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
@@ -111,6 +89,24 @@ export const UIOverlay: FC = () => {
               />
             ))}
           </ul>
+        </div>
+      </div>
+      {/* celestial body select */}
+      <div className={`col-span-8 ${orbitMode && "invisible opacity-0"}`}>
+        <div className="place-self-center flex flex-wrap md:flex-nowrap gap-3 md:gap-6 bg-card/0 border border-text/30 py-2 px-4 rounded-lg w-min">
+          {Object.values(CELESTIAL_BODY_CONFIG).map(({ id, name }) => (
+            <button
+              key={id}
+              className={`cursor-pointer transition-all duration-300 ease-out ${
+                id === selectedCelestialBody.id
+                  ? "underline underline-offset-4 decoration-2 opacity-100"
+                  : "opacity-30 hover:opacity-70"
+              }`}
+              onClick={() => setSelectedCelestialBodyId(id)}
+            >
+              {name}
+            </button>
+          ))}
         </div>
       </div>
     </div>
