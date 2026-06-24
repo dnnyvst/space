@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { useTexture, Outlines } from "@react-three/drei";
 // import { useOrbit } from "@/hooks";
 import { MoonConfig } from "@/types";
-import { useFrame } from "@react-three/fiber";
+import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
 import { useCameraContext } from "@/hooks";
@@ -62,7 +62,7 @@ export const Moon: FC<
     ref.current.position.set(center.x + x, center.y, center.z + z);
   });
 
-  const handleClick = (e) => {
+  const handleClick = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     if (ref.current && followRef) {
       if (followRef.current === ref.current && activeCamera === "follow") {
@@ -79,6 +79,7 @@ export const Moon: FC<
   return (
     <>
       {/* TODO - invisible selection mesh */}
+      {/* TODO - show name on follow */}
       <mesh
         ref={ref}
         castShadow
