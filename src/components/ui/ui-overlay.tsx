@@ -11,7 +11,7 @@ interface ListItemProps {
 
 const ListItem: FC<ListItemProps> = ({ selected, onClick, text }) => (
   <li
-    className={`flex gap-3 items-center cursor-pointer opacity-30 hover:opacity-70 cursor-pointer transition-all duration-300 ease-out ${
+    className={`flex gap-3 items-center cursor-pointer opacity-30 hover:opacity-70 transition-all duration-300 ease-out ${
       selected && "opacity-100 hover:opacity-100"
     }`}
     onClick={onClick}
