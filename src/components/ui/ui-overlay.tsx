@@ -45,10 +45,14 @@ export const UIOverlay: FC = () => {
   );
 
   return (
-    <div className="flex justify-center h-screen absolute py-4 px-12 z-10 w-full sm:px-8 lg:px-4">
+    <div
+      className={`flex justify-center h-screen absolute py-4 px-4 z-10 w-full ${isMobile && "pb-14"}`}
+    >
       {/* controls */}
-      <div className="items-center flex flex-col-reverse justify-end gap-4 w-max lg:w-auto lg:items-start lg:flex-row lg:justify-center">
-        <div className="flex gap-2 justify-around lg:flex-col lg:justify-start self-start">
+      <div
+        className={`items-center flex flex-col-reverse gap-4 w-max lg:w-auto lg:items-start lg:flex-row lg:justify-center justify-end`}
+      >
+        <div className={`flex gap-2 lg:flex-col lg:justify-start w-full`}>
           {/* sliders */}
           <div className="flex flex-col gap-2 bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
             <span className="flex flex-col">
@@ -68,7 +72,7 @@ export const UIOverlay: FC = () => {
               <ListItem
                 selected={orbitMode === true}
                 onClick={() => setOrbitMode((orbitMode) => !orbitMode)}
-                text={`orbit ${!isMobile ? "cam" : ""}`}
+                text="orbit cam"
               />
               {Object.keys(toggleTextures).map((property) => (
                 <ListItem
