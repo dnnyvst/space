@@ -10,7 +10,7 @@ import {
 } from "react";
 import * as THREE from "three";
 
-type Camera = "handheld" | "orbit";
+type Camera = "handheld" | "orbit" | "follow";
 
 interface CameraContextValue {
   activeCamera: Camera;

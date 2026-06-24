@@ -65,6 +65,12 @@ export const Moon: FC<
         receiveShadow
         scale={relativeScale * FINAL_SIZE_SCALE}
         rotation={[0, 0, axialTilt]}
+        onPointerMove={() => {
+          console.log("click");
+          // setActiveCamera((activeCamera) =>
+          //   activeCamera === "follow" ? "handheld" : "follow",
+          // );
+        }}
       >
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial map={map} />

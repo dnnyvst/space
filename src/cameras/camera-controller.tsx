@@ -2,14 +2,14 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
-import { HandheldCamera, OrbitCamera } from "@/cameras";
+import { FollowCamera, HandheldCamera, OrbitCamera } from "@/cameras";
 import { useCameraContext } from "@/hooks";
 
 export const MIN_FOV = 75;
 export const MAX_FOV = 90;
 
 export const CameraController = () => {
-  const { activeCamera, fov } = useCameraContext();
+  const { activeCamera, fov, followRef } = useCameraContext();
 
   const cameraRef = useRef<THREE.PerspectiveCamera>(null!);
 
@@ -43,6 +43,7 @@ export const CameraController = () => {
       />
       <HandheldCamera enabled={activeCamera === "handheld"} />
       <OrbitCamera enabled={activeCamera === "orbit"} />
+      <FollowCamera enabled={activeCamera === "follow"} />
     </>
   );
 };

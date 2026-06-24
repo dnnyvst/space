@@ -23,26 +23,23 @@ export const FollowCamera: FC<FollowCameraProps> = ({ enabled = false }) => {
 
   const { followRef } = useCameraContext();
 
-  const _orbitPosition = useRef(new THREE.Vector3());
+  const newCameraPosition = useRef(new THREE.Vector3());
 
   useFrame(() => {
-    if (!enabled) return;
-    const time = sceneTime.get();
+    if (!enabled || !followRef?.current) return;
 
-    // const orbitPosition = _orbitPosition.current;
+    // const time = sceneTime.get();
 
-    // // Start at a point on the Z axis
-    // orbitPosition.set(0, 0, RADIUS);
+    const targetPosition = followRef.current.position;
 
-    // // Rotate that point around the Y axis
-    // orbitPosition.applyAxisAngle(Y_AXIS, time * ORBIT_SPEED);
+    newCameraPosition.current.set(
+      targetPosition.x,
+      targetPosition.y + 1,
+      targetPosition.z + 1,
+    );
 
-    // // Add slow vertical motion
-    // orbitPosition.y = Math.sin(time * VERTICAL_SPEED) * VERTICAL_AMPLITUDE;
-
-    // // Apply to camera
-    // camera.position.copy(orbitPosition);
-    // camera.lookAt(0, 0, 0);
+    // camera.position.copy(newCameraPosition.current);
+    camera.lookAt(followRef.current.position);
   });
 
   return null;
