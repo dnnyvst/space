@@ -9,7 +9,7 @@ export const MIN_FOV = 75;
 export const MAX_FOV = 90;
 
 export const CameraController = () => {
-  const { orbitMode, fov } = useCameraContext();
+  const { activeCamera, fov } = useCameraContext();
 
   const cameraRef = useRef<THREE.PerspectiveCamera>(null!);
 
@@ -41,8 +41,8 @@ export const CameraController = () => {
         far={5000}
         fov={MIN_FOV}
       />
-      <HandheldCamera enabled={!orbitMode} />
-      <OrbitCamera enabled={orbitMode} />
+      <HandheldCamera enabled={activeCamera === "handheld"} />
+      <OrbitCamera enabled={activeCamera === "orbit"} />
     </>
   );
 };

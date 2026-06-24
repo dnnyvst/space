@@ -25,7 +25,7 @@ export const MainCanvas: FC = () => {
     selectedCelestialBodyId,
     selectedProperties,
   } = useAppContext();
-  const { orbitMode } = useCameraContext();
+  const { activeCamera } = useCameraContext();
 
   const isMobile = useIsMobile(640);
 
@@ -80,7 +80,7 @@ export const MainCanvas: FC = () => {
           // speedMultiplier={selectedCelestialBodyId === "sun" ? 0.2 : 1}
           rotationalSpeed={selectedCelestialBody.rotationalSpeed}
           emissive={selectedCelestialBodyId === "sun"}
-          noRotation={orbitMode}
+          noRotation={activeCamera === "orbit"}
         />
 
         {/* postprocessing */}

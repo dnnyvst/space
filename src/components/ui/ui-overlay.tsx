@@ -32,7 +32,7 @@ export const UIOverlay: FC = () => {
     selectedProperties,
     setSelectedProperties,
   } = useAppContext();
-  const { orbitMode, fov, setOrbitMode } = useCameraContext();
+  const { activeCamera, fov, setActiveCamera } = useCameraContext();
 
   const isMobile = useIsMobile(640);
 
@@ -58,18 +58,24 @@ export const UIOverlay: FC = () => {
               <FOVSlider />
             </span>
             <span className="flex flex-col">
-              <span className={`text-center ${orbitMode && "opacity-20"}`}>
+              <span
+                className={`text-center ${activeCamera === "orbit" && "opacity-20"}`}
+              >
                 zoom
               </span>
-              <CameraZoomSlider disabled={orbitMode} />
+              <CameraZoomSlider disabled={activeCamera === "orbit"} />
             </span>
           </div>
           {/* toggles */}
           <div className="bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg h-min">
             <ul>
               <ListItem
-                selected={orbitMode === true}
-                onClick={() => setOrbitMode((orbitMode) => !orbitMode)}
+                selected={activeCamera === "orbit"}
+                onClick={() =>
+                  setActiveCamera((activeCamera) =>
+                    activeCamera === "orbit" ? "handheld" : "orbit",
+                  )
+                }
                 text="orbit cam"
               />
               {Object.keys(toggleTextures).map((property) => (
@@ -92,7 +98,7 @@ export const UIOverlay: FC = () => {
         </div>
         {/* celestial body select */}
         <div
-          className={`flex flex-wrap gap-3 bg-card/0 border border-text/30 py-2 px-4 rounded-lg h-min lg:w-min lg:flex-nowrap lg:gap-6 ${orbitMode && "invisible opacity-0"}`}
+          className={`flex flex-wrap gap-3 bg-card/0 border border-text/30 py-2 px-4 rounded-lg h-min lg:w-min lg:flex-nowrap lg:gap-6 ${activeCamera === "orbit" && "invisible opacity-0"}`}
         >
           {Object.values(CELESTIAL_BODY_CONFIG).map(({ id, name }) => (
             <button
