@@ -99,7 +99,12 @@ export const Moon: FC<
       >
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial map={map} />
-        {hovered && <Outlines thickness={4} color="#cfc8bb" />}
+        <Outlines
+          thickness={4}
+          color="#cfc8bb"
+          transparent
+          opacity={hovered ? 1 : 0}
+        />
       </mesh>
     </>
   );
