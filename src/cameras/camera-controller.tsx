@@ -9,18 +9,18 @@ export const MIN_FOV = 75;
 export const MAX_FOV = 90;
 
 export const CameraController = () => {
-  const { activeCamera, fov, followRef } = useCameraContext();
+  const { activeCamera, fov, followName, setFollowName } = useCameraContext();
 
   const cameraRef = useRef<THREE.PerspectiveCamera>(null!);
 
-  // remove follow ref when camera changes
+  // remove follow id when camera changes
   useEffect(() => {
-    if (!followRef?.current) return;
+    if (!followName) return;
 
     if (activeCamera !== "follow") {
-      followRef.current = null;
+      setFollowName(null);
     }
-  }, [activeCamera, followRef]);
+  }, [activeCamera, followName, setFollowName]);
 
   // fov smoothing
   useFrame((_, delta) => {

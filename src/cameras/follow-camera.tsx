@@ -8,18 +8,20 @@ interface FollowCameraProps {
 }
 
 export const FollowCamera: FC<FollowCameraProps> = ({ enabled = false }) => {
-  const { camera } = useThree();
+  const { camera, scene } = useThree();
 
-  const { followRef } = useCameraContext();
+  const { followName } = useCameraContext();
+
+  const followObject = scene.getObjectByName(followName ?? "");
 
   const offset = new THREE.Vector3();
   const direction = new THREE.Vector3();
   const newCameraPosition = new THREE.Vector3();
 
   useFrame((_, delta) => {
-    if (!enabled || !followRef?.current) return;
+    if (!enabled || !followObject) return;
 
-    const target = followRef.current.position;
+    const target = followObject.position;
     // todo - use parent center via
     // target.clone().sub(planet.position).normalize()
     direction.copy(target).normalize();

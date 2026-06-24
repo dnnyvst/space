@@ -1,3 +1,4 @@
+import { Moon } from "@/types";
 import {
   createContext,
   useContext,
@@ -5,10 +6,7 @@ import {
   type ReactNode,
   type Dispatch,
   type SetStateAction,
-  RefObject,
-  useRef,
 } from "react";
-import * as THREE from "three";
 
 type Camera = "handheld" | "orbit" | "follow";
 
@@ -16,22 +14,24 @@ interface CameraContextValue {
   activeCamera: Camera;
   handheldZoom: number;
   fov: number;
-  followRef: RefObject<THREE.Mesh | null> | null;
+  followName: Moon | null;
 
   setActiveCamera: Dispatch<SetStateAction<Camera>>;
   setHandheldZoom: Dispatch<SetStateAction<number>>;
   setFov: Dispatch<SetStateAction<number>>;
+  setFollowName: Dispatch<SetStateAction<Moon | null>>;
 }
 
 const INIT: CameraContextValue = {
   activeCamera: "handheld",
   handheldZoom: 1,
   fov: 75,
-  followRef: null,
+  followName: null,
 
   setActiveCamera: () => {},
   setHandheldZoom: () => {},
   setFov: () => {},
+  setFollowName: () => {},
 };
 
 const CameraContext = createContext(INIT);
@@ -46,13 +46,7 @@ export const CameraContextProvider = ({
   const [activeCamera, setActiveCamera] = useState<Camera>(INIT.activeCamera);
   const [handheldZoom, setHandheldZoom] = useState<number>(INIT.handheldZoom);
   const [fov, setFov] = useState<number>(INIT.fov);
-
-  const followRef = useRef(null);
-
-  // const stopFollowing = () => {
-  //   setActiveCamera("handheld");
-  //   followRef.current = null;
-  // };
+  const [followName, setFollowName] = useState<Moon | null>(INIT.followName);
 
   return (
     <CameraContext.Provider
@@ -60,11 +54,12 @@ export const CameraContextProvider = ({
         activeCamera,
         handheldZoom,
         fov,
-        followRef,
+        followName,
 
         setActiveCamera,
         setHandheldZoom,
         setFov,
+        setFollowName,
       }}
     >
       {children}

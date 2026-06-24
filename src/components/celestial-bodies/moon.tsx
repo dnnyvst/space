@@ -36,12 +36,14 @@ export const Moon: FC<
   textures,
   parentRef,
 }) => {
-  const { followRef, activeCamera, setActiveCamera } = useCameraContext();
+  const { activeCamera, followName, setActiveCamera, setFollowName } =
+    useCameraContext();
 
   const ref = useRef<THREE.Mesh>(null);
-  const [beingFollowed, setBeingFollowed] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
   useCursor(hovered, "zoom-in");
+
+  const beingFollowed = activeCamera === "follow" && followName === id;
 
   const map = useTexture(textures.map);
 
@@ -73,22 +75,17 @@ export const Moon: FC<
 
   const handleClick = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
-    if (ref.current && followRef) {
-      if (beingFollowed && activeCamera === "follow") {
-        setActiveCamera("handheld");
-        setBeingFollowed(false);
-        setHovered(false);
-      } else {
-        followRef.current = ref.current;
-        setActiveCamera("follow");
-        setBeingFollowed(true);
-        setHovered(false);
-      }
+    if (beingFollowed) {
+      setActiveCamera("handheld");
+    } else {
+      setFollowName(name);
+      setActiveCamera("follow");
     }
+    setHovered(false);
   };
 
   return (
-    <group ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
+    <group name={name} ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
       {(hovered || beingFollowed) && (
         <Billboard>
           <Float>
@@ -101,7 +98,7 @@ export const Moon: FC<
       {/* invisible selection mesh */}
       <mesh
         onPointerEnter={() => {
-          if (!(beingFollowed && activeCamera === "follow")) {
+          if (!beingFollowed) {
             setHovered(true);
           }
         }}
