@@ -47,12 +47,12 @@ export const UIOverlay: FC = () => {
   return (
     <div className="flex justify-center h-screen absolute py-4 px-4 z-10 w-full">
       <div
-        className={`${isMobile ? "justify-between pb-10" : " lg:justify-center justify-end"} items-center flex flex-col-reverse gap-4 lg:items-start lg:flex-row`}
+        className={`${isMobile ? "justify-between pb-10" : "lg:justify-center justify-end"} items-center flex flex-col-reverse gap-4 lg:items-start lg:flex-row`}
       >
         {/* controls */}
-        <div className="flex gap-2 lg:flex-col lg:justify-start w-full lg:w-auto lg:min-w-1/5">
+        <div className="flex gap-2 w-full lg:flex-col lg:w-auto lg:min-w-1/5">
           {/* sliders */}
-          <div className="flex flex-col gap-2 bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
+          <div className="flex flex-col gap-2 bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg">
             <span className="flex flex-col">
               <span className="text-center">fov: {fov}&deg;</span>
               <FOVSlider />
@@ -65,7 +65,7 @@ export const UIOverlay: FC = () => {
             </span>
           </div>
           {/* toggles */}
-          <div className="bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg z-10 h-min">
+          <div className="bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg h-min">
             <ul>
               <ListItem
                 selected={orbitMode === true}
@@ -97,7 +97,7 @@ export const UIOverlay: FC = () => {
           {Object.values(CELESTIAL_BODY_CONFIG).map(({ id, name }) => (
             <button
               key={id}
-              className={`block cursor-pointer transition-all duration-300 ease-out ${
+              className={`cursor-pointer transition-all duration-300 ease-out ${
                 id === selectedCelestialBody.id
                   ? "underline underline-offset-4 decoration-2 opacity-100"
                   : "opacity-30 hover:opacity-70"
