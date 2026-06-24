@@ -1,6 +1,6 @@
-import { useRef, type FC, type RefObject } from "react";
+import { useRef, useState, type FC, type RefObject } from "react";
 import * as THREE from "three";
-import { useTexture } from "@react-three/drei";
+import { useTexture, Outlines } from "@react-three/drei";
 // import { useOrbit } from "@/hooks";
 import { MoonConfig } from "@/types";
 import { useFrame } from "@react-three/fiber";
@@ -32,6 +32,8 @@ export const Moon: FC<
 
   const ref = useRef<THREE.Mesh>(null);
 
+  const [hovered, setHovered] = useState<boolean>(false);
+
   const map = useTexture(textures.map);
 
   useFrame((_, delta) => {
@@ -60,30 +62,42 @@ export const Moon: FC<
     ref.current.position.set(center.x + x, center.y, center.z + z);
   });
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+    if (ref.current && followRef) {
+      if (followRef.current === ref.current && activeCamera === "follow") {
+        setActiveCamera("handheld");
+        setHovered(false);
+      } else {
+        followRef.current = ref.current;
+        setActiveCamera("follow");
+        setHovered(false);
+      }
+    }
+  };
+
   return (
     <>
+      {/* TODO - invisible selection mesh */}
       <mesh
         ref={ref}
         castShadow
         receiveShadow
         scale={relativeScale * FINAL_SIZE_SCALE}
         rotation={[0, 0, axialTilt]}
-        onPointerUp={() => {
-          if (ref.current && followRef) {
-            if (
-              followRef.current === ref.current &&
-              activeCamera === "follow"
-            ) {
-              setActiveCamera("handheld");
-            } else {
-              followRef.current = ref.current;
-              setActiveCamera("follow");
-            }
+        onPointerEnter={() => {
+          if (
+            !(followRef?.current === ref.current && activeCamera === "follow")
+          ) {
+            setHovered(true);
           }
         }}
+        onPointerLeave={() => setHovered(false)}
+        onPointerUp={handleClick}
       >
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial map={map} />
+        {hovered && <Outlines thickness={4} color="#cfc8bb" />}
       </mesh>
     </>
   );
