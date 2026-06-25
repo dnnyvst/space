@@ -3,7 +3,7 @@
 import { type FC } from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
-import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
+// import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { Skybox, CelestialBody, UIOverlay } from "@/components";
 import { CameraController } from "@/cameras";
 import { SunLight } from "@/lights";
@@ -82,14 +82,14 @@ export const MainCanvas: FC = () => {
         />
 
         {/* postprocessing */}
-        <EffectComposer>
+        {/* <EffectComposer>
           <Bloom
             intensity={isEarthAtNight ? 5 : 1}
             luminanceThreshold={isEarthAtNight ? 0.1 : 0.2}
             luminanceSmoothing={0.6}
           />
           <Vignette eskil={false} offset={0.1} darkness={0.7} />
-        </EffectComposer>
+        </EffectComposer> */}
       </Canvas>
       {/* saturn construction overlay */}
       {selectedCelestialBodyId === "saturn" && (
