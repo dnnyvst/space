@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FC } from "react";
-import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 // import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { Skybox, CelestialBody, UIOverlay } from "@/components";
@@ -38,20 +37,19 @@ export const MainCanvas: FC = () => {
       {canvasReady && <UIOverlay />}
       {/* canvas (full screen) */}
       <Canvas
-        onPointerMissed={() => {
-          if (activeCamera === "follow") {
-            setActiveCamera("handheld");
-          }
-        }}
         className="w-full h-full"
         gl={{
           alpha: true,
         }}
         dpr={[1, 2]}
-        onCreated={({ gl }) => {
-          gl.shadowMap.enabled = true;
-          gl.shadowMap.type = THREE.VSMShadowMap;
+        shadows
+        onCreated={() => {
           setCanvasReady(true);
+        }}
+        onPointerMissed={() => {
+          if (activeCamera === "follow") {
+            setActiveCamera("handheld");
+          }
         }}
       >
         <Skybox />
