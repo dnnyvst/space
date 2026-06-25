@@ -73,10 +73,7 @@ export const UIOverlay: FC = () => {
               </span>
               <CameraZoomSlider disabled={handheldZoomDisabled} />
             </span>
-          </div>
-          {/* toggles */}
-          <div className="bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg h-min">
-            <ul>
+            <ul className="pt-2">
               <ListItem
                 selected={activeCamera === "orbit"}
                 onClick={() =>
@@ -86,33 +83,41 @@ export const UIOverlay: FC = () => {
                 }
                 text="orbit cam"
               />
-              {hasMoons && (
-                <ListItem
-                  selected={showOrbitPaths}
-                  onClick={() =>
-                    setShowOrbitPaths((showOrbitPaths) => !showOrbitPaths)
-                  }
-                  text="orbit paths"
-                />
-              )}
-
-              {Object.keys(toggleTextures).map((property) => (
-                <ListItem
-                  key={property}
-                  selected={selectedProperties.has(property)}
-                  onClick={() =>
-                    setSelectedProperties((prev) => {
-                      if (prev.has(property)) {
-                        return new Set([...prev].filter((p) => p !== property));
-                      }
-                      return new Set([...prev, property]);
-                    })
-                  }
-                  text={property}
-                />
-              ))}
             </ul>
           </div>
+          {/* toggles */}
+          {(hasMoons || Object.keys(toggleTextures).length > 0) && (
+            <div className="bg-card/0 whitespace-nowrap border border-text/30 py-2 px-4 rounded-lg h-min">
+              <ul>
+                {hasMoons && (
+                  <ListItem
+                    selected={showOrbitPaths}
+                    onClick={() =>
+                      setShowOrbitPaths((showOrbitPaths) => !showOrbitPaths)
+                    }
+                    text="orbit paths"
+                  />
+                )}
+                {Object.keys(toggleTextures).map((property) => (
+                  <ListItem
+                    key={property}
+                    selected={selectedProperties.has(property)}
+                    onClick={() =>
+                      setSelectedProperties((prev) => {
+                        if (prev.has(property)) {
+                          return new Set(
+                            [...prev].filter((p) => p !== property),
+                          );
+                        }
+                        return new Set([...prev, property]);
+                      })
+                    }
+                    text={property}
+                  />
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
         {/* celestial body select */}
         <div
