@@ -13,7 +13,7 @@ export const CameraZoomSlider: FC<CameraZoomSliderProps> = ({
 
   return (
     <Slider
-      min={1}
+      min={0}
       max={22}
       value={handheldZoom}
       setValue={setHandheldZoom}

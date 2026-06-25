@@ -13,6 +13,8 @@ interface HandheldCameraProps {
   enabled?: boolean;
 }
 
+const handheldShake = false;
+
 export const HandheldCamera: FC<HandheldCameraProps> = ({
   enabled = false,
 }) => {
@@ -24,37 +26,56 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
   useFrame((_, delta) => {
     if (!enabled) return;
 
-    const time = sceneTime.get();
     const position = _position.current;
+    if (handheldShake) {
+      const time = sceneTime.get();
 
-    // breathing cycle
-    const breath = Math.sin(time * 0.18);
+      // breathing cycle
+      const breath = Math.sin(time * 0.18);
 
-    // gate motion so it only peaks during part of the breath
-    const breathGate = smoothstep(0.2, 0.8, Math.abs(breath));
+      // gate motion so it only peaks during part of the breath
+      const breathGate = smoothstep(0.2, 0.8, Math.abs(breath));
 
-    // shape inhale/exhale
-    const ease = breath * Math.abs(breath);
+      // shape inhale/exhale
+      const ease = breath * Math.abs(breath);
 
-    // main handheld drift (stronger, but gated)
-    const driftX = ease * 0.025 * breathGate;
-    const driftY = ease * 0.075 * breathGate;
-    const driftZ = ease * 0.03 * breathGate;
+      // main handheld drift (stronger, but gated)
+      const driftX = ease * 0.025 * breathGate;
+      const driftY = ease * 0.075 * breathGate;
+      const driftZ = ease * 0.03 * breathGate;
 
-    // always-on micro motion (very subtle)
-    const micro = Math.sin(time * 2.2) * 0.0018 + Math.sin(time * 3.7) * 0.0012;
+      // always-on micro motion (very subtle)
+      const micro =
+        Math.sin(time * 2.2) * 0.0018 + Math.sin(time * 3.7) * 0.0012;
 
-    const targetX = driftX + micro + handheldZoom * 0.1;
-    const targetY = 0.06 + driftY + micro * 0.5 - handheldZoom * 0.1;
-    const targetZ = 5 + driftZ - handheldZoom * 0.25;
+      const targetX = driftX + micro + handheldZoom * 0.1;
+      const targetY = 0.06 + driftY + micro * 0.5 - handheldZoom * 0.1;
+      const targetZ = 5 + driftZ - handheldZoom * 0.25;
 
-    // build target position
-    position.set(
-      THREE.MathUtils.damp(position.x, targetX, 5, delta),
-      THREE.MathUtils.damp(position.y, targetY, 5, delta),
-      THREE.MathUtils.damp(position.z, targetZ, 5, delta),
-    );
+      // build target position
+      position.set(
+        THREE.MathUtils.damp(position.x, targetX, 5, delta),
+        THREE.MathUtils.damp(position.y, targetY, 5, delta),
+        THREE.MathUtils.damp(position.z, targetZ, 5, delta),
+      );
+    } else {
+      // const targetX = handheldZoom * 0.1;
+      // const targetY = 0.06 * 0.5 - handheldZoom * 0.1;
+      // const targetZ = 5 - handheldZoom * 0.25;
+      const xyMod = handheldZoom * 0.1;
+      const zMod = handheldZoom * 0.25;
 
+      const targetX = xyMod;
+      const targetY = 0.3 - xyMod;
+      const targetZ = 5 - zMod;
+
+      // build target position
+      position.set(
+        THREE.MathUtils.damp(position.x, targetX, 5, delta),
+        THREE.MathUtils.damp(position.y, targetY, 5, delta),
+        THREE.MathUtils.damp(position.z, targetZ, 5, delta),
+      );
+    }
     // apply
     camera.position.copy(position);
     camera.lookAt(0, 0, 0);

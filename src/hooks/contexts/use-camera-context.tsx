@@ -24,7 +24,7 @@ interface CameraContextValue {
 
 const INIT: CameraContextValue = {
   activeCamera: "handheld",
-  handheldZoom: 1,
+  handheldZoom: 0,
   fov: 75,
   followName: null,
 
