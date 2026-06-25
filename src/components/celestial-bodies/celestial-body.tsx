@@ -21,11 +21,9 @@ export interface CelestialBodyProps {
   atmosphereColor?: string;
   scale?: number;
   position?: THREE.Vector3Tuple;
-  speedMultiplier?: number;
   rotationalSpeed?: number;
   emissive?: boolean;
   noRotation?: boolean;
-  // orbitEnabled?: boolean;
 }
 
 export const CelestialBody: FC<CelestialBodyProps> = ({
