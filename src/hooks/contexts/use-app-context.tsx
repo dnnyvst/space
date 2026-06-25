@@ -10,10 +10,12 @@ import {
 interface AppContextValue {
   selectedCelestialBodyId: string;
   selectedProperties: Set<string>;
+  showOrbitPaths: boolean;
   hoveredMoonId: string | null;
 
   setSelectedCelestialBodyId: (id: string) => void;
   setSelectedProperties: Dispatch<SetStateAction<Set<string>>>;
+  setShowOrbitPaths: Dispatch<SetStateAction<boolean>>;
   setHoveredMoonId: Dispatch<SetStateAction<string | null>>;
 }
 
@@ -21,9 +23,11 @@ const INIT: AppContextValue = {
   selectedCelestialBodyId: "earth",
   selectedProperties: new Set(["clouds", "atmosphere"]),
   hoveredMoonId: null,
+  showOrbitPaths: false,
 
   setSelectedCelestialBodyId: () => {},
   setSelectedProperties: () => {},
+  setShowOrbitPaths: () => {},
   setHoveredMoonId: () => {},
 };
 
@@ -37,6 +41,9 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
     INIT.selectedProperties,
   );
+  const [showOrbitPaths, setShowOrbitPaths] = useState<boolean>(
+    INIT.showOrbitPaths,
+  );
   const [hoveredMoonId, setHoveredMoonId] = useState<string | null>(
     INIT.hoveredMoonId,
   );
@@ -46,10 +53,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       value={{
         selectedCelestialBodyId,
         selectedProperties,
+        showOrbitPaths,
         hoveredMoonId,
 
         setSelectedCelestialBodyId,
         setSelectedProperties,
+        setShowOrbitPaths,
         setHoveredMoonId,
       }}
     >

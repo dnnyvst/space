@@ -39,7 +39,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   noRotation = false,
   position = [0, 0, 0],
 }) => {
-  const { hoveredMoonId } = useAppContext();
+  const { showOrbitPaths, hoveredMoonId } = useAppContext();
   const { followName } = useCameraContext();
 
   const mainRef = useRef<THREE.Mesh>(null);
@@ -165,21 +165,22 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       {/* moons */}
       {moons.map((moon) => (
         <group key={moon.id}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[moon.orbitRadius, 0.002, 30, 256]} />
-            <meshBasicMaterial
-              color="#cfc8bb"
-              transparent
-              opacity={
-                followName === moon.name || hoveredMoonId === moon.id
-                  ? 0.6
-                  : 0.2
-              }
-              depthWrite={false}
-              depthTest={true}
-            />
-          </mesh>
-
+          {showOrbitPaths && (
+            <mesh rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[moon.orbitRadius, 0.002, 30, 256]} />
+              <meshBasicMaterial
+                color="#cfc8bb"
+                transparent
+                opacity={
+                  followName === moon.name || hoveredMoonId === moon.id
+                    ? 0.6
+                    : 0.2
+                }
+                depthWrite={false}
+                depthTest={true}
+              />
+            </mesh>
+          )}
           <Moon parentRef={mainRef} {...moon} />
         </group>
       ))}

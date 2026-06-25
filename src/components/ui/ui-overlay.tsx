@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { CameraZoomSlider, FOVSlider } from "@/components";
-import { CELESTIAL_BODY_CONFIG } from "@/config";
+import { CELESTIAL_BODY_CONFIG, MOON_CONFIG } from "@/config";
 import { useAppContext, useCameraContext, useIsMobile } from "@/hooks";
 
 interface ListItemProps {
@@ -31,12 +31,17 @@ export const UIOverlay: FC = () => {
     setSelectedCelestialBodyId,
     selectedProperties,
     setSelectedProperties,
+    showOrbitPaths,
+    setShowOrbitPaths,
   } = useAppContext();
   const { activeCamera, fov, setActiveCamera } = useCameraContext();
 
   const isMobile = useIsMobile(640);
 
   const selectedCelestialBody = CELESTIAL_BODY_CONFIG[selectedCelestialBodyId];
+  const hasMoons = Object.values(MOON_CONFIG).some(
+    (moon) => moon.parent === selectedCelestialBodyId,
+  );
 
   const toggleTextures = Object.fromEntries(
     Object.entries(selectedCelestialBody.textures).filter(
@@ -81,6 +86,16 @@ export const UIOverlay: FC = () => {
                 }
                 text="orbit cam"
               />
+              {hasMoons && (
+                <ListItem
+                  selected={showOrbitPaths}
+                  onClick={() =>
+                    setShowOrbitPaths((showOrbitPaths) => !showOrbitPaths)
+                  }
+                  text="orbit paths"
+                />
+              )}
+
               {Object.keys(toggleTextures).map((property) => (
                 <ListItem
                   key={property}
