@@ -65,9 +65,11 @@ export const Moon: FC<
       phase /= 3;
     }
 
-    const x = Math.sin(phase) * orbitRadius;
-    const z = Math.cos(phase) * orbitRadius;
-    ref.current.position.set(center.x + x, center.y, center.z + z);
+    ref.current.position.set(
+      center.x + Math.sin(phase) * orbitRadius,
+      center.y,
+      center.z + Math.cos(phase) * orbitRadius,
+    );
   });
 
   const handleClick = (e: ThreeEvent<PointerEvent>) => {
