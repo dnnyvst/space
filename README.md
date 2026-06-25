@@ -5,4 +5,4 @@ textures sourced from:
 - [Solar System Scope](https://www.solarsystemscope.com/textures/)
 - [Planet Texture Maps Wiki](https://planet-texture-maps.fandom.com/wiki/Planet_Texture_Maps_Wiki)
 
-![Demo](./public/demo-16.png)
+![Demo](./public/demo-17.png)
