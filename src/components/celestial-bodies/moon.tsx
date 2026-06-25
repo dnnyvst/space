@@ -118,7 +118,6 @@ export const Moon: FC<
         <sphereGeometry args={[3, 16, 16]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
-      {/* todo - show name on follow */}
       <mesh castShadow receiveShadow rotation={[0, 0, axialTilt]}>
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial map={map} />
