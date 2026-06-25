@@ -3,7 +3,7 @@
 import { useMemo, useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
-import { useTexture, Line } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import { atmosphereMaterial } from "@/shaders";
 import type { CelestialBodyTextures } from "@/types";
 import { Moon } from "@/components";
@@ -38,8 +38,9 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   emissive = false,
   noRotation = false,
   position = [0, 0, 0],
-  // orbitEnabled = false,
 }) => {
+  const { followName } = useCameraContext();
+
   const mainRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
@@ -53,15 +54,15 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
 
   const { map, normal, clouds, atmosphere, ring, night } = loadedTextures;
 
-  const moons = useMemo(
-    () => Object.values(MOON_CONFIG).filter((moon) => moon.parent === id),
-    [id],
-  );
-
   let atmosphereShader = EMPTY_SHADER;
   if (atmosphere) {
     atmosphereShader = atmosphereMaterial(atmosphere, atmosphereColor);
   }
+
+  const moons = useMemo(
+    () => Object.values(MOON_CONFIG).filter((moon) => moon.parent === id),
+    [id],
+  );
 
   useFrame((_, delta) => {
     if (noRotation) {
@@ -83,40 +84,6 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       ringRef.current.rotation.z += delta * 0.1 * multipliers;
     }
   });
-
-  const moonOrbitPointsMap = useMemo(() => {
-    const pointsMap: Record<string, THREE.Vector3[]> = {};
-
-    for (const moon of moons) {
-      const radius = moon.orbitRadius;
-
-      // 1. Create the 2D circle math
-      const curve = new THREE.EllipseCurve(
-        0,
-        0,
-        radius,
-        radius,
-        0,
-        2 * Math.PI,
-        false,
-        0,
-      );
-
-      // 2. Sample 64 points along that circle
-      const points2d = curve.getPoints(256);
-
-      // 3. Map those points flat onto the 3D XZ floor plane
-      const points3d = points2d.map((p) => new THREE.Vector3(p.x, 0, p.y));
-
-      // 4. Connect the loop by duplicating the first point at the very end
-      points3d.push(points3d[0].clone());
-
-      // Store the points array indexed by the moon's unique id
-      pointsMap[moon.id] = points3d;
-    }
-
-    return pointsMap;
-  }, [moons]);
 
   return (
     <group scale={scale} position={position}>
@@ -197,15 +164,16 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       {/* moons */}
       {moons.map((moon) => (
         <group key={moon.id}>
-          <Line
-            points={moonOrbitPointsMap[moon.id]}
-            color="#cfc8bb"
-            lineWidth={2}
-            transparent
-            opacity={0.3}
-            depthWrite={true}
-            depthTest={true}
-          />
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[moon.orbitRadius, 0.002, 30, 256]} />
+            <meshBasicMaterial
+              color="#cfc8bb"
+              transparent
+              opacity={followName === moon.name ? 0.7 : 0.2}
+              depthWrite={false}
+              depthTest={true}
+            />
+          </mesh>
 
           <Moon parentRef={mainRef} {...moon} />
         </group>
