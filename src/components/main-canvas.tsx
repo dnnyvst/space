@@ -61,7 +61,7 @@ export const MainCanvas: FC = () => {
         <SceneTimeDriver />
         <CameraController />
 
-        <ambientLight intensity={0.06} />
+        <ambientLight intensity={0.08} />
         {selectedCelestialBodyId !== "sun" && (
           <SunLight natural={isEarthAtDay} />
         )}
