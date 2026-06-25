@@ -26,10 +26,8 @@ export const MainCanvas: FC = () => {
 
   const isEarthAtDay =
     selectedCelestialBodyId === "earth" && !selectedProperties.has("night");
-  const isEarthAtNight =
-    selectedCelestialBodyId === "earth" && selectedProperties.has("night");
-
-  // const earthsMoon = MOON_CONFIG["moon"];
+  // const isEarthAtNight =
+  //   selectedCelestialBodyId === "earth" && selectedProperties.has("night");
 
   return (
     <div className="fixed inset-0 overflow-hidden font-mono text-text">
