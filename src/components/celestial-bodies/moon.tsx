@@ -1,4 +1,4 @@
-import { useRef, useState, type FC, type RefObject } from "react";
+import { useRef, type FC, type RefObject } from "react";
 import * as THREE from "three";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import {
@@ -12,7 +12,7 @@ import {
 import { MoonConfig } from "@/types";
 import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
-import { useCameraContext } from "@/hooks";
+import { useAppContext, useCameraContext } from "@/hooks";
 
 const ROTATIONAL_SPEED_MULTIPLIER = 10;
 const ORBITAL_SPEED_SCALE = 0.4;
@@ -33,10 +33,12 @@ export const Moon: FC<
   textures,
   parentRef,
 }) => {
+  const { hoveredMoonId, setHoveredMoonId } = useAppContext();
+  const hovered = hoveredMoonId === id;
+
   const { activeCamera, followName, setActiveCamera, setFollowName } =
     useCameraContext();
   const ref = useRef<THREE.Mesh>(null);
-  const [hovered, setHovered] = useState<boolean>(false);
 
   useCursor(hovered, "zoom-in");
   const beingFollowed = activeCamera === "follow" && followName === id;
@@ -76,7 +78,7 @@ export const Moon: FC<
       setFollowName(name);
       setActiveCamera("follow");
     }
-    setHovered(false);
+    setHoveredMoonId(null);
   };
 
   return (
@@ -103,10 +105,10 @@ export const Moon: FC<
       <mesh
         onPointerEnter={() => {
           if (!beingFollowed) {
-            setHovered(true);
+            setHoveredMoonId(id);
           }
         }}
-        onPointerLeave={() => setHovered(false)}
+        onPointerLeave={() => setHoveredMoonId(null)}
         onPointerUp={handleClick}
       >
         <sphereGeometry args={[3, 16, 16]} />

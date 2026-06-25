@@ -8,7 +8,7 @@ import { atmosphereMaterial } from "@/shaders";
 import type { CelestialBodyTextures } from "@/types";
 import { Moon } from "@/components";
 import { MOON_CONFIG } from "@/config";
-import { useCameraContext } from "@/hooks";
+import { useAppContext, useCameraContext } from "@/hooks";
 
 const EMPTY_SHADER = { uniforms: {}, vertexShader: "", fragmentShader: "" };
 
@@ -39,6 +39,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   noRotation = false,
   position = [0, 0, 0],
 }) => {
+  const { hoveredMoonId } = useAppContext();
   const { followName } = useCameraContext();
 
   const mainRef = useRef<THREE.Mesh>(null);
@@ -169,7 +170,11 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
             <meshBasicMaterial
               color="#cfc8bb"
               transparent
-              opacity={followName === moon.name ? 0.6 : 0.2}
+              opacity={
+                followName === moon.name || hoveredMoonId === moon.id
+                  ? 0.6
+                  : 0.2
+              }
               depthWrite={false}
               depthTest={true}
             />

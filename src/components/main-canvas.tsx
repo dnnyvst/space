@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 // import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
@@ -12,13 +12,10 @@ import { SceneTimeDriver } from "@/utils";
 import { useAppContext, useCameraContext, useIsMobile } from "@/hooks";
 
 export const MainCanvas: FC = () => {
-  const {
-    canvasReady,
-    setCanvasReady,
-    selectedCelestialBodyId,
-    selectedProperties,
-  } = useAppContext();
+  const { selectedCelestialBodyId, selectedProperties } = useAppContext();
   const { activeCamera, setActiveCamera } = useCameraContext();
+
+  const [canvasReady, setCanvasReady] = useState<boolean>(false);
 
   const isMobile = useIsMobile(640);
 
