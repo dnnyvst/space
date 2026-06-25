@@ -86,24 +86,23 @@ export const Moon: FC<
 
   return (
     <group name={name} ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
-      {(hovered || beingFollowed) && (
-        <Billboard>
-          <Float speed={4}>
-            <Text
-              key={id}
-              color="#cfc8bb"
-              anchorX="center"
-              anchorY={name === "moon" ? -3.4 : -3.8}
-              font="/fonts/GeistMono-Regular.ttf"
-              raycast={undefined}
-              fontSize={name === "moon" ? 0.8 : 1}
-              letterSpacing={0.02}
-            >
-              {name}
-            </Text>
-          </Float>
-        </Billboard>
-      )}
+      <Billboard visible={hovered || beingFollowed}>
+        <Float speed={4} enabled={hovered || beingFollowed}>
+          <Text
+            key={id}
+            color="#cfc8bb"
+            anchorX="center"
+            anchorY={name === "moon" ? -3.4 : -3.8}
+            font="/fonts/GeistMono-Regular.ttf"
+            raycast={undefined}
+            fontSize={name === "moon" ? 0.8 : 1}
+            letterSpacing={0.02}
+            visible={hovered || beingFollowed}
+          >
+            {name}
+          </Text>
+        </Float>
+      </Billboard>
 
       {/* invisible selection mesh */}
       <mesh

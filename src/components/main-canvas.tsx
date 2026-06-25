@@ -3,14 +3,7 @@
 import { type FC } from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
-import {
-  EffectComposer,
-  // Noise,
-  // HueSaturation,
-  // DepthOfField,
-  Bloom,
-  Vignette,
-} from "@react-three/postprocessing";
+import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { Skybox, CelestialBody, UIOverlay } from "@/components";
 import { CameraController } from "@/cameras";
 import { SunLight } from "@/lights";
@@ -90,14 +83,6 @@ export const MainCanvas: FC = () => {
 
         {/* postprocessing */}
         <EffectComposer>
-          {/* <Noise opacity={0.08} /> */}
-          {/* <HueSaturation saturation={-0.1} /> */}
-          {/* <DepthOfField
-            focusDistance={0.02}
-            focalLength={0.05}
-            bokehScale={2}
-            height={480}
-          /> */}
           <Bloom
             intensity={isEarthAtNight ? 5 : 1}
             luminanceThreshold={isEarthAtNight ? 0.1 : 0.2}
