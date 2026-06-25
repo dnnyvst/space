@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useMemo, useRef, type FC } from "react";
+import { useMemo, useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { useTexture, Line } from "@react-three/drei";
 import { atmosphereMaterial } from "@/shaders";
 import type { CelestialBodyTextures } from "@/types";
 import { Moon } from "@/components";
@@ -44,7 +44,6 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   const cloudsRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
   const ringRef = useRef<THREE.Mesh>(null);
-  const orbitRingRef = useRef<THREE.Mesh>(null);
 
   const _axialTilt = THREE.MathUtils.degToRad(axialTilt);
 
@@ -85,26 +84,39 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
     }
   });
 
-  const getTubePath = useCallback((orbitRadius: number) => {
-    const radius = orbitRadius;
+  const moonOrbitPointsMap = useMemo(() => {
+    const pointsMap: Record<string, THREE.Vector3[]> = {};
 
-    const curve = new THREE.EllipseCurve(
-      0,
-      0,
-      radius,
-      radius,
-      0,
-      2 * Math.PI,
-      false,
-      0,
-    );
+    for (const moon of moons) {
+      const radius = moon.orbitRadius;
 
-    const points2d = curve.getPoints(64);
-    const points3d = points2d.map((p) => new THREE.Vector3(p.x, 0, p.y));
+      // 1. Create the 2D circle math
+      const curve = new THREE.EllipseCurve(
+        0,
+        0,
+        radius,
+        radius,
+        0,
+        2 * Math.PI,
+        false,
+        0,
+      );
 
-    const path = new THREE.CatmullRomCurve3(points3d, true);
-    return path;
-  }, []);
+      // 2. Sample 64 points along that circle
+      const points2d = curve.getPoints(256);
+
+      // 3. Map those points flat onto the 3D XZ floor plane
+      const points3d = points2d.map((p) => new THREE.Vector3(p.x, 0, p.y));
+
+      // 4. Connect the loop by duplicating the first point at the very end
+      points3d.push(points3d[0].clone());
+
+      // Store the points array indexed by the moon's unique id
+      pointsMap[moon.id] = points3d;
+    }
+
+    return pointsMap;
+  }, [moons]);
 
   return (
     <group scale={scale} position={position}>
@@ -185,18 +197,16 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       {/* moons */}
       {moons.map((moon) => (
         <group key={moon.id}>
-          <mesh ref={orbitRingRef}>
-            <tubeGeometry
-              args={[getTubePath(moon.orbitRadius), 128, 0.001, 8, true]}
-            />
-            <meshBasicMaterial
-              color="#cfc8bb"
-              transparent
-              opacity={false ? 1 : 0.2}
-              depthTest={true}
-              depthWrite={false}
-            />
-          </mesh>
+          <Line
+            points={moonOrbitPointsMap[moon.id]}
+            color="#cfc8bb"
+            lineWidth={2}
+            transparent
+            opacity={0.3}
+            depthWrite={true}
+            depthTest={true}
+          />
+
           <Moon parentRef={mainRef} {...moon} />
         </group>
       ))}
