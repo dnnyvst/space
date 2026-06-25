@@ -8,10 +8,11 @@ const RADIUS = 5;
 const ORBIT_SPEED = 0.12;
 
 // very slow vertical drift
-const VERTICAL_AMPLITUDE = 0.15; // keep this small
+const VERTICAL_AMPLITUDE = 0.075; // keep this small
 const VERTICAL_SPEED = 0.25; // VERY slow (≈30s per cycle) (EDITED, was 0.03)
 
 const Y_AXIS = new THREE.Vector3(0, 1, 0);
+const Y_START = 0.3;
 
 interface OrbitCameraProps {
   enabled?: boolean;
@@ -29,13 +30,14 @@ export const OrbitCamera: FC<OrbitCameraProps> = ({ enabled = false }) => {
     const orbitPosition = _orbitPosition.current;
 
     // start at a point on the Z axis
-    orbitPosition.set(0, 0, RADIUS);
+    orbitPosition.set(0, Y_START, RADIUS);
 
     // rotate that point around the Y axis
     orbitPosition.applyAxisAngle(Y_AXIS, time * ORBIT_SPEED);
 
     // add slow vertical motion
-    orbitPosition.y = Math.sin(time * VERTICAL_SPEED) * VERTICAL_AMPLITUDE;
+    orbitPosition.y =
+      Y_START - Math.sin(time * VERTICAL_SPEED) * VERTICAL_AMPLITUDE;
 
     // apply to camera
     camera.position.copy(orbitPosition);
