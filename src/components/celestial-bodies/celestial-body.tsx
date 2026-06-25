@@ -86,9 +86,6 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
     }
   });
 
-  const moonsInclination = id === "earth" ? 5.145 : -0.9;
-  // rotation={[0, 0, THREE.MathUtils.degToRad(moonsInclination)]}
-
   return (
     <group scale={scale} position={position}>
       <group rotation={[0, 0, _axialTilt]}>
@@ -169,7 +166,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       {moons.map((moon) => (
         <group
           key={moon.id}
-          rotation={[0, 0, THREE.MathUtils.degToRad(moonsInclination)]}
+          rotation={[0, 0, THREE.MathUtils.degToRad(moon.orbitalTilt)]}
         >
           {showOrbitPaths && (
             <mesh rotation={[Math.PI / 2, 0, 0]}>

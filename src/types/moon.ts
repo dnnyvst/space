@@ -10,4 +10,5 @@ export interface MoonConfig extends CelestialBody {
   orbitRadius: number;
   orbitPhase: number;
   orbitalSpeed: number;
+  orbitalTilt: number;
 }
