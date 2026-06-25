@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type FC, type RefObject } from "react";
+import { useRef, useState, type FC, type RefObject } from "react";
 import * as THREE from "three";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import {
@@ -36,7 +36,6 @@ export const Moon: FC<
   const { activeCamera, followName, setActiveCamera, setFollowName } =
     useCameraContext();
   const ref = useRef<THREE.Mesh>(null);
-  const tubeMeshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState<boolean>(false);
 
   useCursor(hovered, "zoom-in");
@@ -47,11 +46,6 @@ export const Moon: FC<
     if (!ref.current || !parentRef.current) return;
 
     const center = parentRef.current.position;
-
-    // position the tube mesh at the parent's center
-    if (tubeMeshRef.current) {
-      tubeMeshRef.current.position.copy(center);
-    }
 
     // independent rotation
     ref.current.rotation.y +=
@@ -85,84 +79,50 @@ export const Moon: FC<
     setHovered(false);
   };
 
-  const tubePath = useMemo(() => {
-    const radius = orbitRadius;
-
-    const curve = new THREE.EllipseCurve(
-      0,
-      0,
-      radius,
-      radius,
-      0,
-      2 * Math.PI,
-      false,
-      0,
-    );
-
-    const points2d = curve.getPoints(64);
-    const points3d = points2d.map((p) => new THREE.Vector3(p.x, 0, p.y));
-
-    const path = new THREE.CatmullRomCurve3(points3d, true);
-    return path;
-  }, [orbitRadius]);
-
   return (
-    <group>
-      <mesh ref={tubeMeshRef}>
-        <tubeGeometry args={[tubePath, 128, 0.001, 8, true]} />
-        <meshBasicMaterial
-          color="#cfc8bb"
-          transparent
-          opacity={hovered ? 1 : 0.2}
-          depthTest={true}
-          depthWrite={false}
-        />
+    <group name={name} ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
+      <Billboard visible={hovered || beingFollowed}>
+        <Float speed={4} enabled={hovered || beingFollowed}>
+          <Text
+            key={id}
+            color="#cfc8bb"
+            anchorX="center"
+            anchorY={name === "moon" ? -3.4 : -3.8}
+            font="/fonts/GeistMono-Regular.ttf"
+            raycast={undefined}
+            fontSize={name === "moon" ? 0.8 : 1}
+            letterSpacing={0.02}
+            visible={hovered || beingFollowed}
+          >
+            {name}
+          </Text>
+        </Float>
+      </Billboard>
+
+      {/* invisible selection mesh */}
+      <mesh
+        onPointerEnter={() => {
+          if (!beingFollowed) {
+            setHovered(true);
+          }
+        }}
+        onPointerLeave={() => setHovered(false)}
+        onPointerUp={handleClick}
+      >
+        <sphereGeometry args={[3, 16, 16]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
-      <group name={name} ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
-        <Billboard visible={hovered || beingFollowed}>
-          <Float speed={4} enabled={hovered || beingFollowed}>
-            <Text
-              key={id}
-              color="#cfc8bb"
-              anchorX="center"
-              anchorY={name === "moon" ? -3.4 : -3.8}
-              font="/fonts/GeistMono-Regular.ttf"
-              raycast={undefined}
-              fontSize={name === "moon" ? 0.8 : 1}
-              letterSpacing={0.02}
-              visible={hovered || beingFollowed}
-            >
-              {name}
-            </Text>
-          </Float>
-        </Billboard>
-
-        {/* invisible selection mesh */}
-        <mesh
-          onPointerEnter={() => {
-            if (!beingFollowed) {
-              setHovered(true);
-            }
-          }}
-          onPointerLeave={() => setHovered(false)}
-          onPointerUp={handleClick}
-        >
-          <sphereGeometry args={[3, 16, 16]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
-
-        <mesh castShadow receiveShadow rotation={[0, 0, axialTilt]}>
-          <sphereGeometry args={[2, 64, 64]} />
-          <meshStandardMaterial map={map} />
-          <Outlines
-            thickness={4}
-            color="#cfc8bb"
-            transparent
-            opacity={hovered ? 1 : 0}
-          />
-        </mesh>
-      </group>
+      <mesh castShadow receiveShadow rotation={[0, 0, axialTilt]}>
+        <sphereGeometry args={[2, 64, 64]} />
+        <meshStandardMaterial map={map} />
+        <Outlines
+          thickness={4}
+          color="#cfc8bb"
+          transparent
+          opacity={hovered ? 1 : 0}
+        />
+      </mesh>
     </group>
   );
 };

@@ -1,14 +1,14 @@
 "use client";
 
-import { useMemo, useRef, type FC } from "react";
+import { useCallback, useMemo, useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { atmosphereMaterial } from "@/shaders";
 import type { CelestialBodyTextures } from "@/types";
 import { Moon } from "@/components";
-// import { useOrbit } from "@/hooks";
 import { MOON_CONFIG } from "@/config";
+import { useCameraContext } from "@/hooks";
 
 const EMPTY_SHADER = { uniforms: {}, vertexShader: "", fragmentShader: "" };
 
@@ -44,6 +44,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   const cloudsRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
   const ringRef = useRef<THREE.Mesh>(null);
+  const orbitRingRef = useRef<THREE.Mesh>(null);
 
   const _axialTilt = THREE.MathUtils.degToRad(axialTilt);
 
@@ -83,6 +84,27 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       ringRef.current.rotation.z += delta * 0.1 * multipliers;
     }
   });
+
+  const getTubePath = useCallback((orbitRadius: number) => {
+    const radius = orbitRadius;
+
+    const curve = new THREE.EllipseCurve(
+      0,
+      0,
+      radius,
+      radius,
+      0,
+      2 * Math.PI,
+      false,
+      0,
+    );
+
+    const points2d = curve.getPoints(64);
+    const points3d = points2d.map((p) => new THREE.Vector3(p.x, 0, p.y));
+
+    const path = new THREE.CatmullRomCurve3(points3d, true);
+    return path;
+  }, []);
 
   return (
     <group scale={scale} position={position}>
@@ -162,7 +184,21 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       </group>
       {/* moons */}
       {moons.map((moon) => (
-        <Moon key={moon.id} parentRef={mainRef} {...moon} />
+        <group key={moon.id}>
+          <mesh ref={orbitRingRef}>
+            <tubeGeometry
+              args={[getTubePath(moon.orbitRadius), 128, 0.001, 8, true]}
+            />
+            <meshBasicMaterial
+              color="#cfc8bb"
+              transparent
+              opacity={false ? 1 : 0.2}
+              depthTest={true}
+              depthWrite={false}
+            />
+          </mesh>
+          <Moon parentRef={mainRef} {...moon} />
+        </group>
       ))}
     </group>
   );
