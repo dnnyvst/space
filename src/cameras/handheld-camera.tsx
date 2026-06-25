@@ -59,9 +59,6 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
         THREE.MathUtils.damp(position.z, targetZ, 5, delta),
       );
     } else {
-      // const targetX = handheldZoom * 0.1;
-      // const targetY = 0.06 * 0.5 - handheldZoom * 0.1;
-      // const targetZ = 5 - handheldZoom * 0.25;
       const xyMod = handheldZoom * 0.1;
       const zMod = handheldZoom * 0.25;
 
@@ -83,8 +80,3 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
 
   return null;
 };
-
-// old trig
-// camera.position.x = driftX + micro;
-// camera.position.y = 0.06 + driftY + micro * 0.5;
-// camera.position.z = 5 + driftZ;

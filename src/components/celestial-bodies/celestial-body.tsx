@@ -169,7 +169,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
             <meshBasicMaterial
               color="#cfc8bb"
               transparent
-              opacity={followName === moon.name ? 0.7 : 0.2}
+              opacity={followName === moon.name ? 0.6 : 0.2}
               depthWrite={false}
               depthTest={true}
             />
