@@ -87,8 +87,8 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   });
 
   return (
-    <group scale={scale} position={position}>
-      <group rotation={[0, 0, _axialTilt]}>
+    <group scale={scale} position={position} rotation={[0, 0, _axialTilt]}>
+      <group>
         {/* main */}
         <mesh ref={mainRef} castShadow receiveShadow>
           <sphereGeometry args={[2, 64, 64]} />

@@ -89,10 +89,10 @@ export const Moon: FC<
             key={id}
             color="#cfc8bb"
             anchorX="center"
-            anchorY={name === "moon" ? -3.4 : -3.8}
+            anchorY={name === "moon" ? -3.2 : -3.8}
             font="/fonts/GeistMono-Regular.ttf"
             raycast={undefined}
-            fontSize={name === "moon" ? 0.8 : 1}
+            fontSize={name === "moon" ? 0.6 : 1}
             letterSpacing={0.02}
             visible={hovered || beingFollowed}
           >

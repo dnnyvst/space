@@ -21,7 +21,9 @@ export const FollowCamera: FC<FollowCameraProps> = ({ enabled = false }) => {
   useFrame((_, delta) => {
     if (!enabled || !followObject) return;
 
-    const target = followObject.position;
+    const target = new THREE.Vector3();
+    followObject.getWorldPosition(target);
+
     // todo - use parent center via
     // target.clone().sub(planet.position).normalize()
     direction.copy(target).normalize();
@@ -31,7 +33,7 @@ export const FollowCamera: FC<FollowCameraProps> = ({ enabled = false }) => {
     // add vertical lift
     offset
       .copy(direction)
-      .multiplyScalar(0.5)
+      .multiplyScalar(followName === "moon" ? 1 : 0.5)
       .add(new THREE.Vector3(0, 0.25, 0));
 
     newCameraPosition.copy(target).add(offset);
