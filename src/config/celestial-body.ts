@@ -141,7 +141,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     rotationalSpeed: 16.6,
 
     orbitRadius: 4,
-    orbitalTilt: 5.145 - PLANET_CONFIG.earth.axialTilt,
+    orbitalTilt: 5.145,
     orbitalSpeed: 0.1,
     orbitPhase: Math.random() * Math.PI * 2,
 
