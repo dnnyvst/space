@@ -139,10 +139,12 @@ export const MOON_CONFIG: MoonConfigMap = {
     radius: 1737.4,
     axialTilt: 1.54,
     rotationalSpeed: 16.6,
+
     orbitRadius: 4,
     orbitalTilt: 5.145 - PLANET_CONFIG.earth.axialTilt,
     orbitalSpeed: 0.1,
     orbitPhase: Math.random() * Math.PI * 2,
+
     textures: {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
@@ -155,10 +157,12 @@ export const MOON_CONFIG: MoonConfigMap = {
     radius: 1821.6 * JUPITER_SCALE,
     axialTilt: 0.05,
     rotationalSpeed: 269,
+
     orbitRadius: 3.25,
     orbitalTilt: 0.04,
     orbitalSpeed: 1.54,
     orbitPhase: Math.random() * Math.PI * 2,
+
     textures: {
       map: "/textures/io/surface.jpg",
     },
@@ -171,10 +175,12 @@ export const MOON_CONFIG: MoonConfigMap = {
     radius: 1560.8 * JUPITER_SCALE,
     axialTilt: 0.1,
     rotationalSpeed: 115,
+
     orbitRadius: 3.75,
     orbitalTilt: 0.47,
     orbitalSpeed: 0.77,
     orbitPhase: Math.random() * Math.PI * 2,
+
     textures: {
       map: "/textures/europa/surface.jpg",
     },
@@ -187,10 +193,12 @@ export const MOON_CONFIG: MoonConfigMap = {
     radius: 2634.1 * JUPITER_SCALE,
     axialTilt: 0.33,
     rotationalSpeed: 96.5,
+
     orbitRadius: 4.25,
     orbitalTilt: 0.19,
     orbitalSpeed: 0.38,
     orbitPhase: Math.random() * Math.PI * 2,
+
     textures: {
       map: "/textures/ganymede/surface.jpg",
     },
@@ -203,10 +211,12 @@ export const MOON_CONFIG: MoonConfigMap = {
     radius: 2410.3 * JUPITER_SCALE,
     axialTilt: 0.51,
     rotationalSpeed: 37.8,
+
     orbitRadius: 4.75,
     orbitalTilt: 0.28,
     orbitalSpeed: 0.16,
     orbitPhase: Math.random() * Math.PI * 2,
+
     textures: {
       map: "/textures/callisto/surface.jpg",
     },
@@ -219,11 +229,13 @@ export const MOON_CONFIG: MoonConfigMap = {
     radius: 1353.4 * JUPITER_SCALE,
     axialTilt: 0,
     rotationalSpeed: 60.3,
-    retrograde: true,
+
     orbitRadius: 4.2,
     orbitalTilt: 23,
     orbitalSpeed: 0.06,
     orbitPhase: Math.random() * Math.PI * 2,
+    retrograde: true,
+
     textures: {
       map: "/textures/triton/surface.jpg",
     },
