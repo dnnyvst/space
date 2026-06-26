@@ -8,7 +8,6 @@ import { atmosphereMaterial } from "@/shaders";
 import type { CelestialBodyTextures } from "@/types";
 import { Moon } from "@/components";
 import { MOON_CONFIG } from "@/config";
-import { useAppContext, useCameraContext } from "@/hooks";
 
 const EMPTY_SHADER = { uniforms: {}, vertexShader: "", fragmentShader: "" };
 
@@ -39,9 +38,6 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
   noRotation = false,
   position = [0, 0, 0],
 }) => {
-  const { showOrbitPaths, hoveredMoonId } = useAppContext();
-  const { followName } = useCameraContext();
-
   const mainRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
@@ -167,28 +163,7 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       </group>
       {/* moons */}
       {moons.map((moon) => (
-        <group
-          key={moon.id}
-          rotation={[0, 0, THREE.MathUtils.degToRad(moon.orbitalTilt)]}
-        >
-          {showOrbitPaths && (
-            <mesh rotation={[Math.PI / 2, 0, 0]}>
-              <torusGeometry args={[moon.orbitRadius, 0.002, 30, 256]} />
-              <meshBasicMaterial
-                color="#cfc8bb"
-                transparent
-                opacity={
-                  followName === moon.name || hoveredMoonId === moon.id
-                    ? 0.6
-                    : 0.2
-                }
-                depthWrite={false}
-                depthTest={true}
-              />
-            </mesh>
-          )}
-          <Moon parentRef={mainRef} {...moon} />
-        </group>
+        <Moon key={moon.id} parentRef={mainRef} {...moon} />
       ))}
     </group>
   );

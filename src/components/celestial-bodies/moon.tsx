@@ -33,8 +33,9 @@ export const Moon: FC<
   textures,
   parentRef,
   retrograde,
+  orbitalTilt,
 }) => {
-  const { hoveredMoonId, setHoveredMoonId } = useAppContext();
+  const { showOrbitPaths, hoveredMoonId, setHoveredMoonId } = useAppContext();
   const hovered = hoveredMoonId === id;
 
   const { activeCamera, followName, setActiveCamera, setFollowName } =
@@ -95,49 +96,84 @@ export const Moon: FC<
   };
 
   return (
-    <group name={name} ref={ref} scale={scale}>
-      <Billboard visible={hovered || beingFollowed}>
-        <Float speed={4} enabled={hovered || beingFollowed}>
-          <Text
-            key={id}
+    <group rotation={[0, 0, THREE.MathUtils.degToRad(orbitalTilt)]}>
+      <group name={name} ref={ref} scale={scale}>
+        <Billboard visible={hovered || beingFollowed}>
+          <Float speed={4} enabled={hovered || beingFollowed}>
+            <Text
+              key={id}
+              color="#cfc8bb"
+              anchorX="center"
+              anchorY={name === "moon" ? -3.2 : -3.8}
+              font="/fonts/GeistMono-Regular.ttf"
+              raycast={undefined}
+              fontSize={name === "moon" ? 0.6 : 1}
+              letterSpacing={0.02}
+              visible={hovered || beingFollowed}
+            >
+              {name}
+            </Text>
+          </Float>
+        </Billboard>
+        {/* invisible selection mesh */}
+        <mesh
+          onPointerEnter={() => {
+            if (!beingFollowed) {
+              setHoveredMoonId(id);
+            }
+          }}
+          onPointerLeave={() => setHoveredMoonId(null)}
+          onPointerUp={handleClick}
+        >
+          <sphereGeometry args={[3, 16, 16]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+        {/* main */}
+        <mesh castShadow receiveShadow rotation={[0, 0, axialTilt]}>
+          <sphereGeometry args={[2, 64, 64]} />
+          <meshStandardMaterial map={map} />
+          <Outlines
+            thickness={4}
             color="#cfc8bb"
-            anchorX="center"
-            anchorY={name === "moon" ? -3.2 : -3.8}
-            font="/fonts/GeistMono-Regular.ttf"
-            raycast={undefined}
-            fontSize={name === "moon" ? 0.6 : 1}
-            letterSpacing={0.02}
-            visible={hovered || beingFollowed}
+            transparent
+            opacity={hovered ? 1 : 0}
+          />
+        </mesh>
+      </group>
+      {/* orbit path */}
+      {showOrbitPaths && (
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          {/* invisible selection mesh */}
+          <mesh
+            onPointerEnter={() => {
+              if (!beingFollowed) {
+                setHoveredMoonId(id);
+              }
+            }}
+            onPointerLeave={() => setHoveredMoonId(null)}
+            onPointerUp={handleClick}
           >
-            {name}
-          </Text>
-        </Float>
-      </Billboard>
-
-      {/* invisible selection mesh */}
-      <mesh
-        onPointerEnter={() => {
-          if (!beingFollowed) {
-            setHoveredMoonId(id);
-          }
-        }}
-        onPointerLeave={() => setHoveredMoonId(null)}
-        onPointerUp={handleClick}
-      >
-        <sphereGeometry args={[3, 16, 16]} />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-      </mesh>
-
-      <mesh castShadow receiveShadow rotation={[0, 0, axialTilt]}>
-        <sphereGeometry args={[2, 64, 64]} />
-        <meshStandardMaterial map={map} />
-        <Outlines
-          thickness={4}
-          color="#cfc8bb"
-          transparent
-          opacity={hovered ? 1 : 0}
-        />
-      </mesh>
+            <torusGeometry args={[orbitRadius, 0.006, 30, 256]} />
+            <meshBasicMaterial
+              transparent
+              opacity={0}
+              depthWrite={false}
+              depthTest={true}
+            />
+          </mesh>
+          {/* main */}
+          <mesh>
+            <torusGeometry args={[orbitRadius, 0.002, 30, 256]} />
+            <meshBasicMaterial
+              color="#cfc8bb"
+              transparent
+              opacity={hovered || beingFollowed ? 0.6 : 0.2}
+              depthWrite={false}
+              depthTest={true}
+            />
+          </mesh>
+        </group>
+      )}
     </group>
   );
 };
