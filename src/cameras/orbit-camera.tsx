@@ -8,7 +8,7 @@ const RADIUS = 5;
 const ORBIT_SPEED = 0.12;
 
 // very slow vertical drift
-const VERTICAL_AMPLITUDE = 0.075; // keep this small
+const VERTICAL_AMPLITUDE = 0.025; // keep this small
 const VERTICAL_SPEED = 0.25; // VERY slow (≈30s per cycle) (EDITED, was 0.03)
 
 const Y_AXIS = new THREE.Vector3(0, 1, 0);
