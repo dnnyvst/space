@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { CameraZoomSlider, FOVSlider } from "@/components";
 import { CELESTIAL_BODY_CONFIG, MOON_CONFIG } from "@/config";
-import { useAppContext, useCameraContext, useIsMobile } from "@/hooks";
+import { useAppContext, useCameraContext } from "@/hooks";
 
 interface ListItemProps {
   selected: boolean;
@@ -39,8 +39,6 @@ export const UIOverlay: FC = () => {
   const { activeCamera, fov, setActiveCamera, followName, setFollowName } =
     useCameraContext();
 
-  const isMobile = useIsMobile(640);
-
   const selectedCelestialBody = CELESTIAL_BODY_CONFIG[selectedCelestialBodyId];
 
   const moons = Object.values(MOON_CONFIG).filter(
@@ -60,11 +58,9 @@ export const UIOverlay: FC = () => {
 
   return (
     <div className="pointer-events-none flex justify-center h-screen absolute py-4 px-4 z-10 w-full">
-      <div
-        className={`${isMobile ? "justify-between pb-10" : "lg:justify-center justify-end"} items-center flex flex-col-reverse gap-4 lg:items-start lg:flex-row`}
-      >
+      <div className="justify-between pb-10 items-center flex flex-col-reverse gap-4 lg:justify-center lg:items-start lg:flex-row">
         {/* controls */}
-        <div className="flex gap-2 w-full lg:flex-col lg:w-auto lg:min-w-1/5">
+        <div className="flex gap-2 w-full items-end lg:items-stretch lg:flex-col lg:w-auto lg:min-w-1/5">
           {/* sliders */}
           <div className="card flex flex-col gap-2">
             <span className="flex flex-col">
