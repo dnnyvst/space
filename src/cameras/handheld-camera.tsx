@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { sceneTime } from "@/utils";
 import { useCameraContext } from "@/hooks";
+import { Y_START } from "@/constants";
 
 const smoothstep = (edge0: number, edge1: number, x: number) => {
   const t = Math.min(Math.max((x - edge0) / (edge1 - edge0), 0), 1);
@@ -76,7 +77,7 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
       const zMod = handheldZoom * 0.25;
 
       const targetX = xyMod;
-      const targetY = 0.3 - xyMod;
+      const targetY = Y_START - xyMod;
       const targetZ = 5 - zMod;
 
       // build target position

@@ -14,9 +14,11 @@ import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
 import { useAppContext, useCameraContext } from "@/hooks";
 
-const ROTATIONAL_SPEED_SCALE = 0.005;
-const ORBITAL_SPEED_SCALE = 0.4;
 const FINAL_SIZE_SCALE = 0.4;
+const ROTATION_SPEED_SCALE = 0.005;
+const ORBIT_SPEED_SCALE = 0.4;
+const ORBIT_RADIUS_SCALE = 4;
+const ORBIT_GAP_SCALE = 0.18;
 
 export const Moon: FC<
   MoonConfig & { parentRef: RefObject<THREE.Mesh | null> }
@@ -48,16 +50,17 @@ export const Moon: FC<
 
   const scale = useMemo(
     () => (radius / PLANET_CONFIG[parent].radius) * FINAL_SIZE_SCALE,
-    [],
+    [parent, radius],
   );
 
   const _rotationalSpeed = useMemo(
-    () => rotationalSpeed * ROTATIONAL_SPEED_SCALE,
-    [],
+    () => rotationalSpeed * ROTATION_SPEED_SCALE,
+    [rotationalSpeed],
   );
 
   // squish radii so nothings too crazy far away
-  const _orbitRadius = Math.pow(orbitRadius, 0.4) * 4.0;
+  const _orbitRadius =
+    Math.pow(orbitRadius, ORBIT_GAP_SCALE) * ORBIT_RADIUS_SCALE;
 
   useFrame((_, delta) => {
     if (!ref.current || !parentRef.current) return;
@@ -72,7 +75,7 @@ export const Moon: FC<
       orbitPhase +
       sceneTime.get() *
         orbitalSpeed *
-        ORBITAL_SPEED_SCALE *
+        ORBIT_SPEED_SCALE *
         (retrograde ? -1 : 1);
 
     // todo - temporary special scale for jupiters moons

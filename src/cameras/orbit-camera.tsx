@@ -2,6 +2,7 @@ import { useRef, type FC } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { sceneTime } from "@/utils";
+import { Y_START } from "@/constants";
 
 // orbit settings
 const RADIUS = 5;
@@ -12,7 +13,6 @@ const VERTICAL_AMPLITUDE = 0.025; // keep this small
 const VERTICAL_SPEED = 0.25; // VERY slow (≈30s per cycle) (EDITED, was 0.03)
 
 const Y_AXIS = new THREE.Vector3(0, 1, 0);
-const Y_START = 0.3;
 
 interface OrbitCameraProps {
   enabled?: boolean;
