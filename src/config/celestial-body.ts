@@ -18,6 +18,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   mercury: {
     id: "mercury",
     name: "mercury",
+    radius: 2439.7,
     axialTilt: 0.034,
     rotationalSpeed: 0.1,
     textures: {
@@ -27,6 +28,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   venus: {
     id: "venus",
     name: "venus",
+    radius: 6051.8,
     retrograde: true,
     axialTilt: 177.4,
     rotationalSpeed: 0.1,
@@ -38,6 +40,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   earth: {
     id: "earth",
     name: "earth",
+    radius: 6371,
     axialTilt: 23.44,
     rotationalSpeed: 0.1,
     textures: {
@@ -50,6 +53,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   mars: {
     id: "mars",
     name: "mars",
+    radius: 3389.5,
     axialTilt: 25.19,
     rotationalSpeed: 0.1,
     textures: {
@@ -59,6 +63,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   jupiter: {
     id: "jupiter",
     name: "jupiter",
+    radius: 69886,
     axialTilt: 3.13,
     rotationalSpeed: 0.1,
     textures: {
@@ -68,6 +73,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   saturn: {
     id: "saturn",
     name: "saturn",
+    radius: 58232,
     axialTilt: 26.73,
     rotationalSpeed: 0.1,
     textures: {
@@ -78,6 +84,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   uranus: {
     id: "uranus",
     name: "uranus",
+    radius: 25362,
     retrograde: true,
     axialTilt: 97.77,
     rotationalSpeed: 0.1,
@@ -88,6 +95,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
   neptune: {
     id: "neptune",
     name: "neptune",
+    radius: 24622,
     axialTilt: 28.32,
     rotationalSpeed: 0.1,
     textures: {
@@ -104,7 +112,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     id: "moon",
     name: "moon",
     parent: "earth",
-    relativeScale: 0.273,
+    radius: 1737.4,
     rotationalSpeed: 0.1,
     relativeRotationalSpeed: 0.03663,
     axialTilt: 1.54,
@@ -122,7 +130,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     id: "io",
     name: "io",
     parent: "jupiter",
-    relativeScale: 0.026 * JUPITER_SCALE,
+    radius: 1821.6 * JUPITER_SCALE,
     relativeRotationalSpeed: 0.565,
     axialTilt: 0.05,
     orbitRadius: 3.25,
@@ -137,7 +145,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     id: "europa",
     name: "europa",
     parent: "jupiter",
-    relativeScale: 0.022 * JUPITER_SCALE,
+    radius: 1560.8 * JUPITER_SCALE,
     relativeRotationalSpeed: 0.281,
     axialTilt: 0.1,
     orbitRadius: 3.75,
@@ -152,7 +160,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     id: "ganymede",
     name: "ganymede",
     parent: "jupiter",
-    relativeScale: 0.038 * JUPITER_SCALE,
+    radius: 2634.1 * JUPITER_SCALE,
     relativeRotationalSpeed: 0.139,
     axialTilt: 0.33,
     orbitRadius: 4.25,
@@ -167,7 +175,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     id: "callisto",
     name: "callisto",
     parent: "jupiter",
-    relativeScale: 0.034 * JUPITER_SCALE,
+    radius: 2410.3 * JUPITER_SCALE,
     relativeRotationalSpeed: 0.06,
     axialTilt: 0.51,
     orbitRadius: 4.75,
@@ -182,8 +190,9 @@ export const MOON_CONFIG: MoonConfigMap = {
     id: "triton",
     name: "triton",
     parent: "neptune",
+    // todo
+    radius: 1353.4 * JUPITER_SCALE,
     retrograde: true,
-    relativeScale: 0.055 * JUPITER_SCALE,
     relativeRotationalSpeed: 0.0038,
     axialTilt: 0,
     // 12

@@ -1,4 +1,4 @@
-import { useRef, type FC, type RefObject } from "react";
+import { useMemo, useRef, type FC, type RefObject } from "react";
 import * as THREE from "three";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import {
@@ -24,7 +24,7 @@ export const Moon: FC<
   id,
   name,
   parent,
-  relativeScale,
+  radius,
   relativeRotationalSpeed,
   orbitRadius,
   orbitPhase,
@@ -88,8 +88,13 @@ export const Moon: FC<
     setHoveredMoonId(null);
   };
 
+  const scale = useMemo(
+    () => (radius / PLANET_CONFIG[parent].radius) * FINAL_SIZE_SCALE,
+    [],
+  );
+
   return (
-    <group name={name} ref={ref} scale={relativeScale * FINAL_SIZE_SCALE}>
+    <group name={name} ref={ref} scale={scale}>
       <Billboard visible={hovered || beingFollowed}>
         <Float speed={4} enabled={hovered || beingFollowed}>
           <Text
