@@ -17,8 +17,8 @@ import { useAppContext, useCameraContext } from "@/hooks";
 const FINAL_SIZE_SCALE = 0.4;
 const ROTATION_SPEED_SCALE = 0.005;
 const ORBIT_SPEED_SCALE = 0.4;
-const ORBIT_RADIUS_SCALE = 4;
-const ORBIT_GAP_SCALE = 0.18;
+const ORBIT_RADIUS_SCALE = 3.6;
+const ORBIT_GAP_SCALE = 0.3;
 
 export const Moon: FC<
   MoonConfig & { parentRef: RefObject<THREE.Mesh | null> }
