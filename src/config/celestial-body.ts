@@ -129,8 +129,6 @@ export const PLANET_CONFIG: PlanetConfigMap = {
 
 const JUPITER_SCALE = 3.0;
 
-// todo - all relative to solar ecliptic plane
-// orbitalTilt = inclination relative to parent planet equator
 export const MOON_CONFIG: MoonConfigMap = {
   moon: {
     id: "moon",
@@ -159,7 +157,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     rotationalSpeed: 269,
 
     orbitRadius: 3.25,
-    orbitalTilt: 0.04,
+    orbitalTilt: 2.213,
     orbitalSpeed: 1.54,
     orbitPhase: Math.random() * Math.PI * 2,
 
@@ -177,7 +175,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     rotationalSpeed: 115,
 
     orbitRadius: 3.75,
-    orbitalTilt: 0.47,
+    orbitalTilt: 1.791,
     orbitalSpeed: 0.77,
     orbitPhase: Math.random() * Math.PI * 2,
 
@@ -191,7 +189,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "ganymede",
     parent: "jupiter",
     radius: 2634.1 * JUPITER_SCALE,
-    axialTilt: 0.33,
+    axialTilt: 2.214,
     rotationalSpeed: 96.5,
 
     orbitRadius: 4.25,
@@ -213,7 +211,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     rotationalSpeed: 37.8,
 
     orbitRadius: 4.75,
-    orbitalTilt: 0.28,
+    orbitalTilt: 2.017,
     orbitalSpeed: 0.16,
     orbitPhase: Math.random() * Math.PI * 2,
 
@@ -231,7 +229,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     rotationalSpeed: 60.3,
 
     orbitRadius: 4.2,
-    orbitalTilt: 23,
+    orbitalTilt: 129.812,
     orbitalSpeed: 0.06,
     orbitPhase: Math.random() * Math.PI * 2,
     retrograde: true,
