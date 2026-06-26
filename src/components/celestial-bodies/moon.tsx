@@ -56,6 +56,9 @@ export const Moon: FC<
     [],
   );
 
+  // squish radii so nothings too crazy far away
+  const _orbitRadius = Math.pow(orbitRadius, 0.4) * 4.0;
+
   useFrame((_, delta) => {
     if (!ref.current || !parentRef.current) return;
 
@@ -78,9 +81,9 @@ export const Moon: FC<
     }
 
     ref.current.position.set(
-      center.x + Math.sin(phase) * orbitRadius,
+      center.x + Math.sin(phase) * _orbitRadius,
       center.y,
-      center.z + Math.cos(phase) * orbitRadius,
+      center.z + Math.cos(phase) * _orbitRadius,
     );
   });
 
@@ -153,7 +156,7 @@ export const Moon: FC<
             onPointerLeave={() => setHoveredMoonId(null)}
             onPointerUp={handleClick}
           >
-            <torusGeometry args={[orbitRadius, 0.006, 30, 256]} />
+            <torusGeometry args={[_orbitRadius, 0.036, 30, 256]} />
             <meshBasicMaterial
               transparent
               opacity={0}
@@ -163,7 +166,7 @@ export const Moon: FC<
           </mesh>
           {/* main */}
           <mesh>
-            <torusGeometry args={[orbitRadius, 0.002, 30, 256]} />
+            <torusGeometry args={[_orbitRadius, 0.002, 30, 256]} />
             <meshBasicMaterial
               color="#cfc8bb"
               transparent
