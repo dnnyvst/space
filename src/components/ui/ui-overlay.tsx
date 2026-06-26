@@ -68,16 +68,16 @@ export const UIOverlay: FC = () => {
           {/* sliders */}
           <div className="card flex flex-col gap-2">
             <span className="flex flex-col">
-              <span className="text-center">fov: {fov}&deg;</span>
-              <FOVSlider />
-            </span>
-            <span className="flex flex-col">
               <span
                 className={`text-center ${handheldZoomDisabled && "opacity-20"}`}
               >
                 zoom
               </span>
               <CameraZoomSlider disabled={handheldZoomDisabled} />
+            </span>
+            <span className="flex flex-col">
+              <span className="text-center">fov: {fov}&deg;</span>
+              <FOVSlider />
             </span>
             <ul className="pt-2">
               <ListItem
@@ -171,6 +171,7 @@ export const UIOverlay: FC = () => {
                   onClick={() => {
                     setFollowName(name);
                     setActiveCamera("follow");
+                    setHoveredMoonId(null);
                   }}
                 >
                   {name}
