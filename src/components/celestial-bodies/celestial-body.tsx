@@ -70,7 +70,9 @@ export const CelestialBody: FC<CelestialBodyProps> = ({
       return;
     }
 
-    const multipliers = (retrograde ? -1 : 1) * rotationalSpeed;
+    // todo - using 0.1 instead of parent speed
+    // need to compress the range
+    const multipliers = (retrograde ? -1 : 1) * 0.1;
 
     if (mainRef.current) {
       mainRef.current.rotation.y += delta * multipliers;

@@ -20,29 +20,37 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     name: "mercury",
     radius: 2439.7,
     axialTilt: 0.034,
-    rotationalSpeed: 0.1,
+
+    rotationalSpeed: 10.9, // km/h
+
     textures: {
       map: `/textures/mercury/${RESOLUTION}_surface.jpg`,
     },
   },
+
   venus: {
     id: "venus",
     name: "venus",
     radius: 6051.8,
     retrograde: true,
     axialTilt: 177.4,
-    rotationalSpeed: 0.1,
+
+    rotationalSpeed: 6.5, // km/h (retrograde spin)
+
     textures: {
       map: `/textures/venus/${RESOLUTION}_surface.jpg`,
       atmosphere: `/textures/venus/${RESOLUTION}_atmosphere.jpg`,
     },
   },
+
   earth: {
     id: "earth",
     name: "earth",
     radius: 6371,
     axialTilt: 23.44,
-    rotationalSpeed: 0.1,
+
+    rotationalSpeed: 1670, // km/h
+
     textures: {
       map: `/textures/earth/${RESOLUTION}_day.jpg`,
       normal: `/textures/earth/${RESOLUTION}_normal.jpg`,
@@ -50,54 +58,69 @@ export const PLANET_CONFIG: PlanetConfigMap = {
       night: `/textures/earth/${RESOLUTION}_night.jpg`,
     },
   },
+
   mars: {
     id: "mars",
     name: "mars",
     radius: 3389.5,
     axialTilt: 25.19,
-    rotationalSpeed: 0.1,
+
+    rotationalSpeed: 866, // km/h
+
     textures: {
       map: `/textures/mars/${RESOLUTION}_surface.jpg`,
     },
   },
+
   jupiter: {
     id: "jupiter",
     name: "jupiter",
     radius: 69886,
     axialTilt: 3.13,
-    rotationalSpeed: 0.1,
+
+    rotationalSpeed: 45300, // km/h
+
     textures: {
       map: `/textures/jupiter/${RESOLUTION}_surface.jpg`,
     },
   },
+
   saturn: {
     id: "saturn",
     name: "saturn",
     radius: 58232,
     axialTilt: 26.73,
-    rotationalSpeed: 0.1,
+
+    rotationalSpeed: 35500, // km/h
+
     textures: {
       map: `/textures/saturn/${RESOLUTION}_surface.jpg`,
       ring: `/textures/saturn/${RESOLUTION}_ring.png`,
     },
   },
+
   uranus: {
     id: "uranus",
     name: "uranus",
     radius: 25362,
     retrograde: true,
     axialTilt: 97.77,
-    rotationalSpeed: 0.1,
+
+    rotationalSpeed: 9300, // km/h
+
     textures: {
       map: "/textures/uranus/surface.jpg",
     },
   },
+
   neptune: {
     id: "neptune",
     name: "neptune",
     radius: 24622,
     axialTilt: 28.32,
-    rotationalSpeed: 0.1,
+
+    rotationalSpeed: 9650, // km/h
+
     textures: {
       map: "/textures/neptune/surface.jpg",
     },
@@ -106,6 +129,7 @@ export const PLANET_CONFIG: PlanetConfigMap = {
 
 const JUPITER_SCALE = 3.0;
 
+// todo - all relative to solar ecliptic plane
 // orbitalTilt = inclination relative to parent planet equator
 export const MOON_CONFIG: MoonConfigMap = {
   moon: {
@@ -113,25 +137,23 @@ export const MOON_CONFIG: MoonConfigMap = {
     name: "moon",
     parent: "earth",
     radius: 1737.4,
-    rotationalSpeed: 0.1,
-    relativeRotationalSpeed: 0.03663,
+    rotationalSpeed: 16.6,
     axialTilt: 1.54,
     orbitRadius: 4,
     orbitalTilt: 5.145 - PLANET_CONFIG.earth.axialTilt,
-    // orbitalSpeed: 0.06,
-    // orbitalSpeed: 0.2,
     orbitalSpeed: 0.1,
     orbitPhase: Math.random() * Math.PI * 2,
     textures: {
       map: `/textures/moon/${RESOLUTION}_surface.jpg`,
     },
   },
+
   io: {
     id: "io",
     name: "io",
     parent: "jupiter",
     radius: 1821.6 * JUPITER_SCALE,
-    relativeRotationalSpeed: 0.565,
+    rotationalSpeed: 269,
     axialTilt: 0.05,
     orbitRadius: 3.25,
     orbitalTilt: 0.04,
@@ -141,12 +163,13 @@ export const MOON_CONFIG: MoonConfigMap = {
       map: "/textures/io/surface.jpg",
     },
   },
+
   europa: {
     id: "europa",
     name: "europa",
     parent: "jupiter",
     radius: 1560.8 * JUPITER_SCALE,
-    relativeRotationalSpeed: 0.281,
+    rotationalSpeed: 115,
     axialTilt: 0.1,
     orbitRadius: 3.75,
     orbitalTilt: 0.47,
@@ -156,12 +179,13 @@ export const MOON_CONFIG: MoonConfigMap = {
       map: "/textures/europa/surface.jpg",
     },
   },
+
   ganymede: {
     id: "ganymede",
     name: "ganymede",
     parent: "jupiter",
     radius: 2634.1 * JUPITER_SCALE,
-    relativeRotationalSpeed: 0.139,
+    rotationalSpeed: 96.5,
     axialTilt: 0.33,
     orbitRadius: 4.25,
     orbitalTilt: 0.19,
@@ -171,12 +195,13 @@ export const MOON_CONFIG: MoonConfigMap = {
       map: "/textures/ganymede/surface.jpg",
     },
   },
+
   callisto: {
     id: "callisto",
     name: "callisto",
     parent: "jupiter",
     radius: 2410.3 * JUPITER_SCALE,
-    relativeRotationalSpeed: 0.06,
+    rotationalSpeed: 37.8,
     axialTilt: 0.51,
     orbitRadius: 4.75,
     orbitalTilt: 0.28,
@@ -186,16 +211,15 @@ export const MOON_CONFIG: MoonConfigMap = {
       map: "/textures/callisto/surface.jpg",
     },
   },
+
   triton: {
     id: "triton",
     name: "triton",
     parent: "neptune",
-    // todo
     radius: 1353.4 * JUPITER_SCALE,
+    rotationalSpeed: 60.3,
     retrograde: true,
-    relativeRotationalSpeed: 0.0038,
     axialTilt: 0,
-    // 12
     orbitRadius: 4.2,
     orbitalTilt: 23,
     orbitalSpeed: 0.06,

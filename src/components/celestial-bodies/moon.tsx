@@ -14,7 +14,7 @@ import { PLANET_CONFIG } from "@/config";
 import { sceneTime } from "@/utils";
 import { useAppContext, useCameraContext } from "@/hooks";
 
-const ROTATIONAL_SPEED_MULTIPLIER = 10;
+const ROTATIONAL_SPEED_SCALE = 0.005;
 const ORBITAL_SPEED_SCALE = 0.4;
 const FINAL_SIZE_SCALE = 0.4;
 
@@ -25,7 +25,7 @@ export const Moon: FC<
   name,
   parent,
   radius,
-  relativeRotationalSpeed,
+  rotationalSpeed,
   orbitRadius,
   orbitPhase,
   orbitalSpeed,
@@ -45,17 +45,23 @@ export const Moon: FC<
   const beingFollowed = activeCamera === "follow" && followName === id;
   const map = useTexture(textures.map);
 
+  const scale = useMemo(
+    () => (radius / PLANET_CONFIG[parent].radius) * FINAL_SIZE_SCALE,
+    [],
+  );
+
+  const _rotationalSpeed = useMemo(
+    () => rotationalSpeed * ROTATIONAL_SPEED_SCALE,
+    [],
+  );
+
   useFrame((_, delta) => {
     if (!ref.current || !parentRef.current) return;
 
     const center = parentRef.current.position;
 
     // independent rotation
-    ref.current.rotation.y +=
-      delta *
-      PLANET_CONFIG[parent].rotationalSpeed *
-      relativeRotationalSpeed *
-      ROTATIONAL_SPEED_MULTIPLIER;
+    ref.current.rotation.y += delta * _rotationalSpeed;
 
     // orbit, using global scene time
     let phase =
@@ -87,11 +93,6 @@ export const Moon: FC<
     }
     setHoveredMoonId(null);
   };
-
-  const scale = useMemo(
-    () => (radius / PLANET_CONFIG[parent].radius) * FINAL_SIZE_SCALE,
-    [],
-  );
 
   return (
     <group name={name} ref={ref} scale={scale}>

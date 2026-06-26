@@ -11,9 +11,11 @@ export interface CelestialBodyTextures {
 export interface CelestialBody {
   id: string;
   name: Planet | Moon;
+  // km
   radius: number;
+  // km/h
+  rotationalSpeed: number;
   retrograde?: boolean;
   axialTilt: number;
   textures: CelestialBodyTextures;
-  rotationalSpeed?: number;
 }
