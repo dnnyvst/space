@@ -12,6 +12,8 @@ const upOffset = new THREE.Vector3(0, 0.25, 0);
 const offset = new THREE.Vector3();
 const direction = new THREE.Vector3();
 const newCameraPosition = new THREE.Vector3();
+const lookAtMatrix = new THREE.Matrix4();
+const targetQuat = new THREE.Quaternion();
 
 export const FollowCamera: FC<FollowCameraProps> = ({ enabled = false }) => {
   const { camera, scene } = useThree();
@@ -49,14 +51,10 @@ export const FollowCamera: FC<FollowCameraProps> = ({ enabled = false }) => {
       THREE.MathUtils.damp(camera.position.z, newCameraPosition.z, 3, delta),
     );
 
-    // camera.lookAt(target);
-    const lookAtMatrix = new THREE.Matrix4();
-    const targetQuat = new THREE.Quaternion();
-
     lookAtMatrix.lookAt(camera.position, target, camera.up);
     targetQuat.setFromRotationMatrix(lookAtMatrix);
 
-    camera.quaternion.slerp(targetQuat, 1 - Math.exp(-6 * delta));
+    camera.quaternion.slerp(targetQuat, 1 - Math.exp(-5 * delta));
   });
 
   return null;

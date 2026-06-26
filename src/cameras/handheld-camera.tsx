@@ -14,6 +14,9 @@ interface HandheldCameraProps {
 }
 
 const handheldShake = false;
+// const target = new THREE.Vector3(0, 0, 0);
+// const lookAtMatrix = new THREE.Matrix4();
+// const targetQuat = new THREE.Quaternion();
 
 export const HandheldCamera: FC<HandheldCameraProps> = ({
   enabled = false,
@@ -22,11 +25,21 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
   const { handheldZoom } = useCameraContext();
 
   const _position = useRef(new THREE.Vector3());
+  const wasEnabled = useRef(false);
 
   useFrame((_, delta) => {
-    if (!enabled) return;
+    if (!enabled) {
+      wasEnabled.current = false;
+      return;
+    }
+
+    // if (!wasEnabled.current) {
+    //   _position.current.copy(camera.position);
+    //   wasEnabled.current = true;
+    // }
 
     const position = _position.current;
+
     if (handheldShake) {
       const time = sceneTime.get();
 
@@ -76,6 +89,10 @@ export const HandheldCamera: FC<HandheldCameraProps> = ({
     // apply
     camera.position.copy(position);
     camera.lookAt(0, 0, 0);
+    // lookAtMatrix.lookAt(camera.position, target, camera.up);
+    // targetQuat.setFromRotationMatrix(lookAtMatrix);
+
+    // camera.quaternion.slerp(targetQuat, 1 - Math.exp(-6 * delta));
   });
 
   return null;
