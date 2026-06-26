@@ -178,6 +178,23 @@ export const MOON_CONFIG: MoonConfigMap = {
       map: "/textures/callisto/surface.jpg",
     },
   },
+  triton: {
+    id: "triton",
+    name: "triton",
+    parent: "neptune",
+    retrograde: true,
+    relativeScale: 0.055 * JUPITER_SCALE,
+    relativeRotationalSpeed: 0.0038,
+    axialTilt: 0,
+    // 12
+    orbitRadius: 4.2,
+    orbitalTilt: 23,
+    orbitalSpeed: 0.06,
+    orbitPhase: Math.random() * Math.PI * 2,
+    textures: {
+      map: "/textures/triton/surface.jpg",
+    },
+  },
 };
 
 export const CELESTIAL_BODY_CONFIG: CelestialBodyConfigMap = {

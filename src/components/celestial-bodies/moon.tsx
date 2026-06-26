@@ -32,6 +32,7 @@ export const Moon: FC<
   axialTilt,
   textures,
   parentRef,
+  retrograde,
 }) => {
   const { hoveredMoonId, setHoveredMoonId } = useAppContext();
   const hovered = hoveredMoonId === id;
@@ -58,7 +59,11 @@ export const Moon: FC<
 
     // orbit, using global scene time
     let phase =
-      orbitPhase + sceneTime.get() * orbitalSpeed * ORBITAL_SPEED_SCALE;
+      orbitPhase +
+      sceneTime.get() *
+        orbitalSpeed *
+        ORBITAL_SPEED_SCALE *
+        (retrograde ? -1 : 1);
 
     // todo - temporary special scale for jupiters moons
     if (parent === "jupiter") {
