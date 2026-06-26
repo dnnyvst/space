@@ -34,7 +34,8 @@ export const PLANET_CONFIG: PlanetConfigMap = {
     radius: 6051.8,
     axialTilt: 177.4,
 
-    retrograde: true,
+    // temporary
+    retrograde: false,
     rotationalSpeed: 6.5,
 
     textures: {
