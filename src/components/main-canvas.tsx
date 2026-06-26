@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FC } from "react";
+import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 // import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { Skybox, CelestialBody, UIOverlay } from "@/components";
@@ -42,7 +43,7 @@ export const MainCanvas: FC = () => {
           alpha: true,
         }}
         dpr={[1, 2]}
-        shadows
+        shadows={{ type: THREE.PCFShadowMap }}
         onCreated={() => {
           setCanvasReady(true);
         }}
