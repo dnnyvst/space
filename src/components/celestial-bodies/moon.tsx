@@ -43,7 +43,7 @@ export const Moon: FC<
   const ref = useRef<THREE.Mesh>(null);
 
   useCursor(hovered, "zoom-in");
-  const beingFollowed = activeCamera === "follow" && followName === id;
+  const beingFollowed = activeCamera === "follow" && followName === name;
   const map = useTexture(textures.map);
 
   const scale = useMemo(

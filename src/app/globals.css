@@ -29,6 +29,12 @@
   }
 }
 
+@layer components {
+  .card {
+    @apply bg-card/0 border border-text/30 py-2 px-4 rounded-lg whitespace-nowrap pointer-events-auto;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
