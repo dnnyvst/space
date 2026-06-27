@@ -11,7 +11,7 @@ export type Moon =
 export interface MoonConfig extends CelestialBody {
   name: Moon;
   parent: Planet;
-  orbitRadius: number;
+  orbitalRadius: number;
   orbitPhase: number;
   orbitalSpeed: number;
   // relative to the ecliptic

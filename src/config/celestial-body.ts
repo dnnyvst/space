@@ -139,7 +139,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     axialTilt: 1.54,
     rotationalSpeed: 16.6,
 
-    orbitRadius: 1,
+    orbitalRadius: 1,
     orbitalTilt: 5.145,
     orbitalSpeed: 0.1,
     orbitPhase: Math.random() * Math.PI * 2,
@@ -157,7 +157,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     axialTilt: 0.05,
     rotationalSpeed: 269,
 
-    orbitRadius: 1,
+    orbitalRadius: 1,
     orbitalTilt: 2.213,
     orbitalSpeed: 1.54,
     orbitPhase: Math.random() * Math.PI * 2,
@@ -175,7 +175,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     axialTilt: 0.1,
     rotationalSpeed: 115,
 
-    orbitRadius: 1.6,
+    orbitalRadius: 1.6,
     orbitalTilt: 1.791,
     orbitalSpeed: 0.77,
     orbitPhase: Math.random() * Math.PI * 2,
@@ -193,7 +193,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     axialTilt: 2.214,
     rotationalSpeed: 96.5,
 
-    orbitRadius: 2.5,
+    orbitalRadius: 2.5,
     orbitalTilt: 0.19,
     orbitalSpeed: 0.38,
     orbitPhase: Math.random() * Math.PI * 2,
@@ -211,7 +211,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     axialTilt: 0.51,
     rotationalSpeed: 37.8,
 
-    orbitRadius: 4.5,
+    orbitalRadius: 4.5,
     orbitalTilt: 2.017,
     orbitalSpeed: 0.16,
     orbitPhase: Math.random() * Math.PI * 2,
@@ -229,7 +229,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     axialTilt: 0,
     rotationalSpeed: 60.3,
 
-    orbitRadius: 1,
+    orbitalRadius: 1,
     orbitalTilt: 129.812,
     orbitalSpeed: 0.06,
     orbitPhase: Math.random() * Math.PI * 2,
