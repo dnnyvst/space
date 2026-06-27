@@ -163,7 +163,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     orbitPhase: Math.random() * Math.PI * 2,
 
     textures: {
-      map: "/textures/io/surface.jpg",
+      map: "/textures/io/surface-3-edit.png",
     },
   },
 
@@ -181,7 +181,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     orbitPhase: Math.random() * Math.PI * 2,
 
     textures: {
-      map: "/textures/europa/surface.jpg",
+      map: "/textures/europa/surface-3.jpg",
     },
   },
 
@@ -199,7 +199,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     orbitPhase: Math.random() * Math.PI * 2,
 
     textures: {
-      map: "/textures/ganymede/surface.jpg",
+      map: "/textures/ganymede/surface-3.jpg",
     },
   },
 
@@ -217,7 +217,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     orbitPhase: Math.random() * Math.PI * 2,
 
     textures: {
-      map: "/textures/callisto/surface.jpg",
+      map: "/textures/callisto/surface-3.jpg",
     },
   },
 
