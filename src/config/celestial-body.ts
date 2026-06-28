@@ -163,7 +163,7 @@ export const MOON_CONFIG: MoonConfigMap = {
     orbitPhase: Math.random() * Math.PI * 2,
 
     textures: {
-      map: "/textures/io/surface-3-edit.png",
+      map: "/textures/io/surface.jpg",
     },
   },
 
